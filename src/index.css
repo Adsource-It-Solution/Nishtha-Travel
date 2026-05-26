@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-800 font-sans antialiased overflow-x-hidden selection:bg-brand-purple/20 selection:text-brand-purple;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-slate-100;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-slate-300 rounded-full hover:bg-brand-purple/40 transition-colors;
+  }
+}
+
+@layer components {
+  /* Premium Glassmorphism (Light Mode) */
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-md border border-white shadow-luxury rounded-2xl;
+  }
+  
+  .glass-card-hover {
+    @apply transition-all duration-300 hover:bg-white/95 hover:border-brand-purple/10 hover:shadow-luxury-lg hover:-translate-y-1;
+  }
+
+  .glass-nav {
+    @apply bg-white/80 backdrop-blur-lg border-b border-soft-border;
+  }
+  
+  .glass-input {
+    @apply bg-white/70 border border-soft-border rounded-xl px-4 py-3 text-dark-text placeholder-slate-400 focus:outline-none focus:border-brand-purple focus:ring-1 focus:ring-brand-purple transition-all;
+  }
+  
+  /* Buttons */
+  .btn-gold {
+    @apply bg-gradient-to-r from-brand-blue via-brand-purple to-brand-lavender hover:opacity-95 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-300 hover:shadow-brand-glow flex items-center justify-center gap-2 active:scale-95;
+  }
+  
+  .btn-outline {
+    @apply bg-transparent hover:bg-brand-light text-brand-purple border border-brand-purple/25 hover:border-brand-purple/50 font-semibold px-6 py-3 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 active:scale-95;
+  }
+  
+  .btn-navy {
+    @apply bg-brand-light hover:bg-slate-200/80 text-brand-blue border border-soft-border font-semibold px-6 py-3 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 active:scale-95;
+  }
+  
+  /* Text Gradients */
+  .text-gradient-gold {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-blue via-brand-purple to-brand-lavender;
+  }
+  
+  .text-gradient-blue {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-blue to-brand-lavender;
+  }
+
+  .text-gradient-luxury {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-blue via-brand-purple to-brand-soft;
+  }
+}
+
+/* Customize Swiper indicators */
+.swiper-pagination-bullet {
+  @apply bg-slate-300 !opacity-100;
+}
+
+.swiper-pagination-bullet-active {
+  @apply bg-brand-purple w-6 rounded-full transition-all duration-300 !important;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  @apply text-brand-purple after:text-xl bg-white/90 w-12 h-12 rounded-full border border-soft-border backdrop-blur-sm transition-all hover:bg-brand-purple hover:text-white shadow-luxury;
+}
+
+/* Webkit input calendars formatting */
+::-webkit-calendar-picker-indicator {
+  filter: none;
+  cursor: pointer;
+}
