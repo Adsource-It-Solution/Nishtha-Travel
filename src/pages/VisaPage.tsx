@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FileText, Search, ShieldCheck, ChevronRight, CheckCircle2, CloudUpload, Sparkles, Send, HelpCircle } from 'lucide-react';
+import { Search, ShieldCheck, ChevronRight, CheckCircle2, CloudUpload, Sparkles, Send, HelpCircle } from 'lucide-react';
 
 const mockVisaRequirements: Record<string, {
   processingTime: string;
