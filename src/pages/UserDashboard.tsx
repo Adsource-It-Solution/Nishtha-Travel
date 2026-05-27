@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { User, Briefcase, Heart, Wallet, Bell, Settings, Award, Clock, MapPin, CheckCircle2, ShieldCheck, Mail, Phone, Lock, Save, Gift } from 'lucide-react';
-import { mockHotels, mockPackages, mockFlights } from '../data/mockData';
+import { User, Briefcase, Heart, Wallet, Bell, Settings, Award, MapPin, CheckCircle2, ShieldCheck, Mail, Phone, Save, Gift } from 'lucide-react';
+import { mockHotels, mockFlights } from '../data/mockData';
 import { Link } from 'react-router-dom';
 
 type ActiveTab = 'bookings' | 'wishlist' | 'wallet' | 'settings' | 'notifications';
@@ -43,7 +43,7 @@ export const UserDashboard: React.FC = () => {
             <div>
               <div className="flex items-center gap-2 justify-center md:justify-start">
                 <h1 className="text-xl md:text-2xl font-bold text-white">{profileName}</h1>
-                <span className="px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-gold-500 text-midnight font-bold">
+                <span className="px-2 py-0.5 rounded-full text-[9px] uppercase tracking-wider bg-gold-500 text-midnight font-bold">
                   Gold Member
                 </span>
               </div>

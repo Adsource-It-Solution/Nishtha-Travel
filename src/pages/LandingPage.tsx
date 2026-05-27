@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Compass, Sparkles, ShieldCheck, Award, ArrowRight, Play, CheckCircle2, Send, Heart, Flame } from 'lucide-react';
+import { Compass, Sparkles, ShieldCheck, Award, ArrowRight, Play, CheckCircle2, Send, Flame } from 'lucide-react';
 import { SearchTabs } from '../components/SearchTabs';
 import { DestinationCard } from '../components/DestinationCard';
 import { PackageCard } from '../components/PackageCard';
@@ -167,7 +167,7 @@ export const LandingPage: React.FC = () => {
       <section className="py-24 bg-slate-50 relative border-t border-soft-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-            <span className="text-xs text-brand-purple font-bold uppercase tracking-widest block flex items-center justify-center gap-1.5">
+            <span className="text-xs text-brand-purple font-bold uppercase tracking-widest flex items-center justify-center gap-1.5">
               <Flame className="w-4 h-4 text-brand-purple" />
               <span>Seasonal Offers</span>
             </span>

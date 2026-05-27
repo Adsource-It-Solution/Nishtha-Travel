@@ -46,11 +46,11 @@ export const Navbar: React.FC = () => {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3 group">
-              <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-white to-slate-100 shadow-luxury group-hover:scale-105 transition-all border border-soft-border">
+              <div className="relative flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br from-white to-slate-100 shadow-luxury group-hover:scale-105 transition-all border border-soft-border">
                 <img
                   src="/favicon.svg"
                   alt="Nishtha Travel Logo"
-                  className="w-7 h-7 object-contain"
+                  className="w-16 h-16 object-contain"
                 />
               </div>
               <div>

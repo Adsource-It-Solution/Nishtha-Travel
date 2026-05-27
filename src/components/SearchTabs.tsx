@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Plane, Hotel, Luggage, MapPin, Calendar, Users, Search, ArrowRightLeft, Sparkles } from 'lucide-react';
+import { Plane, Hotel, Luggage, MapPin, Calendar, Users, Search, ArrowRightLeft, } from 'lucide-react';
 
 type TabType = 'flights' | 'hotels' | 'packages';
 
@@ -83,10 +83,10 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
 
       {/* Booking Form Card */}
       <div className="glass-card p-6 md:p-8 relative shadow-luxury">
-        <div className="absolute top-0 right-0 p-3 flex items-center gap-1.5 text-[10px] text-brand-purple bg-brand-purple/5 border-l border-b border-soft-border rounded-tr-2xl rounded-bl-2xl font-bold tracking-wider uppercase">
+        {/* <div className="absolute top-0 right-0 p-3 flex items-center gap-1.5 text-[10px] text-brand-purple bg-brand-purple/5 border-l border-b border-soft-border rounded-tr-2xl rounded-bl-2xl font-bold tracking-wider uppercase">
           <Sparkles className="w-3.5 h-3.5" />
           <span>Concierge Intelligence Desk</span>
-        </div>
+        </div> */}
 
         {/* Flight Booking Panel */}
         {activeTab === 'flights' && (
