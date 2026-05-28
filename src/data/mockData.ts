@@ -439,7 +439,7 @@ export const mockTestimonials: Testimonial[] = [
     name: "Victoria Harrison",
     role: "Luxury Lifestyle Blogger",
     avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80",
-    content: "The booking experience was flawless. Antigravity Travel curated an overwater bungalow stay in the Maldives that was beyond spectacular. Every detail, from the seaplane arrival to the private reef snorkeling, was perfectly scheduled.",
+    content: "The booking experience was flawless. Nishtha Travel Concierge curated an overwater bungalow stay in the Maldives that was beyond spectacular. Every detail, from the seaplane arrival to the private reef snorkeling, was perfectly scheduled.",
     rating: 5,
     location: "London, UK"
   },

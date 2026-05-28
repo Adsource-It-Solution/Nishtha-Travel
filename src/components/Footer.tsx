@@ -23,7 +23,7 @@ export const Footer: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
-          
+
           {/* Brand Info */}
           <div className="lg:col-span-2 space-y-5">
             <Link to="/" className="flex items-center gap-3 group w-fit">
@@ -75,9 +75,9 @@ export const Footer: React.FC = () => {
               <li>
                 <Link to="/packages" className="text-slate-500 hover:text-brand-purple transition-colors">Holiday Packages</Link>
               </li>
-              <li>
+              {/* <li>
                 <Link to="/visa" className="text-slate-500 hover:text-brand-purple transition-colors">Visa Services</Link>
-              </li>
+              </li> */}
               <li>
                 <Link to="/about" className="text-slate-500 hover:text-brand-purple transition-colors">Corporate Travel</Link>
               </li>
@@ -125,7 +125,7 @@ export const Footer: React.FC = () => {
                 <span>concierge@nishthatravel.com</span>
               </div>
             </div>
-            
+
             {/* Direct Newsletter inside footer */}
             <div className="pt-2">
               <form onSubmit={handleSubscribe} className="flex gap-1.5 max-w-xs">

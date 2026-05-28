@@ -4,7 +4,7 @@ import { SearchTabs } from '../components/SearchTabs';
 import { FlightCard } from '../components/FlightCard';
 import { mockFlights } from '../data/mockData';
 import type { Flight } from '../data/mockData';
-import { Filter, ArrowUpDown, ShieldCheck, Plane, CheckCircle2, X } from 'lucide-react';
+import { Filter, ShieldCheck, Plane, CheckCircle2, X } from 'lucide-react';
 
 export const FlightBookingPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -56,35 +56,33 @@ export const FlightBookingPage: React.FC = () => {
   };
 
   return (
-    <div className="pt-28 pb-20 min-h-screen bg-slate-50 relative overflow-hidden">
-      {/* Background designs */}
-      <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-brand-blue/5 rounded-full blur-[100px] pointer-events-none" />
-      
+    <div className="pt-28 pb-20 min-h-screen bg-brand-light relative">
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Page Header */}
-        <div className="mb-8 space-y-2 text-center md:text-left">
-          <span className="text-xs text-brand-purple font-bold uppercase tracking-widest block">VIP Aviation Booking</span>
-          <h1 className="text-3xl md:text-5xl font-extrabold text-brand-blue">First & Business Class Flights</h1>
-          <p className="text-slate-500 text-xs sm:text-sm font-semibold leading-relaxed">
-            Search, compare, and book private luxury flights and commercial suites with premium sky benefits.
+        <div className="mb-12 space-y-3 text-center md:text-left border-b border-[#E5E0D8] pb-8">
+          <span className="text-[10px] text-brand-purple font-bold uppercase tracking-[0.2em] block">01 / Curated Aviation</span>
+          <h1 className="text-4xl md:text-5xl font-serif text-brand-blue leading-tight">First & Business Class Flights</h1>
+          <p className="text-slate-600 text-sm font-light leading-relaxed max-w-xl">
+            Search, compare, and secure premium commercial suites and private aviation with elite lounge benefits.
           </p>
         </div>
 
         {/* Embedded Search Tabs */}
-        <div className="mb-10">
+        <div className="mb-12">
           <SearchTabs initialTab="flights" compact />
         </div>
 
         {/* Layout Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
+
           {/* 1. FILTER SIDEBAR (Desktop) */}
           <div className="lg:col-span-3 space-y-6 lg:sticky lg:top-24 hidden lg:block">
-            <div className="glass-card p-6 space-y-6 shadow-sm">
-              <div className="flex items-center justify-between border-b border-soft-border pb-4">
-                <h3 className="text-xs font-bold uppercase tracking-widest text-brand-blue flex items-center gap-2">
-                  <Filter className="w-4 h-4 text-brand-purple" />
+            <div className="glass-card p-6 space-y-6 shadow-none">
+              <div className="flex items-center justify-between border-b border-[#E5E0D8] pb-4">
+                <h3 className="text-[10px] font-bold uppercase tracking-[0.15em] text-brand-blue flex items-center gap-2">
+                  <Filter className="w-3.5 h-3.5 text-brand-purple" />
                   <span>Filters</span>
                 </h3>
                 <button
@@ -93,7 +91,7 @@ export const FlightBookingPage: React.FC = () => {
                     setSelectedClass('all');
                     setSelectedAirline('all');
                   }}
-                  className="text-[10px] uppercase tracking-wider font-extrabold text-brand-purple hover:text-brand-blue transition-colors"
+                  className="text-[9px] uppercase tracking-widest font-bold text-brand-purple hover:text-brand-blue transition-colors"
                 >
                   Reset All
                 </button>
@@ -101,7 +99,7 @@ export const FlightBookingPage: React.FC = () => {
 
               {/* Stops Filter */}
               <div className="space-y-3">
-                <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Transit Stops</h4>
+                <h4 className="text-[9px] font-bold text-brand-purple uppercase tracking-[0.15em]">Transit Stops</h4>
                 <div className="space-y-2">
                   {[
                     { label: 'Non-stop Only', value: 0 },
@@ -112,9 +110,9 @@ export const FlightBookingPage: React.FC = () => {
                         type="checkbox"
                         checked={selectedStops === opt.value}
                         onChange={() => setSelectedStops(selectedStops === opt.value ? null : opt.value)}
-                        className="rounded border-soft-border bg-slate-50 text-brand-purple focus:ring-0 focus:ring-offset-0 focus:outline-none w-4 h-4 cursor-pointer"
+                        className="rounded-none border-[#E5E0D8] bg-white text-brand-purple focus:ring-0 focus:ring-offset-0 focus:outline-none w-4 h-4 cursor-pointer"
                       />
-                      <span className="text-xs font-semibold">{opt.label}</span>
+                      <span className="text-xs font-light">{opt.label}</span>
                     </label>
                   ))}
                 </div>
@@ -122,7 +120,7 @@ export const FlightBookingPage: React.FC = () => {
 
               {/* Class Filter */}
               <div className="space-y-3">
-                <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Cabin Travel Class</h4>
+                <h4 className="text-[9px] font-bold text-brand-purple uppercase tracking-[0.15em]">Cabin Travel Class</h4>
                 <div className="space-y-2">
                   {[
                     { label: 'All Cabin Classes', value: 'all' },
@@ -136,9 +134,9 @@ export const FlightBookingPage: React.FC = () => {
                         name="class-group"
                         checked={selectedClass === opt.value}
                         onChange={() => setSelectedClass(opt.value)}
-                        className="border-soft-border bg-slate-50 text-brand-purple focus:ring-0 focus:ring-offset-0 focus:outline-none w-4 h-4 cursor-pointer"
+                        className="rounded-none border-[#E5E0D8] bg-white text-brand-purple focus:ring-0 focus:ring-offset-0 focus:outline-none w-4 h-4 cursor-pointer"
                       />
-                      <span className="text-xs font-semibold">{opt.label}</span>
+                      <span className="text-xs font-light">{opt.label}</span>
                     </label>
                   ))}
                 </div>
@@ -146,7 +144,7 @@ export const FlightBookingPage: React.FC = () => {
 
               {/* Airline Filter */}
               <div className="space-y-3">
-                <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Aviation Partners</h4>
+                <h4 className="text-[9px] font-bold text-brand-purple uppercase tracking-[0.15em]">Aviation Partners</h4>
                 <div className="space-y-2">
                   {[
                     { label: 'All Airlines', value: 'all' },
@@ -160,9 +158,9 @@ export const FlightBookingPage: React.FC = () => {
                         name="airline-group"
                         checked={selectedAirline === opt.value}
                         onChange={() => setSelectedAirline(opt.value)}
-                        className="border-soft-border bg-slate-50 text-brand-purple focus:ring-0 focus:ring-offset-0 focus:outline-none w-4 h-4 cursor-pointer"
+                        className="rounded-none border-[#E5E0D8] bg-white text-brand-purple focus:ring-0 focus:ring-offset-0 focus:outline-none w-4 h-4 cursor-pointer"
                       />
-                      <span className="text-xs font-semibold">{opt.label}</span>
+                      <span className="text-xs font-light">{opt.label}</span>
                     </label>
                   ))}
                 </div>
@@ -170,12 +168,12 @@ export const FlightBookingPage: React.FC = () => {
             </div>
 
             {/* Travel Assurance Badge */}
-            <div className="glass-card p-4 flex gap-3 items-start bg-brand-purple/5 border border-brand-purple/10">
+            <div className="glass-card p-5 flex gap-4 items-start bg-white border border-[#E5E0D8] shadow-none">
               <ShieldCheck className="w-5 h-5 text-brand-purple shrink-0 mt-0.5" />
               <div>
-                <h4 className="text-[10px] font-bold text-brand-blue uppercase tracking-wider">Nishtha Flight Protection</h4>
-                <p className="text-[9px] text-slate-500 mt-1 leading-relaxed font-semibold">
-                  Complimentary 100% cancellation refund & flight rebooking insurance included on all Business and First Class bookings.
+                <h4 className="text-[10px] font-bold text-brand-blue uppercase tracking-[0.15em]">Nishtha Flight Protection</h4>
+                <p className="text-[10px] text-slate-600 mt-1.5 leading-relaxed font-light">
+                  Complimentary cancellation protection & flexible itinerary rebooking included with all Business and First Class reservations.
                 </p>
               </div>
             </div>
@@ -183,22 +181,21 @@ export const FlightBookingPage: React.FC = () => {
 
           {/* 2. FLIGHT LISTINGS PANEL */}
           <div className="lg:col-span-9 space-y-6">
-            
+
             {/* Sorting & Stats Bar */}
-            <div className="flex items-center justify-between bg-white border border-soft-border rounded-2xl p-4 shadow-sm">
-              <span className="text-xs font-bold text-slate-500">
-                {loading ? 'Searching...' : `${filteredFlights.length} Flights Found`}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between bg-white border border-[#E5E0D8] rounded-none p-5 shadow-none gap-4">
+              <span className="text-[11px] tracking-[0.1em] text-slate-500 uppercase">
+                {loading ? 'Consulting Aviation Schedules...' : `${filteredFlights.length} Available Curated Flights`}
               </span>
 
-              <div className="flex items-center gap-2">
-                <ArrowUpDown className="w-3.5 h-3.5 text-brand-purple" />
-                <span className="text-xs text-slate-500 font-bold">Sort By:</span>
+              <div className="flex items-center gap-3 w-full sm:w-auto">
+                <span className="text-[11px] text-slate-500 uppercase tracking-[0.1em]">Sort:</span>
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value as any)}
-                  className="bg-slate-50 border border-soft-border text-dark-text rounded-lg text-xs px-2.5 py-1.5 focus:border-brand-purple outline-none cursor-pointer font-bold"
+                  className="bg-transparent border-b border-[#E5E0D8] text-brand-blue rounded-none text-xs pb-1 focus:border-brand-purple focus:outline-none cursor-pointer tracking-wider font-semibold"
                 >
-                  <option value="price">Lowest Price</option>
+                  <option value="price">Lowest Fare First</option>
                   <option value="duration">Shortest Duration</option>
                 </select>
               </div>
@@ -209,20 +206,20 @@ export const FlightBookingPage: React.FC = () => {
               {loading ? (
                 // SKELETON LOADER CARDS
                 [...Array(3)].map((_, i) => (
-                  <div key={i} className="glass-card p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 animate-pulse shadow-sm border border-soft-border">
+                  <div key={i} className="glass-card p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 animate-pulse shadow-none border border-[#E5E0D8] bg-white rounded-none">
                     <div className="flex items-center gap-4 min-w-[200px]">
-                      <div className="w-12 h-12 bg-slate-100 rounded-xl" />
+                      <div className="w-12 h-12 bg-slate-100" />
                       <div className="space-y-2">
-                        <div className="h-4 w-24 bg-slate-100 rounded" />
-                        <div className="h-3 w-16 bg-slate-100 rounded" />
+                        <div className="h-4 w-24 bg-slate-100" />
+                        <div className="h-3 w-16 bg-slate-100" />
                       </div>
                     </div>
                     <div className="flex-grow flex items-center justify-between gap-6 max-w-lg">
-                      <div className="space-y-2"><div className="h-5 w-12 bg-slate-100 rounded" /><div className="h-3 w-8 bg-slate-100 rounded" /></div>
-                      <div className="h-2 flex-grow bg-slate-100 rounded max-w-xs mx-4" />
-                      <div className="space-y-2 text-right"><div className="h-5 w-12 bg-slate-100 rounded" /><div className="h-3 w-8 bg-slate-100 rounded" /></div>
+                      <div className="space-y-2"><div className="h-5 w-12 bg-slate-100" /><div className="h-3 w-8 bg-slate-100" /></div>
+                      <div className="h-2 flex-grow bg-slate-100 max-w-xs mx-4" />
+                      <div className="space-y-2 text-right"><div className="h-5 w-12 bg-slate-100" /><div className="h-3 w-8 bg-slate-100" /></div>
                     </div>
-                    <div className="h-10 w-28 bg-slate-100 rounded-xl border border-soft-border" />
+                    <div className="h-10 w-28 bg-slate-100" />
                   </div>
                 ))
               ) : filteredFlights.length > 0 ? (
@@ -231,12 +228,12 @@ export const FlightBookingPage: React.FC = () => {
                 ))
               ) : (
                 // EMPTY STATE
-                <div className="glass-card p-12 text-center space-y-4 border-dashed border-soft-border shadow-sm">
-                  <div className="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center mx-auto text-slate-400 border border-soft-border">
-                    <Plane className="w-6 h-6 text-brand-purple" />
+                <div className="glass-card p-16 text-center space-y-4 border-dashed border-[#E5E0D8] shadow-none bg-white rounded-none">
+                  <div className="w-12 h-12 rounded-none bg-brand-light flex items-center justify-center mx-auto text-slate-400 border border-[#E5E0D8]">
+                    <Plane className="w-5 h-5 text-brand-purple" />
                   </div>
-                  <h4 className="text-base font-extrabold text-brand-blue uppercase tracking-wider">No Flights Found</h4>
-                  <p className="text-slate-500 text-xs max-w-sm mx-auto font-semibold leading-relaxed">
+                  <h4 className="text-base font-serif text-brand-blue">No Curated Flights Available</h4>
+                  <p className="text-slate-500 text-xs max-w-sm mx-auto font-light leading-relaxed">
                     No active flights match your filter parameters. Please reset filters or modify airport selections.
                   </p>
                 </div>
@@ -258,69 +255,69 @@ export const FlightBookingPage: React.FC = () => {
               onClick={() => {
                 if (!bookingConfirmed) setBookingFlight(null);
               }}
-              className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+              className="absolute inset-0 bg-[#09131F]/40 backdrop-blur-[2px]"
             />
 
             {/* Modal Card */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 10 }}
+              initial={{ opacity: 0, scale: 0.98, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 10 }}
-              className="glass-card p-6 md:p-8 max-w-md w-full relative z-10 space-y-6 shadow-2xl border border-brand-purple/20 bg-white"
+              exit={{ opacity: 0, scale: 0.98, y: 10 }}
+              className="bg-white border border-[#E5E0D8] p-8 md:p-10 max-w-md w-full relative z-10 space-y-6 rounded-none shadow-none"
             >
               {!bookingConfirmed ? (
                 <>
                   <div className="flex justify-between items-start">
                     <div>
-                      <span className="text-[10px] text-brand-purple font-bold uppercase tracking-widest block">Review Booking</span>
-                      <h3 className="text-xl font-extrabold text-brand-blue mt-1">Flight Itinerary</h3>
+                      <span className="text-[9px] text-brand-purple font-bold uppercase tracking-[0.15em] block">Review Luxury Booking</span>
+                      <h3 className="text-xl font-serif text-brand-blue mt-1">Flight Itinerary</h3>
                     </div>
                     <button
                       onClick={() => setBookingFlight(null)}
-                      className="text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100 transition-colors"
+                      className="text-slate-400 hover:text-slate-600 p-1 transition-colors"
                     >
                       <X className="w-5 h-5" />
                     </button>
                   </div>
 
                   {/* Flight Info Summary */}
-                  <div className="p-4 rounded-xl bg-slate-50 border border-soft-border space-y-4">
+                  <div className="p-5 rounded-none bg-brand-light border border-[#E5E0D8] space-y-4">
                     <div className="flex justify-between items-center text-xs">
-                      <span className="font-extrabold text-brand-blue">{bookingFlight.airlineName}</span>
-                      <span className="text-slate-400 font-semibold">{bookingFlight.flightNumber} • {bookingFlight.class}</span>
+                      <span className="font-bold text-brand-blue uppercase tracking-widest text-[10px]">{bookingFlight.airlineName}</span>
+                      <span className="text-slate-500 font-medium tracking-wider text-[10px]">{bookingFlight.flightNumber} • {bookingFlight.class}</span>
                     </div>
 
-                    <div className="flex justify-between items-center py-2 border-y border-soft-border">
+                    <div className="flex justify-between items-center py-4 border-y border-[#E5E0D8]">
                       <div className="text-left">
-                        <span className="font-extrabold text-slate-800 text-base block">{bookingFlight.departureCode}</span>
-                        <span className="text-[10px] text-slate-400 font-semibold">{bookingFlight.departureCity}</span>
+                        <span className="font-serif text-brand-blue text-lg block">{bookingFlight.departureCode}</span>
+                        <span className="text-[10px] text-slate-500 font-light uppercase tracking-wider block mt-0.5">{bookingFlight.departureCity}</span>
                       </div>
                       <div className="flex flex-col items-center">
-                        <span className="text-[9px] text-slate-400 font-bold">{bookingFlight.duration}</span>
-                        <Plane className="w-3.5 h-3.5 text-brand-purple my-0.5 rotate-90" />
-                        <span className="text-[9px] font-extrabold text-brand-purple">{bookingFlight.stops === 0 ? 'Non-Stop' : '1 Stop'}</span>
+                        <span className="text-[9px] text-slate-500 uppercase tracking-widest">{bookingFlight.duration}</span>
+                        <Plane className="w-3.5 h-3.5 text-brand-purple my-1 rotate-90" />
+                        <span className="text-[9px] font-bold text-brand-purple uppercase tracking-widest">{bookingFlight.stops === 0 ? 'Non-Stop' : '1 Stop'}</span>
                       </div>
                       <div className="text-right">
-                        <span className="font-extrabold text-slate-800 text-base block">{bookingFlight.arrivalCode}</span>
-                        <span className="text-[10px] text-slate-400 font-semibold">{bookingFlight.arrivalCity}</span>
+                        <span className="font-serif text-slate-600 text-lg block">{bookingFlight.arrivalCode}</span>
+                        <span className="text-[10px] text-slate-500 font-light uppercase tracking-wider block mt-0.5">{bookingFlight.arrivalCity}</span>
                       </div>
                     </div>
 
                     <div className="flex justify-between items-center text-xs pt-1">
-                      <span className="text-slate-400 font-semibold">Total Price (incl. tax)</span>
-                      <span className="text-base font-extrabold text-brand-blue">${bookingFlight.price}</span>
+                      <span className="text-slate-500 font-light uppercase tracking-wider">Total Est. Price</span>
+                      <span className="text-xl font-serif text-brand-blue">${bookingFlight.price}</span>
                     </div>
                   </div>
 
                   {/* Policies */}
-                  <div className="space-y-2 text-xs text-slate-500 font-semibold">
+                  <div className="space-y-2 text-[11px] text-slate-600 font-light">
                     <div className="flex gap-2">
-                      <span className="text-emerald-600">✓</span>
-                      <span>Free priority check-in & lounge access boarding.</span>
+                      <span className="text-brand-purple">✓</span>
+                      <span>Complimentary priority check-in & lounge access.</span>
                     </div>
                     <div className="flex gap-2">
-                      <span className="text-emerald-600">✓</span>
-                      <span>Refundable flight cancellation policy enabled.</span>
+                      <span className="text-brand-purple">✓</span>
+                      <span>Flexible rebooking protection program active.</span>
                     </div>
                   </div>
 
@@ -328,13 +325,13 @@ export const FlightBookingPage: React.FC = () => {
                   <div className="grid grid-cols-2 gap-3 pt-2">
                     <button
                       onClick={() => setBookingFlight(null)}
-                      className="btn-navy !py-3 !text-xs font-extrabold uppercase tracking-wider"
+                      className="btn-navy rounded-none"
                     >
                       Cancel
                     </button>
                     <button
                       onClick={confirmBooking}
-                      className="btn-gold !py-3 !text-xs font-extrabold uppercase tracking-wider"
+                      className="btn-gold rounded-none"
                     >
                       Confirm Book
                     </button>
@@ -345,13 +342,13 @@ export const FlightBookingPage: React.FC = () => {
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="text-center py-6 space-y-4"
+                  className="text-center py-8 space-y-4"
                 >
-                  <div className="w-16 h-16 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center mx-auto text-emerald-600 shadow-sm animate-pulse">
+                  <div className="w-16 h-16 rounded-none bg-brand-light border border-[#E5E0D8] flex items-center justify-center mx-auto text-brand-purple animate-pulse">
                     <CheckCircle2 className="w-8 h-8" />
                   </div>
-                  <h3 className="text-2xl font-extrabold text-brand-blue">Booking Confirmed!</h3>
-                  <p className="text-slate-500 text-xs font-semibold max-w-xs mx-auto leading-relaxed">
+                  <h3 className="text-2xl font-serif text-brand-blue">Booking Confirmed</h3>
+                  <p className="text-slate-500 text-xs font-light max-w-xs mx-auto leading-relaxed">
                     Your flight reservation details have been stored. We've synchronized this trip with your Nishtha Member Dashboard.
                   </p>
                 </motion.div>

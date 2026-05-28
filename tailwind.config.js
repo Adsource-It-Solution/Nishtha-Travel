@@ -9,11 +9,11 @@ export default {
     extend: {
       colors: {
         brand: {
-          blue: "#004394",
-          purple: "#682681",
-          lavender: "#7F408E",
-          soft: "#A267A5",
-          light: "#F5F7FA",
+          blue: "#09131F", // Obsidian Navy
+          purple: "#A08A72", // Champagne Gold
+          lavender: "#C0B29E", // Sand Gold
+          soft: "#D2C5B3", // Warm Brass
+          light: "#FDFBF7", // Silk Cream
         },
         slate: {
           50: "#f8fafc",

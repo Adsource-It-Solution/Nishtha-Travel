@@ -6,7 +6,7 @@
 
 @layer base {
   body {
-    @apply bg-slate-50 text-slate-800 font-sans antialiased overflow-x-hidden selection:bg-brand-purple/20 selection:text-brand-purple;
+    @apply bg-brand-light text-slate-800 font-sans antialiased overflow-x-hidden selection:bg-brand-purple/20 selection:text-brand-purple;
   }
 
   /* Custom Scrollbar */
@@ -16,56 +16,56 @@
   }
   
   ::-webkit-scrollbar-track {
-    @apply bg-slate-100;
+    @apply bg-[#F4F0EA];
   }
   
   ::-webkit-scrollbar-thumb {
-    @apply bg-slate-300 rounded-full hover:bg-brand-purple/40 transition-colors;
+    @apply bg-brand-purple/30 rounded-full hover:bg-brand-purple/60 transition-colors;
   }
 }
 
 @layer components {
-  /* Premium Glassmorphism (Light Mode) */
+  /* Premium Structured Cards (Luxury Editorial) */
   .glass-card {
-    @apply bg-white/80 backdrop-blur-md border border-white shadow-luxury rounded-2xl;
+    @apply bg-white border border-[#E5E0D8] rounded-[2px] shadow-[0_4px_16px_rgba(13,19,31,0.02)];
   }
   
   .glass-card-hover {
-    @apply transition-all duration-300 hover:bg-white/95 hover:border-brand-purple/10 hover:shadow-luxury-lg hover:-translate-y-1;
+    @apply transition-all duration-300 hover:border-brand-purple hover:shadow-[0_8px_24px_rgba(13,19,31,0.04)];
   }
 
   .glass-nav {
-    @apply bg-white/80 backdrop-blur-lg border-b border-soft-border;
+    @apply bg-white/95 border-b border-[#E5E0D8];
   }
   
   .glass-input {
-    @apply bg-white/70 border border-soft-border rounded-xl px-4 py-3 text-dark-text placeholder-slate-400 focus:outline-none focus:border-brand-purple focus:ring-1 focus:ring-brand-purple transition-all;
+    @apply bg-white border border-[#E5E0D8] rounded-[2px] px-4 py-3 text-dark-text placeholder-slate-400 focus:outline-none focus:border-brand-purple transition-all;
   }
   
   /* Buttons */
   .btn-gold {
-    @apply bg-gradient-to-r from-brand-blue via-brand-purple to-brand-lavender hover:opacity-95 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-300 hover:shadow-brand-glow flex items-center justify-center gap-2 active:scale-95;
+    @apply bg-brand-blue hover:bg-brand-purple text-white font-bold uppercase tracking-[0.18em] text-[10px] px-6 py-3.5 rounded-[1px] border border-brand-blue hover:border-brand-purple transition-all duration-300 flex items-center justify-center gap-2;
   }
   
   .btn-outline {
-    @apply bg-transparent hover:bg-brand-light text-brand-purple border border-brand-purple/25 hover:border-brand-purple/50 font-semibold px-6 py-3 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 active:scale-95;
+    @apply bg-transparent hover:bg-brand-purple/5 text-brand-purple border border-brand-purple/40 hover:border-brand-purple font-bold uppercase tracking-[0.18em] text-[10px] px-6 py-3.5 rounded-[1px] transition-all duration-300 flex items-center justify-center gap-2;
   }
   
   .btn-navy {
-    @apply bg-brand-light hover:bg-slate-200/80 text-brand-blue border border-soft-border font-semibold px-6 py-3 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 active:scale-95;
+    @apply bg-brand-light hover:bg-[#E5E0D8]/40 text-brand-blue border border-[#E5E0D8] font-bold uppercase tracking-[0.18em] text-[10px] px-6 py-3.5 rounded-[1px] transition-all duration-300 flex items-center justify-center gap-2;
   }
   
-  /* Text Gradients */
+  /* Solid Luxury Colors (Removed Gradients) */
   .text-gradient-gold {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-blue via-brand-purple to-brand-lavender;
+    @apply text-brand-purple;
   }
   
   .text-gradient-blue {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-blue to-brand-lavender;
+    @apply text-brand-blue;
   }
 
   .text-gradient-luxury {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-blue via-brand-purple to-brand-soft;
+    @apply text-brand-blue;
   }
 }
 

@@ -25,7 +25,7 @@ export const Navbar: React.FC = () => {
     { name: 'Flights', path: '/flights' },
     { name: 'Hotels', path: '/hotels' },
     { name: 'Holiday Packages', path: '/packages' },
-    { name: 'Visa Services', path: '/visa' },
+    // { name: 'Visa Services', path: '/visa' },
     { name: 'About', path: '/about' },
     { name: 'Contact', path: '/contact' },
   ];
@@ -38,31 +38,31 @@ export const Navbar: React.FC = () => {
         transition={{ duration: 0.5, ease: 'easeOut' }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled || isOpen
-            ? 'bg-white/90 backdrop-blur-md border-b border-soft-border py-3.5 shadow-sm'
-            : 'bg-white/60 backdrop-blur-sm py-5 border-b border-white/20'
+            ? 'bg-white border-b border-[#E5E0D8] py-3 shadow-sm'
+            : 'bg-brand-light/90 backdrop-blur-sm py-4 border-b border-transparent'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3 group">
-              <div className="relative flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br from-white to-slate-100 shadow-luxury group-hover:scale-105 transition-all border border-soft-border">
+              <div className="relative flex items-center justify-center w-12 h-12 bg-white transition-all border border-[#E5E0D8] rounded-none">
                 <img
                   src="/favicon.svg"
                   alt="Nishtha Travel Logo"
-                  className="w-16 h-16 object-contain"
+                  className="w-10 h-10 object-contain"
                 />
               </div>
               <div>
-                <span className="text-base font-extrabold tracking-wider font-sans text-brand-blue group-hover:text-brand-purple transition-colors block leading-tight">
+                <span className="text-sm font-extrabold tracking-[0.1em] font-sans text-brand-blue group-hover:text-brand-purple transition-colors block leading-tight">
                   NISHTHA
                 </span>
-                <span className="text-[9px] block font-semibold tracking-[0.18em] uppercase text-brand-purple -mt-0.5 leading-none">
+                <span className="text-[8px] block font-bold tracking-[0.2em] uppercase text-brand-purple -mt-0.5 leading-none">
                   Travel Concierge
                 </span>
               </div>
             </Link>
-
+ 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center gap-6">
               {navLinks.map((link) => {
@@ -71,15 +71,15 @@ export const Navbar: React.FC = () => {
                   <Link
                     key={link.path}
                     to={link.path}
-                    className="relative text-xs font-bold tracking-wider uppercase transition-colors"
+                    className="relative text-[12px] font-bold tracking-[0.15em] uppercase transition-colors"
                   >
-                    <span className={isActive ? 'text-brand-purple font-extrabold' : 'text-slate-600 hover:text-brand-blue'}>
+                    <span className={isActive ? 'text-brand-purple' : 'text-slate-600 hover:text-brand-blue'}>
                       {link.name}
                     </span>
                     {isActive && (
                       <motion.div
                         layoutId="activeNav"
-                        className="absolute -bottom-1.5 left-0 right-0 h-[2.5px] bg-gradient-to-r from-brand-blue to-brand-purple rounded-full"
+                        className="absolute -bottom-1.5 left-0 right-0 h-[1.5px] bg-brand-purple"
                         transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                       />
                     )}
@@ -94,28 +94,28 @@ export const Navbar: React.FC = () => {
                 href="https://wa.me/919999999999"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-brand-light border border-soft-border hover:bg-slate-100 text-xs font-bold text-slate-700 transition-all duration-300"
+                className="flex items-center gap-2 px-4 py-2 rounded-none bg-white border border-[#E5E0D8] hover:border-brand-purple text-xs font-bold text-slate-700 transition-all duration-300"
               >
                 <PhoneCall className="w-3.5 h-3.5 text-brand-purple" />
-                <span>Concierge Call</span>
+                <span className="tracking-wide">Concierge Call</span>
               </a>
-              <Link to="/dashboard" className="btn-gold !px-4 !py-2 !text-xs uppercase tracking-wider font-bold">
+              <Link to="/dashboard" className="btn-gold !px-4 !py-2 !text-[10px] uppercase tracking-[0.18em] font-bold rounded-none">
                 Lounge Hub
               </Link>
             </div>
-
+ 
             {/* Mobile menu button */}
             <div className="flex lg:hidden items-center">
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="text-slate-600 hover:text-brand-purple p-2 rounded-lg hover:bg-slate-100 focus:outline-none transition-colors"
+                className="text-slate-600 hover:text-brand-purple p-2 focus:outline-none transition-colors"
               >
                 {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
             </div>
           </div>
         </div>
-
+ 
         {/* Mobile menu Panel */}
         <AnimatePresence>
           {isOpen && (
@@ -124,7 +124,7 @@ export const Navbar: React.FC = () => {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
-              className="lg:hidden bg-white/95 border-b border-soft-border overflow-hidden shadow-lg"
+              className="lg:hidden bg-white border-b border-[#E5E0D8] overflow-hidden shadow-sm"
             >
               <div className="px-4 pt-2 pb-6 space-y-2">
                 {navLinks.map((link) => {
@@ -134,9 +134,9 @@ export const Navbar: React.FC = () => {
                       key={link.path}
                       to={link.path}
                       onClick={() => setIsOpen(false)}
-                      className={`block px-4 py-2.5 rounded-xl text-xs font-extrabold tracking-wider uppercase transition-all ${
+                      className={`block px-4 py-2.5 text-xs font-extrabold tracking-wider uppercase transition-all rounded-none ${
                         isActive
-                          ? 'bg-brand-purple/5 text-brand-purple border-l-4 border-brand-purple pl-3'
+                          ? 'bg-[#FDFBF7] text-brand-purple border-l-2 border-brand-purple pl-3'
                           : 'text-slate-600 hover:bg-slate-50 hover:text-brand-blue'
                       }`}
                     >
@@ -144,7 +144,7 @@ export const Navbar: React.FC = () => {
                     </Link>
                   );
                 })}
-                <div className="pt-4 border-t border-soft-border flex flex-col gap-2.5 px-4">
+                <div className="pt-4 border-t border-[#E5E0D8] flex flex-col gap-2.5 px-4">
                   <Link
                     to="/dashboard"
                     onClick={() => setIsOpen(false)}
@@ -166,7 +166,7 @@ export const Navbar: React.FC = () => {
                   <Link
                     to="/contact"
                     onClick={() => setIsOpen(false)}
-                    className="btn-gold w-full mt-2 !py-2.5 !text-xs text-center font-bold tracking-wider"
+                    className="btn-gold w-full mt-2 !py-2.5 !text-[10px] text-center font-bold tracking-wider rounded-none"
                   >
                     Book Journey
                   </Link>

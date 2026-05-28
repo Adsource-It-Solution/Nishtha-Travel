@@ -49,17 +49,15 @@ export const HolidayPackagesPage: React.FC = () => {
   };
 
   return (
-    <div className="pt-28 pb-20 min-h-screen bg-slate-50 relative overflow-hidden">
-      {/* Background designs */}
-      <div className="absolute top-0 left-0 w-[450px] h-[450px] bg-brand-blue/5 rounded-full blur-[100px] pointer-events-none" />
-
+    <div className="pt-28 pb-20 min-h-screen bg-brand-light relative">
+      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Page Header */}
-        <div className="mb-8 space-y-2 text-center md:text-left">
-          <span className="text-xs text-brand-purple font-bold uppercase tracking-widest block">Curated Voyages</span>
-          <h1 className="text-3xl md:text-5xl font-extrabold text-brand-blue">All-Inclusive Holiday Packages</h1>
-          <p className="text-slate-500 text-xs sm:text-sm font-semibold leading-relaxed">
+        <div className="mb-12 space-y-3 text-center md:text-left border-b border-[#E5E0D8] pb-8">
+          <span className="text-[10px] text-brand-purple font-bold uppercase tracking-[0.2em] block">03 / Curated Voyages</span>
+          <h1 className="text-4xl md:text-5xl font-serif text-brand-blue leading-tight">All-Inclusive Holiday Packages</h1>
+          <p className="text-slate-600 text-sm font-light leading-relaxed max-w-xl">
             Bespoke tours pairing luxury accommodation, curated private activities, and custom flight solutions.
           </p>
         </div>
@@ -72,31 +70,31 @@ export const HolidayPackagesPage: React.FC = () => {
         {/* Offers / Deals Section */}
         <div className="mb-16">
           <div className="mb-6 space-y-1">
-            <span className="text-xs text-brand-purple font-bold uppercase tracking-widest block mb-1">Club Benefits</span>
-            <h3 className="text-lg font-bold text-brand-blue uppercase tracking-wider">Active Deals & Vouchers</h3>
+            <span className="text-[9px] text-brand-purple font-bold uppercase tracking-[0.15em] block mb-1">Club Benefits</span>
+            <h3 className="text-base font-serif text-brand-blue">Active Private Curation Deals</h3>
           </div>
           <OfferBanner />
         </div>
 
         {/* Categories Tab Selector */}
-        <div className="mb-8 flex flex-wrap gap-2 border-b border-soft-border pb-4 justify-start">
+        <div className="mb-10 flex flex-wrap gap-2 border-b border-[#E5E0D8] pb-4 justify-start">
           {categories.map((cat) => {
             const isActive = selectedCategory === cat.id;
             return (
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`relative px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
+                className={`relative px-4 py-2.5 rounded-none text-[10px] font-bold uppercase tracking-[0.15em] transition-all ${
                   isActive
-                    ? 'text-brand-purple bg-brand-purple/5'
-                    : 'text-slate-400 hover:text-brand-purple hover:bg-slate-100'
+                    ? 'text-brand-purple bg-white border border-[#E5E0D8] border-b-transparent'
+                    : 'text-slate-500 hover:text-brand-purple'
                 }`}
               >
                 <span>{cat.label}</span>
                 {isActive && (
                   <motion.div
                     layoutId="activePkgCat"
-                    className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-brand-blue to-brand-purple rounded-full"
+                    className="absolute -bottom-[5px] left-0 right-0 h-[2px] bg-brand-purple z-10"
                   />
                 )}
               </button>
@@ -108,12 +106,12 @@ export const HolidayPackagesPage: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {loading ? (
             [...Array(3)].map((_, i) => (
-              <div key={i} className="glass-card overflow-hidden h-[420px] animate-pulse border border-soft-border shadow-sm bg-white">
+              <div key={i} className="glass-card overflow-hidden h-[420px] animate-pulse border border-[#E5E0D8] bg-white rounded-none shadow-none">
                 <div className="bg-slate-100 h-56 w-full" />
                 <div className="p-5 space-y-4">
-                  <div className="h-4 w-1/3 bg-slate-100 rounded" />
-                  <div className="h-6 w-2/3 bg-slate-100 rounded" />
-                  <div className="h-4 w-1/2 bg-slate-100 rounded" />
+                  <div className="h-4 w-1/3 bg-slate-100" />
+                  <div className="h-6 w-2/3 bg-slate-100" />
+                  <div className="h-4 w-1/2 bg-slate-100" />
                 </div>
               </div>
             ))
@@ -122,12 +120,12 @@ export const HolidayPackagesPage: React.FC = () => {
               <PackageCard key={pkg.id} pkg={pkg} onBook={handleBookPkg} />
             ))
           ) : (
-            <div className="col-span-full glass-card p-16 text-center space-y-4 border-dashed border-soft-border shadow-sm">
-              <div className="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center mx-auto text-slate-400 border border-soft-border">
-                <Luggage className="w-6 h-6 text-brand-purple" />
+            <div className="col-span-full glass-card p-16 text-center space-y-4 border-dashed border-[#E5E0D8] bg-white rounded-none shadow-none">
+              <div className="w-12 h-12 rounded-none bg-brand-light flex items-center justify-center mx-auto text-slate-400 border border-[#E5E0D8]">
+                <Luggage className="w-5 h-5 text-brand-purple" />
               </div>
-              <h4 className="text-base font-extrabold text-brand-blue uppercase tracking-wider">No Packages Available</h4>
-              <p className="text-slate-500 text-xs max-w-sm mx-auto font-semibold leading-relaxed">
+              <h4 className="text-base font-serif text-brand-blue">No Curated Packages Available</h4>
+              <p className="text-slate-500 text-xs max-w-sm mx-auto font-light leading-relaxed">
                 No active all-inclusive packages found matching this category. Please adjust filters.
               </p>
             </div>
@@ -147,62 +145,62 @@ export const HolidayPackagesPage: React.FC = () => {
               onClick={() => {
                 if (!bookingConfirmed) setBookingPkg(null);
               }}
-              className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+              className="absolute inset-0 bg-[#09131F]/40 backdrop-blur-[2px]"
             />
 
             {/* Modal Card */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 10 }}
+              initial={{ opacity: 0, scale: 0.98, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 10 }}
-              className="glass-card p-6 md:p-8 max-w-md w-full relative z-10 space-y-6 shadow-2xl border border-brand-purple/20 bg-white"
+              exit={{ opacity: 0, scale: 0.98, y: 10 }}
+              className="bg-white border border-[#E5E0D8] p-8 md:p-10 max-w-md w-full relative z-10 space-y-6 rounded-none shadow-none"
             >
               {!bookingConfirmed ? (
                 <>
                   <div className="flex justify-between items-start">
                     <div>
-                      <span className="text-[10px] text-brand-purple font-bold uppercase tracking-widest block">Package Selection</span>
-                      <h3 className="text-xl font-extrabold text-brand-blue mt-1">Book Premium Voyage</h3>
+                      <span className="text-[9px] text-brand-purple font-bold uppercase tracking-[0.15em] block">Package Selection</span>
+                      <h3 className="text-xl font-serif text-brand-blue mt-1">Book Curated Voyage</h3>
                     </div>
                     <button
                       onClick={() => setBookingPkg(null)}
-                      className="text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100 transition-colors"
+                      className="text-slate-400 hover:text-slate-600 p-1 transition-colors"
                     >
                       <X className="w-5 h-5" />
                     </button>
                   </div>
 
                   {/* Summary Box */}
-                  <div className="p-4 rounded-xl bg-slate-50 border border-soft-border space-y-4">
+                  <div className="p-5 rounded-none bg-brand-light border border-[#E5E0D8] space-y-4">
                     <div>
-                      <span className="text-[9px] text-slate-400 uppercase tracking-wider block font-bold">Package Title</span>
-                      <h4 className="font-extrabold text-brand-blue text-base leading-tight mt-0.5">{bookingPkg.title}</h4>
-                      <span className="text-xs text-slate-400 font-semibold">{bookingPkg.destination} • {bookingPkg.duration}</span>
+                      <span className="text-[9px] text-slate-500 uppercase tracking-widest block">Selected Itinerary</span>
+                      <h4 className="font-serif text-brand-blue text-lg leading-tight mt-1">{bookingPkg.title}</h4>
+                      <span className="text-xs text-slate-500 mt-1 block">{bookingPkg.destination} • {bookingPkg.duration}</span>
                     </div>
 
-                    <div className="border-t border-soft-border pt-3 mt-3 flex justify-between items-center text-xs text-slate-600 font-semibold">
+                    <div className="border-t border-[#E5E0D8] pt-3 mt-3 flex justify-between items-center text-xs text-slate-600 font-light">
                       <span>Rate per person</span>
                       <span className="font-bold text-slate-800">${bookingPkg.price}</span>
                     </div>
-                    <div className="flex justify-between items-center text-xs text-slate-600 font-semibold">
+                    <div className="flex justify-between items-center text-xs text-slate-600 font-light">
                       <span>Elite Inclusions Package</span>
-                      <span className="text-emerald-600 font-bold">Enabled</span>
+                      <span className="text-brand-purple font-bold tracking-wider">COMPLIMENTARY</span>
                     </div>
-                    <div className="border-t border-soft-border pt-3 flex justify-between items-center text-xs">
-                      <span className="text-slate-400 font-bold">Total Package Cost</span>
-                      <span className="text-base font-extrabold text-brand-blue">${bookingPkg.price}</span>
+                    <div className="border-t border-[#E5E0D8] pt-3 flex justify-between items-center text-xs">
+                      <span className="text-slate-500 font-light uppercase tracking-wider">Total Package Cost</span>
+                      <span className="text-xl font-serif text-brand-blue">${bookingPkg.price}</span>
                     </div>
                   </div>
 
                   {/* Inclusions checklist */}
-                  <div className="space-y-2 text-xs text-slate-500 font-semibold">
+                  <div className="space-y-2 text-[11px] text-slate-600 font-light">
                     <div className="flex gap-2">
-                      <Check className="w-4 h-4 text-emerald-600 shrink-0" />
-                      <span>Coordinated transfers & activities included.</span>
+                      <Check className="w-4 h-4 text-brand-purple shrink-0" />
+                      <span>Coordinated VIP transfers & private itineraries.</span>
                     </div>
                     <div className="flex gap-2">
-                      <Check className="w-4 h-4 text-emerald-600 shrink-0" />
-                      <span>Dedicated concierge available 24/7.</span>
+                      <Check className="w-4 h-4 text-brand-purple shrink-0" />
+                      <span>Dedicated concierge desk support available 24/7.</span>
                     </div>
                   </div>
 
@@ -210,13 +208,13 @@ export const HolidayPackagesPage: React.FC = () => {
                   <div className="grid grid-cols-2 gap-3 pt-2">
                     <button
                       onClick={() => setBookingPkg(null)}
-                      className="btn-navy !py-3 !text-xs font-extrabold uppercase tracking-wider"
+                      className="btn-navy rounded-none"
                     >
                       Cancel
                     </button>
                     <button
                       onClick={confirmBooking}
-                      className="btn-gold !py-3 !text-xs font-extrabold uppercase tracking-wider"
+                      className="btn-gold rounded-none"
                     >
                       Confirm Package
                     </button>
@@ -227,14 +225,14 @@ export const HolidayPackagesPage: React.FC = () => {
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="text-center py-6 space-y-4"
+                  className="text-center py-8 space-y-4"
                 >
-                  <div className="w-16 h-16 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center mx-auto text-emerald-600 shadow-sm animate-pulse">
-                    <Check className="w-8 h-8 text-emerald-600 animate-bounce" />
+                  <div className="w-16 h-16 rounded-none bg-brand-light border border-[#E5E0D8] flex items-center justify-center mx-auto text-brand-purple animate-pulse">
+                    <Check className="w-8 h-8 text-brand-purple animate-bounce" />
                   </div>
-                  <h3 className="text-2xl font-extrabold text-brand-blue">Voyage Confirmed!</h3>
-                  <p className="text-slate-500 text-xs font-semibold max-w-xs mx-auto leading-relaxed">
-                    Your luxury package is confirmed. We will reach out within 2 hours to coordinate flight timings and bespoke tour selections from our Gurgaon desk.
+                  <h3 className="text-2xl font-serif text-brand-blue">Voyage Confirmed</h3>
+                  <p className="text-slate-500 text-xs font-light max-w-xs mx-auto leading-relaxed">
+                    Your luxury package is confirmed. We will reach out within 2 hours to coordinate flight timings and bespoke tour selections from our concierge desk.
                   </p>
                 </motion.div>
               )}
