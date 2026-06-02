@@ -64,14 +64,18 @@ export interface Package {
   title: string;
   destination: string;
   country: string;
-  duration: string; // e.g. "6 Days, 5 Nights"
+  duration: string;
   price: number;
   originalPrice?: number;
   image: string;
   rating: number;
   includedServices: string[];
-  category: 'international' | 'domestic' | 'honeymoon' | 'luxury' | 'adventure' | 'family' | 'beach' | 'mountains';
+  category: string;
   discountPercentage?: number;
+
+  featured?: boolean;
+  tourType?: string;
+  features?: string[];
 }
 
 export interface Testimonial {
@@ -359,12 +363,29 @@ export const mockPackages: Package[] = [
     duration: "5 Days, 4 Nights",
     price: 2499,
     originalPrice: 3200,
-    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
     rating: 4.9,
-    includedServices: ["Flight", "Resort", "Private Seaplane", "All Meals", "Excursions"],
     category: "luxury",
-    discountPercentage: 22
+    discountPercentage: 22,
+
+    featured: true,
+    tourType: "Group Tour",
+
+    features: [
+      "Water Villa",
+      "Private Beach",
+      "All Inclusive"
+    ],
+
+    includedServices: [
+      "Flight",
+      "Resort",
+      "Private Seaplane",
+      "All Meals",
+      "Excursions"
+    ]
   },
+
   {
     id: "pkg-2",
     title: "Amalfi Coast Romance",
@@ -373,12 +394,28 @@ export const mockPackages: Package[] = [
     duration: "7 Days, 6 Nights",
     price: 3450,
     originalPrice: 3999,
-    image: "https://images.unsplash.com/photo-1486916856992-e4db22c8df33?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1486916856992-e4db22c8df33?auto=format&fit=crop&w=1200&q=80",
     rating: 4.85,
-    includedServices: ["Resort", "Private Riva Yacht", "Cooking Class", "Transfers"],
     category: "honeymoon",
-    discountPercentage: 14
+    discountPercentage: 14,
+
+    featured: true,
+    tourType: "Couple Tour",
+
+    features: [
+      "Private Yacht",
+      "Luxury Resort",
+      "Wine Tasting"
+    ],
+
+    includedServices: [
+      "Resort",
+      "Private Riva Yacht",
+      "Cooking Class",
+      "Transfers"
+    ]
   },
+
   {
     id: "pkg-3",
     title: "Kyoto Autumn Serenity",
@@ -386,11 +423,27 @@ export const mockPackages: Package[] = [
     country: "Japan",
     duration: "6 Days, 5 Nights",
     price: 1890,
-    image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1200&q=80",
     rating: 4.9,
-    includedServices: ["Ryokan Stay", "Kaiseki Dinners", "Bullet Train Pass", "Guided Temples"],
-    category: "international"
+    category: "international",
+
+    featured: false,
+    tourType: "Cultural Tour",
+
+    features: [
+      "Temple Visits",
+      "Tea Ceremony",
+      "Ryokan Stay"
+    ],
+
+    includedServices: [
+      "Ryokan Stay",
+      "Kaiseki Dinners",
+      "Bullet Train Pass",
+      "Guided Temples"
+    ]
   },
+
   {
     id: "pkg-4",
     title: "Swiss Alps Heli-Ski Adventure",
@@ -399,12 +452,28 @@ export const mockPackages: Package[] = [
     duration: "6 Days, 5 Nights",
     price: 2800,
     originalPrice: 3400,
-    image: "https://images.unsplash.com/photo-1548777123-e216912df7d8?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1548777123-e216912df7d8?auto=format&fit=crop&w=1200&q=80",
     rating: 4.75,
-    includedServices: ["Luxury Chalet", "Ski Passes", "Heli-Skiing", "Wellness Baths"],
     category: "adventure",
-    discountPercentage: 17
+    discountPercentage: 17,
+
+    featured: true,
+    tourType: "Adventure Tour",
+
+    features: [
+      "Heli Skiing",
+      "Luxury Chalet",
+      "Spa Access"
+    ],
+
+    includedServices: [
+      "Luxury Chalet",
+      "Ski Passes",
+      "Heli-Skiing",
+      "Wellness Baths"
+    ]
   },
+
   {
     id: "pkg-5",
     title: "Rajasthan Forts & Heritage",
@@ -413,12 +482,28 @@ export const mockPackages: Package[] = [
     duration: "8 Days, 7 Nights",
     price: 1350,
     originalPrice: 1600,
-    image: "https://images.unsplash.com/photo-1477587458883-471a5ed08ff4?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1477587458883-471a5ed08ff4?auto=format&fit=crop&w=1200&q=80",
     rating: 4.8,
-    includedServices: ["Palace Hotel Stay", "Private Guide", "Chauffeur", "Desert Safari"],
     category: "domestic",
-    discountPercentage: 15
+    discountPercentage: 15,
+
+    featured: true,
+    tourType: "Heritage Tour",
+
+    features: [
+      "Palace Stay",
+      "Camel Safari",
+      "Private Guide"
+    ],
+
+    includedServices: [
+      "Palace Hotel Stay",
+      "Private Guide",
+      "Chauffeur",
+      "Desert Safari"
+    ]
   },
+
   {
     id: "pkg-6",
     title: "Grand Canyon Helicopter Tour",
@@ -426,10 +511,25 @@ export const mockPackages: Package[] = [
     country: "USA",
     duration: "4 Days, 3 Nights",
     price: 990,
-    image: "https://images.unsplash.com/photo-1615551043360-33de8b5f410c?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1615551043360-33de8b5f410c?auto=format&fit=crop&w=1200&q=80",
     rating: 4.7,
-    includedServices: ["Hotel", "Helicopter Ride", "National Park Passes", "Breakfast"],
-    category: "family"
+    category: "family",
+
+    featured: false,
+    tourType: "Family Tour",
+
+    features: [
+      "Helicopter Ride",
+      "National Park",
+      "Family Friendly"
+    ],
+
+    includedServices: [
+      "Hotel",
+      "Helicopter Ride",
+      "National Park Passes",
+      "Breakfast"
+    ]
   }
 ];
 

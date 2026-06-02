@@ -59,30 +59,32 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
   return (
     <div className={`w-full ${compact ? '' : 'max-w-6xl mx-auto px-4'}`}>
       {/* Tab Buttons */}
-      <div className="flex gap-2 mb-4 justify-center sm:justify-start">
-        {(['flights', 'hotels', 'packages'] as TabType[]).map((tab) => {
-          const isActive = activeTab === tab;
-          return (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`flex items-center gap-2 px-6 py-3 rounded-xl text-xs font-bold tracking-wider uppercase transition-all duration-300 border ${
-                isActive
-                  ? 'bg-brand-purple border-transparent text-white shadow-brand-glow font-extrabold'
-                  : 'bg-white border-soft-border text-slate-600 hover:bg-slate-50'
-              }`}
-            >
-              {tab === 'flights' && <Plane className="w-4 h-4" />}
-              {tab === 'hotels' && <Hotel className="w-4 h-4" />}
-              {tab === 'packages' && <Luggage className="w-4 h-4" />}
-              <span>{tab}</span>
-            </button>
-          );
-        })}
-      </div>
+        <div className="relative top-8 z-20 flex flex-wrap gap-3 w-full">
+          {[
+            { id: 'flights', label: 'Tours', icon: Plane },
+            { id: 'hotels', label: 'Hotels', icon: Hotel },
+            { id: 'packages', label: 'Packages', icon: Luggage },
+          ].map((tab) => {
+            const Icon = tab.icon;
+            const active = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id as TabType)}
+                className={`flex items-center gap-3 px-8 py-4 rounded-full border transition-all duration-300 font-bold text-lg ${active
+                  ? 'bg-blue-500 text-white border-blue-500 shadow-lg'
+                  : 'bg-white text-gray-800 border-gray-200 hover:border-blue-400'
+                  }`}
+              >
+                <Icon className="w-5 h-5" />
+                {tab.label}
+              </button>
+            );
+          })}
+        </div>
 
       {/* Booking Form Card */}
-      <div className="glass-card p-6 md:p-8 relative shadow-luxury rounded-lg">
+      <div className="glass-card p-6 md:p-8 relative shadow-luxury rounded-lg z-0">
         {/* <div className="absolute top-0 right-0 p-3 flex items-center gap-1.5 text-[10px] text-brand-purple bg-brand-purple/5 border-l border-b border-soft-border rounded-tr-2xl rounded-bl-2xl font-bold tracking-wider uppercase">
           <Sparkles className="w-3.5 h-3.5" />
           <span>Concierge Intelligence Desk</span>
@@ -92,26 +94,24 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
         {activeTab === 'flights' && (
           <form onSubmit={handleFlightSearch} className="space-y-6">
             <div className="flex flex-wrap items-center justify-between gap-4 border-b border-soft-border pb-4">
-              <div className="flex gap-2">
+              <div className="flex gap-2 my-2">
                 <button
                   type="button"
                   onClick={() => setFlightType('roundtrip')}
-                  className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all border ${
-                    flightType === 'roundtrip'
-                      ? 'bg-brand-purple/5 text-brand-purple border-brand-purple/20'
-                      : 'bg-white border-soft-border text-slate-500 hover:text-brand-purple'
-                  }`}
+                  className={`px-3 py-4 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all border ${flightType === 'roundtrip'
+                    ? 'bg-brand-purple/5 text-brand-purple border-brand-purple/20'
+                    : 'bg-white border-soft-border text-slate-500 hover:text-brand-purple'
+                    }`}
                 >
                   Round Trip
                 </button>
                 <button
                   type="button"
                   onClick={() => setFlightType('oneway')}
-                  className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all border ${
-                    flightType === 'oneway'
-                      ? 'bg-brand-purple/5 text-brand-purple border-brand-purple/20'
-                      : 'bg-white border-soft-border text-slate-500 hover:text-brand-purple'
-                  }`}
+                  className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all border ${flightType === 'oneway'
+                    ? 'bg-brand-purple/5 text-brand-purple border-brand-purple/20'
+                    : 'bg-white border-soft-border text-slate-500 hover:text-brand-purple'
+                    }`}
                 >
                   One Way
                 </button>
@@ -164,11 +164,10 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
                               setFlightClass(cls);
                               setShowFlightDropdown(false);
                             }}
-                            className={`text-left px-3 py-2 rounded-lg text-xs font-bold transition-all ${
-                              flightClass === cls
-                                ? 'bg-brand-blue text-white font-extrabold'
-                                : 'text-slate-600 hover:bg-slate-50'
-                            }`}
+                            className={`text-left px-3 py-2 rounded-lg text-xs font-bold transition-all ${flightClass === cls
+                              ? 'bg-brand-blue text-white font-extrabold'
+                              : 'text-slate-600 hover:bg-slate-50'
+                              }`}
                           >
                             {cls}
                           </button>

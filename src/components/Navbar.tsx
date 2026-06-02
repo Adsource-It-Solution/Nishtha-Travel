@@ -44,110 +44,134 @@ export const Navbar: React.FC = () => {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
-            {/* Logo */}
-            <Link to="/" className="flex items-center gap-3 group">
-              <div className="relative flex items-center justify-center w-12 h-12 bg-white transition-all border border-[#E5E0D8] rounded-none">
-                <img
-                  src="/favicon.svg"
-                  alt="Nishtha Travel Logo"
-                  className="w-10 h-10 object-contain"
-                />
-              </div>
-              <div>
-                <span className="text-sm font-extrabold tracking-[0.1em] font-sans text-brand-blue group-hover:text-brand-purple transition-colors block leading-tight">
-                  NISHTHA
-                </span>
-                <span className="text-[8px] block font-bold tracking-[0.2em] uppercase text-brand-purple -mt-0.5 leading-none">
-                  Travel Concierge
-                </span>
-              </div>
-            </Link>
 
-            {/* Desktop Center Section */}
-            <div className="hidden lg:flex flex-col flex-1 min-w-0 px-6 xl:px-10">
-              {/* Title */}
-             
+            {/* Desktop Layout */}
+            <div className="hidden lg:flex flex-1 flex-col ml-10">
 
-              {/* Search Bar */}
-              <div className="w-full flex justify-center">
-                <div className="relative w-full max-w-2xl xl:max-w-3xl">
-                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+              {/* TOP ROW */}
+              <div className="flex items-center justify-between gap-8 pb-2">
+                {/* Logo */}
+                <Link to="/" className="flex items-center gap-3 group">
+                  <div className="relative flex items-center justify-center w-12 h-12 bg-white transition-all border border-[#E5E0D8] rounded-none">
+                    <img
+                      src="/favicon.svg"
+                      alt="Nishtha Travel Logo"
+                      className="w-10 h-10 object-contain"
+                    />
+                  </div>
+                  <div>
+                    <span className="text-sm font-extrabold tracking-[0.1em] font-sans text-blue-900 group-hover:text-brand-blue transition-colors block leading-tight">
+                      NISHTHA TRAVELS
+                    </span>
+                    <span className="text-[8px] block font-bold tracking-[0.2em] uppercase text-purple-600 -mt-0.5 leading-none">
+                      Concierge PVT. LTD.
+                    </span>
+                  </div>
+                </Link>
 
-                  <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search destinations, hotels, flights, holiday packages..."
-                    className="w-full h-11 xl:h-12 pl-11 pr-28 border border-[#E5E0D8] bg-white text-sm text-slate-700 placeholder:text-slate-400 focus:outline-none focus:border-brand-purple transition-all duration-300"
-                  />
+                {/* Search */}
+                <div className="flex-1 max-w-4xl">
+                  <div className="relative">
+                    <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
 
-                  <button
-                    className="absolute right-1.5 top-1/2 -translate-y-1/2 h-8 xl:h-9 px-4 xl:px-5 bg-brand-purple text-white text-[10px] xl:text-xs font-bold uppercase tracking-wider hover:bg-brand-blue transition-all duration-300"
-                  >
-                    Search
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="Find Your Perfect Tour Package"
+                      className="
+            w-full
+            h-14
+            rounded-full
+            bg-[#F4F4F4]
+            border
+            border-gray-200
+            pl-14
+            pr-6
+            text-base
+            outline-none
+            focus:border-brand-purple
+          "
+                    />
+                  </div>
+                </div>
+
+                {/* Right Side */}
+                <div className="flex items-center gap-8">
+                  <button className="font-semibold flex items-center gap-2">
+                    🌐 EN
                   </button>
+
+                  <Link
+                    to="/dashboard"
+                    className="
+          bg-black
+          text-white
+          px-4
+          py-2
+          rounded-2xl
+          font-semibold
+          hover:bg-gray-900
+          transition-all
+        "
+                  >
+                    Login
+                  </Link>
                 </div>
               </div>
-              <div className="flex justify-center my-4">
-                <div className="w-full max-w-3xl border-t border-[#E5E0D8]" />
-              </div>
-              {/* Navigation Links */}
-              <nav className="flex flex-wrap items-center justify-center gap-x-6 xl:gap-x-8 gap-y-2 mt-4">
-                {navLinks.map((link) => {
-                  const isActive = location.pathname === link.path;
 
-                  return (
-                    <Link
-                      key={link.path}
-                      to={link.path}
-                      className="relative py-1 text-[11px] xl:text-[12px] font-bold uppercase tracking-[0.15em] transition-colors whitespace-nowrap"
-                    >
-                      <span
-                        className={
-                          isActive
-                            ? 'text-brand-purple'
-                            : 'text-slate-600 hover:text-brand-blue'
-                        }
+              {/* Divider */}
+              <div className="border-t border-[#E5E0D8]" />
+
+              {/* BOTTOM ROW */}
+              <div className="flex items-center justify-between h-14">
+
+                <nav className="flex items-center gap-10">
+                  {navLinks.map((link) => {
+                    const isActive = location.pathname === link.path;
+
+                    return (
+                      <Link
+                        key={link.path}
+                        to={link.path}
+                        className={`relative font-semibold transition-colors ${isActive
+                          ? 'text-brand-blue'
+                          : 'text-gray-700 hover:text-brand-blue'
+                          }`}
                       >
                         {link.name}
-                      </span>
 
-                      {isActive && (
-                        <motion.div
-                          layoutId="activeNav"
-                          className="absolute -bottom-1 left-0 right-0 h-[1.5px] bg-brand-purple"
-                          transition={{
-                            type: 'spring',
-                            stiffness: 380,
-                            damping: 30,
-                          }}
-                        />
-                      )}
-                    </Link>
-                  );
-                })}
-              </nav>
-            </div>
+                        {isActive && (
+                          <motion.div
+                            layoutId="activeNav"
+                            className="absolute -bottom-5 left-0 right-0 h-[2px] bg-brand-blue"
+                          />
+                        )}
+                      </Link>
+                    );
+                  })}
+                </nav>
 
-            {/* Actions */}
-            <div className="hidden lg:flex items-center gap-3">
-              <div
-                className="text-center gap-2 px-4 py-2 rounded-none bg-white border border-[#E5E0D8] hover:border-brand-purple text-xs font-bold text-slate-700 transition-all duration-300">
-                <a
-                  href="https://wa.me/919999999999"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className='flex gap-2 text-center pb-2'
-                >
-                  <PhoneCall className="w-3.5 h-3.5 text-green-600" />
-                  <h2 className="tracking-wide text-green-600">Watsapp Call</h2>
+                {/* WhatsApp Card */}
+                <div className="flex items-center h-full mt-2 border-green-600 pl-8 border-x-2 border-b-2 px-4">
 
-                </a>
-                <h2 className="tracking-wide text-green-600 text-sm">+91 99999 99999</h2>
+                  <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+                    <PhoneCall className="w-5 h-5 text-green-600" />
+                  </div>
+
+                  <div className="ml-4">
+                    <p className="text-sm text-green-600">
+                      WhatsApp
+                    </p>
+
+                    <p className="font-bold text-lg text-green-600">
+                      +91 99999 99999
+                    </p>
+                  </div>
+
+                </div>
+
               </div>
-              <Link to="/dashboard" className="btn-gold !px-4 !py-2 !text-[10px] uppercase tracking-[0.18em] font-bold rounded-none">
-                Lounge Hub
-              </Link>
             </div>
 
             {/* Mobile menu button */}
