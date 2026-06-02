@@ -536,30 +536,30 @@ export const mockPackages: Package[] = [
 export const mockTestimonials: Testimonial[] = [
   {
     id: "t-1",
-    name: "Victoria Harrison",
+    name: "Archana Singh",
     role: "Luxury Lifestyle Blogger",
     avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80",
     content: "The booking experience was flawless. Nishtha Travel Concierge curated an overwater bungalow stay in the Maldives that was beyond spectacular. Every detail, from the seaplane arrival to the private reef snorkeling, was perfectly scheduled.",
     rating: 5,
-    location: "London, UK"
+    location: "Dwarka Mor, Delhi"
   },
   {
     id: "t-2",
-    name: "Marcus Vance",
+    name: "Atul Verma",
     role: "Venture Capitalist",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80",
     content: "When booking executive leisure trips, I look for efficiency and premium options. The flights interface is fast, and selecting first-class suites is incredibly intuitive. The live travel advisor support is top-notch.",
     rating: 5,
-    location: "New York, USA"
+    location: "Lucknow, U. P."
   },
   {
     id: "t-3",
-    name: "Aisha Rahman",
+    name: "Tabish Ahmad",
     role: "Creative Director",
     avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80",
     content: "The Amalfi Coast honeymoon package was sheer perfection. Staying at Le Sirenuse was a lifelong dream, and the private Riva speedboat cruise to Capri made us feel like movie stars. Can't wait to book our next trip!",
     rating: 5,
-    location: "Dubai, UAE"
+    location: "Varanasi, U. P."
   }
 ];
 

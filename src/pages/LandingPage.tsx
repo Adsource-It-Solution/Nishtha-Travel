@@ -65,36 +65,23 @@ export const LandingPage: React.FC = () => {
 
           {/* Hero Content */}
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-10">
-            {/* Tagline */}
-            {/* <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/70 border border-white backdrop-blur-md shadow-sm"
-          >
-            <Sparkles className="w-4 h-4 text-brand-purple animate-pulse" />
-            <span className="text-[10px] md:text-md font-bold uppercase tracking-[0.25em] text-brand-purple">
-              Bespoke Luxury Travel Concierge
-            </span>
-          </motion.div> */}
-
             {/* Large Luxury Typography */}
             <div className="space-y-4 max-w-4xl mx-auto">
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.1 }}
-                className="text-4xl sm:text-6xl lg:text-7xl font-extrabold font-sans text-brand-blue tracking-tight leading-[1.05]"
+                className="text-4xl sm:text-6xl lg:text-7xl font-extrabold font-sans text-white tracking-tight leading-[1.05]"
               >
                 Explore the World's <br />
-                <span className="text-gradient-luxury">Most Elite Retreats</span>
+                <span className="text-white">Most Elite Retreats</span>
               </motion.h1>
 
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.25 }}
-                className="text-slate-600 text-xs sm:text-base max-w-2xl mx-auto font-semibold leading-relaxed"
+                className="text-white text-xs sm:text-base max-w-2xl mx-auto font-semibold leading-relaxed"
               >
                 Curation of ultraluxury overwater sanctuaries, private aviation suites, and customized travel itineraries for the selective globetrotter.
               </motion.p>

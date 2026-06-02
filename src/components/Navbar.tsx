@@ -52,11 +52,11 @@ export const Navbar: React.FC = () => {
               <div className="flex items-center justify-between gap-8 pb-2">
                 {/* Logo */}
                 <Link to="/" className="flex items-center gap-3 group">
-                  <div className="relative flex items-center justify-center w-12 h-12 bg-white transition-all border border-[#E5E0D8] rounded-none">
+                  <div className="relative flex items-center justify-center w-28 h-12 bg-white transition-all border border-[#E5E0D8] rounded-lg">
                     <img
                       src="/favicon.svg"
                       alt="Nishtha Travel Logo"
-                      className="w-10 h-10 object-contain"
+                      className="w-24 h-16 object-contain"
                     />
                   </div>
                   <div>
@@ -153,7 +153,7 @@ export const Navbar: React.FC = () => {
                 </nav>
 
                 {/* WhatsApp Card */}
-                <div className="flex items-center h-full mt-2 border-green-600 pl-8 border-x-2 border-b-2 px-4">
+                <div className="flex items-center h-full mt-2  pl-8  px-4">
 
                   <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
                     <PhoneCall className="w-5 h-5 text-green-600" />
@@ -223,14 +223,14 @@ export const Navbar: React.FC = () => {
                     <span>Lounge Member Hub</span>
                   </Link>
                   <a
-                    href="https://wa.me/919999999999"
+                    href="https://wa.me/9999999999"
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => setIsOpen(false)}
                     className="flex items-center gap-3 py-1.5 text-xs font-bold text-slate-600 hover:text-brand-blue transition-colors"
                   >
                     <PhoneCall className="w-4 h-4 text-brand-purple" />
-                    <span>WhatsApp Concierge</span>
+                    <span>WhatsApp</span>
                   </a>
                   <Link
                     to="/contact"
