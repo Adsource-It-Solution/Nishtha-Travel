@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
 
 @tailwind base;
 @tailwind components;
@@ -7,7 +9,9 @@
 @layer base {
   body {
     @apply bg-brand-light text-slate-800 font-sans antialiased overflow-x-hidden selection:bg-brand-purple/20 selection:text-brand-purple;
+    font-family: 'Poppins', sans-serif;
   }
+
 
   /* Custom Scrollbar */
   ::-webkit-scrollbar {

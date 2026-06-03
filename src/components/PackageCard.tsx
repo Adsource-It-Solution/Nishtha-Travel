@@ -182,7 +182,7 @@ export const PackageCard: React.FC<PackageCardProps> = ({
             </p>
 
             <div className="text--[24px] font-extrabold text-[#111827]">
-              ${pkg.price}
+              ₹{pkg.price}
             </div>
           </div>
         </div>

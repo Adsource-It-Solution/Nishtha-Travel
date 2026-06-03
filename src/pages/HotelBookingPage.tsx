@@ -4,7 +4,8 @@ import { SearchTabs } from '../components/SearchTabs';
 import { HotelCard } from '../components/HotelCard';
 import { mockHotels } from '../data/mockData';
 import type { Hotel } from '../data/mockData';
-import { Map, Filter, ShieldCheck, MapPin, Sparkles, X, Check } from 'lucide-react';
+import { ShieldCheck, MapPin, X, Check } from 'lucide-react';
+import { Navbar } from '../components/Navbar';
 
 export const HotelBookingPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -44,49 +45,132 @@ export const HotelBookingPage: React.FC = () => {
 
   return (
     <div className="pt-28 pb-20 min-h-screen bg-brand-light relative">
-      
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        {/* Page Header */}
-        <div className="mb-12 space-y-3 text-center md:text-left border-b border-[#E5E0D8] pb-8">
-          <span className="text-[10px] text-brand-purple font-bold uppercase tracking-[0.2em] block">02 / The Elite Collection</span>
-          <h1 className="text-4xl md:text-5xl font-serif text-brand-blue leading-tight">Luxury Suites & Villas</h1>
-          <p className="text-slate-600 text-sm font-light leading-relaxed max-w-xl">
-            Discover curated five-star properties, private water villas, and boutique luxury estates with exclusive concierge privileges.
-          </p>
+      <Navbar />
+      {/* Page Header */}
+      <section className="relative overflow-hidden h-[520px]">
+
+        <img
+          src="https://images.unsplash.com/photo-1566073771259-6a8506099945"
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/20" />
+
+        <div className="relative z-10 h-full flex items-center px-10 md:px-20">
+
+          <div className="max-w-3xl">
+
+            <span className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-md text-white text-sm">
+              ✨ Luxury Hotel Collection
+            </span>
+
+            <h1 className="text-5xl md:text-7xl font-bold text-white mt-6 leading-tight">
+              Discover Extraordinary Stays
+            </h1>
+
+            <p className="text-white/80 text-lg mt-6 max-w-2xl">
+              Explore curated resorts, beachfront villas,
+              luxury suites and unforgettable experiences.
+            </p>
+
+          </div>
+
         </div>
+
+      </section>
+      <div className="max-w-7xl mx-auto relative z-10">
+
 
         {/* Embedded Search Tabs */}
         <div className="mb-12">
           <SearchTabs initialTab="hotels" compact />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-10 mb-14">
+
+            {[
+              ["50K+", "Luxury Hotels"],
+              ["180+", "Destinations"],
+              ["4.9★", "Guest Rating"],
+              ["24/7", "Concierge"]
+            ].map(([value, label]) => (
+              <div
+                key={label}
+                className="
+        bg-white
+        rounded-3xl
+        p-8
+        text-center
+        shadow-lg
+        border border-slate-100
+      "
+              >
+                <h3 className="text-4xl font-bold text-indigo-600">
+                  {value}
+                </h3>
+
+                <p className="text-slate-500 mt-2">
+                  {label}
+                </p>
+              </div>
+            ))}
+
+          </div>
         </div>
 
         {/* Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
+
           {/* 1. FILTER SIDEBAR (Desktop) */}
-          <div className="lg:col-span-3 space-y-6 lg:sticky lg:top-24 hidden lg:block">
-            <div className="glass-card p-6 space-y-6 shadow-none">
-              <div className="flex items-center justify-between border-b border-[#E5E0D8] pb-4">
-                <h3 className="text-[10px] font-bold uppercase tracking-[0.15em] text-brand-blue flex items-center gap-2">
-                  <Filter className="w-3.5 h-3.5 text-brand-purple" />
-                  <span>Filters</span>
-                </h3>
+          <div className="lg:col-span-3 space-y-6 lg:sticky lg:top-24 hidden lg:block font-['Poppins']">
+
+            {/* FILTER CARD */}
+            <div
+              className="
+      bg-white
+      rounded-[32px]
+      p-8
+      shadow-[0_15px_50px_rgba(0,0,0,0.08)]
+      border
+      border-slate-100
+      backdrop-blur-xl
+    "
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <span className="text-[11px] uppercase tracking-[0.25em] text-indigo-600 font-semibold">
+                    Hotel Filters
+                  </span>
+
+                  <h3 className="text-2xl font-semibold text-slate-900 mt-2">
+                    Refine Search
+                  </h3>
+                </div>
+
                 <button
                   onClick={() => {
                     setSelectedAmenity('all');
                     setMinRating(null);
                   }}
-                  className="text-[9px] uppercase tracking-widest font-bold text-brand-purple hover:text-brand-blue transition-colors"
+                  className="
+          text-xs
+          font-medium
+          text-indigo-600
+          hover:text-indigo-800
+          transition
+        "
                 >
-                  Reset All
+                  Reset
                 </button>
               </div>
 
-              {/* Amenities Selector */}
-              <div className="space-y-3">
-                <h4 className="text-[9px] font-bold text-brand-purple uppercase tracking-[0.15em]">Premium Amenities</h4>
-                <div className="space-y-2">
+              {/* AMENITIES */}
+              <div className="mb-10">
+                <h4 className="text-sm font-semibold text-blue-500 mb-3">
+                  Premium Amenities
+                </h4>
+
+                <div className="space-y-3">
+
                   {[
                     { label: 'All Amenities', value: 'all' },
                     { label: 'Private Pool', value: 'Private Pool' },
@@ -95,60 +179,148 @@ export const HotelBookingPage: React.FC = () => {
                     { label: 'Spa Wellness', value: 'Spa' },
                     { label: 'Butlers Service', value: 'Butlers' },
                   ].map((opt) => (
-                    <label key={opt.value} className="flex items-center gap-3 cursor-pointer group text-slate-600 hover:text-brand-purple">
+                    <label
+                      key={opt.value}
+                      className="
+              flex
+              items-center
+              justify-between
+              px-3
+              rounded-2xl
+              hover:bg-slate-50
+              cursor-pointer
+              transition-all
+            "
+                    >
+                      <span className="text-sm text-slate-700 font-medium">
+                        {opt.label}
+                      </span>
+
                       <input
                         type="radio"
                         name="amenity-group"
                         checked={selectedAmenity === opt.value}
                         onChange={() => setSelectedAmenity(opt.value)}
-                        className="rounded-none border-[#E5E0D8] bg-white text-brand-purple focus:ring-0 focus:ring-offset-0 focus:outline-none w-4 h-4 cursor-pointer"
+                        className="
+                w-4
+                h-4
+                accent-indigo-600
+              "
                       />
-                      <span className="text-xs font-light">{opt.label}</span>
                     </label>
                   ))}
+
                 </div>
               </div>
 
-              {/* Star Rating Selector */}
-              <div className="space-y-3">
-                <h4 className="text-[9px] font-bold text-brand-purple uppercase tracking-[0.15em]">Guest Rating</h4>
-                <div className="space-y-2">
+              {/* RATINGS */}
+              <div>
+                <h4 className="text-sm font-semibold text-blue-500 mb-2">
+                  Guest Rating
+                </h4>
+
+                <div className="space-y-3">
+
                   {[
                     { label: '4.9+ Outstanding', value: 4.9 },
                     { label: '4.8+ Exceptional', value: 4.8 },
                     { label: '4.7+ Excellent', value: 4.7 },
                   ].map((opt) => (
-                    <label key={opt.value} className="flex items-center gap-3 cursor-pointer group text-slate-600 hover:text-brand-purple">
+                    <label
+                      key={opt.value}
+                      className="
+              flex
+              items-center
+              justify-between
+              px-3
+              rounded-2xl
+              hover:bg-slate-50
+              cursor-pointer
+              transition-all
+            "
+                    >
+                      <span className="text-sm text-slate-700 font-medium">
+                        {opt.label}
+                      </span>
+
                       <input
                         type="checkbox"
                         checked={minRating === opt.value}
-                        onChange={() => setMinRating(minRating === opt.value ? null : opt.value)}
-                        className="rounded-none border-[#E5E0D8] bg-white text-brand-purple focus:ring-0 focus:ring-offset-0 focus:outline-none w-4 h-4 cursor-pointer"
+                        onChange={() =>
+                          setMinRating(
+                            minRating === opt.value ? null : opt.value
+                          )
+                        }
+                        className="
+                w-4
+                h-4
+                accent-indigo-600
+              "
                       />
-                      <span className="text-xs font-light flex items-center gap-1">
-                        <span>{opt.label}</span>
-                      </span>
                     </label>
                   ))}
+
                 </div>
               </div>
             </div>
 
-            {/* Travel Assurance Badge */}
-            <div className="glass-card p-5 flex gap-4 items-start bg-white border border-[#E5E0D8] shadow-none">
-              <ShieldCheck className="w-5 h-5 text-brand-purple shrink-0 mt-0.5" />
-              <div>
-                <h4 className="text-[10px] font-bold text-brand-blue uppercase tracking-[0.15em]">Suite Benefits</h4>
-                <p className="text-[10px] text-slate-600 mt-1.5 leading-relaxed font-light">
-                  Club membership includes early 12:00 PM check-in, late 4:00 PM check-out, and complimentary daily champagne breakfasts.
+            {/* BENEFITS CARD */}
+            <div
+              className="
+      relative
+      overflow-hidden
+      rounded-[32px]
+      p-7
+      bg-gradient-to-br
+      from-indigo-600
+      via-purple-600
+      to-indigo-900
+      text-white
+      shadow-[0_15px_50px_rgba(79,70,229,0.35)]
+    "
+            >
+              <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-3xl" />
+
+              <div className="relative z-10">
+                <div
+                  className="
+          w-14
+          h-14
+          rounded-2xl
+          bg-white/20
+          backdrop-blur-md
+          flex
+          items-center
+          justify-center
+          mb-5
+        "
+                >
+                  <ShieldCheck className="w-7 h-7" />
+                </div>
+
+                <h4 className="text-xl font-semibold mb-3">
+                  Premium Benefits
+                </h4>
+
+                <p className="text-sm text-white/85 leading-relaxed">
+                  Enjoy early check-in, late checkout,
+                  complimentary breakfast,
+                  luxury concierge access,
+                  and exclusive resort privileges.
                 </p>
+
+                <div className="mt-6 pt-6 border-t border-white/20">
+                  <span className="text-xs uppercase tracking-[0.2em] text-white/70">
+                    Member Exclusive
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
 
+          </div>
           {/* 2. HOTELS GRID & MAP PANEL */}
           <div className="lg:col-span-9 grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch">
-            
+
             {/* Hotels Cards Listing */}
             <div className="md:col-span-7 space-y-6">
               <div className="flex items-center justify-between bg-white border border-[#E5E0D8] rounded-none p-5 shadow-none">
@@ -193,71 +365,198 @@ export const HotelBookingPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Interactive Luxury Map Mockup Panel */}
+            {/* Luxury Destination Map */}
             <div className="md:col-span-5 hidden md:block">
-              <div className="glass-card h-full min-h-[500px] sticky top-24 overflow-hidden border border-[#E5E0D8] bg-white rounded-none shadow-none flex flex-col justify-between p-6">
-                
-                <div className="space-y-1">
-                  <span className="text-[9px] text-brand-purple font-bold uppercase tracking-[0.15em] block">Interactive Geography</span>
-                  <h4 className="text-[10px] font-bold text-brand-blue uppercase tracking-[0.15em] flex items-center gap-1.5 border-b border-[#E5E0D8] pb-3">
-                    <Map className="w-3.5 h-3.5 text-brand-purple" />
-                    <span>Property Map Locations</span>
-                  </h4>
+              <div
+                className="
+                    sticky
+                    top-24
+                    overflow-hidden
+                    rounded-[32px]
+                    bg-white
+                    shadow-[0_15px_50px_rgba(0,0,0,0.08)]
+                    border
+                    border-slate-100
+                    min-h-[850px]
+    "
+              >
+
+                {/* Header */}
+                <div className="p-7 border-b border-slate-100">
+
+                  <span className="text-xs uppercase tracking-[0.25em] text-indigo-600 font-semibold">
+                    Luxury Destinations
+                  </span>
+
+                  <h3 className="text-2xl font-semibold text-slate-900 mt-2">
+                    Explore on Map
+                  </h3>
+
+                  <p className="text-sm text-slate-500 mt-2">
+                    Discover premium properties across the world's
+                    most exclusive destinations.
+                  </p>
+
                 </div>
 
-                {/* Map Graphic Canvas */}
-                <div className="relative flex-grow my-6 bg-brand-light border border-[#E5E0D8] rounded-none overflow-hidden flex items-center justify-center min-h-[300px]">
-                  {/* Decorative background vectors/grid */}
-                  <div className="absolute inset-0 bg-[linear-gradient(rgba(160,138,114,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(160,138,114,0.03)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />
-                  
-                  <div className="absolute w-56 h-56 rounded-none border border-brand-purple/5 pointer-events-none" />
-                  <div className="absolute w-80 h-80 rounded-none border border-brand-purple/5 pointer-events-none" />
+                {/* MAP AREA */}
+                <div className="relative h-[650px] overflow-hidden">
 
-                  {/* Hotspots Pin Map */}
-                  {!loading && filteredHotels.map((h, idx) => {
-                    const leftPos = 25 + idx * 20;
-                    const topPos = 30 + (idx % 2) * 25;
-                    const isHovered = hoveredHotelPin === h.id;
+                  {/* Background Image */}
+                  <img
+                    src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1"
+                    alt=""
+                    className="
+          absolute
+          inset-0
+          w-full
+          h-full
+          object-cover
+        "
+                  />
 
-                    return (
-                      <motion.div
-                        key={h.id}
-                        style={{ left: `${leftPos}%`, top: `${topPos}%` }}
-                        className="absolute -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center"
-                      >
-                        {/* Popover Card */}
-                        <AnimatePresence>
-                          {isHovered && (
-                            <motion.div
-                              initial={{ opacity: 0, y: 5 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              exit={{ opacity: 0, y: 5 }}
-                              className="absolute bottom-8 w-36 bg-white border border-[#E5E0D8] rounded-none p-3 text-center shadow-none z-25"
-                            >
-                              <span className="text-[10px] font-serif text-brand-blue block truncate">{h.name}</span>
-                              <span className="text-[10px] font-bold text-brand-purple block mt-1">${h.pricePerNight} <span className="text-[8px] font-light text-slate-500">/nt</span></span>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/20 to-black/50" />
 
-                        {/* Map Pin Point */}
-                        <div
-                          className={`w-6 h-6 rounded-none flex items-center justify-center transition-all cursor-pointer ${
-                            isHovered
-                              ? 'bg-brand-blue text-white'
-                              : 'bg-white text-brand-purple border border-[#E5E0D8] hover:border-brand-purple'
-                          }`}
+                  {/* Decorative Glow */}
+                  <div className="absolute top-10 right-10 w-32 h-32 bg-purple-500/20 blur-3xl rounded-full" />
+
+                  {/* HOTEL PINS */}
+                  {!loading &&
+                    filteredHotels.map((h, idx) => {
+                      const leftPos = 20 + idx * 18;
+                      const topPos = 25 + (idx % 3) * 18;
+
+                      const isHovered = hoveredHotelPin === h.id;
+
+                      return (
+                        <motion.div
+                          key={h.id}
+                          style={{
+                            left: `${leftPos}%`,
+                            top: `${topPos}%`,
+                          }}
+                          className="
+                absolute
+                -translate-x-1/2
+                -translate-y-1/2
+                z-20
+              "
                         >
-                          <MapPin className="w-3.5 h-3.5" />
-                        </div>
-                      </motion.div>
-                    );
-                  })}
+                          <AnimatePresence>
+                            {isHovered && (
+                              <motion.div
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: 10 }}
+                                className="
+                      absolute
+                      bottom-12
+                      left-1/2
+                      -translate-x-1/2
+                      w-52
+                      rounded-2xl
+                      bg-white
+                      p-4
+                      shadow-2xl
+                    "
+                              >
+                                <h4 className="font-semibold text-slate-900 truncate">
+                                  {h.name}
+                                </h4>
+
+                                <p className="text-xs text-slate-500 mt-1">
+                                  {h.location}
+                                </p>
+
+                                <div className="flex items-center justify-between mt-3">
+
+                                  <span className="text-sm font-bold text-indigo-600">
+                                    ₹{h.pricePerNight}
+                                  </span>
+
+                                  <span className="text-xs text-slate-400">
+                                    per night
+                                  </span>
+
+                                </div>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+
+                          {/* Animated Pulse */}
+                          <span
+                            className="
+                  absolute
+                  inset-0
+                  rounded-full
+                  bg-indigo-500
+                  animate-ping
+                  opacity-30
+                "
+                          />
+
+                          {/* Pin */}
+                          <div
+                            className={`
+                  w-12
+                  h-12
+                  rounded-full
+                  flex
+                  items-center
+                  justify-center
+                  cursor-pointer
+                  shadow-xl
+                  transition-all
+                  duration-300
+                  ${isHovered
+                                ? 'bg-indigo-600 scale-125 text-white'
+                                : 'bg-white text-indigo-600'
+                              }
+                `}
+                          >
+                            <MapPin size={20} />
+                          </div>
+
+                        </motion.div>
+                      );
+                    })}
                 </div>
 
-                <div className="text-[9px] text-slate-500 text-center flex items-center justify-center gap-1.5 pt-3 border-t border-[#E5E0D8]">
-                  <Sparkles className="w-3 h-3 text-brand-purple shrink-0" />
-                  <span className="tracking-wide">Coordinates synchronized automatically via elite satellite registers.</span>
+                {/* Footer Stats */}
+                <div className="p-6 border-t border-slate-100">
+
+                  <div className="grid grid-cols-3 gap-4">
+
+                    <div className="text-center">
+                      <h4 className="text-2xl font-bold text-slate-900">
+                        {filteredHotels.length}
+                      </h4>
+                      <p className="text-xs text-slate-500">
+                        Hotels
+                      </p>
+                    </div>
+
+                    <div className="text-center">
+                      <h4 className="text-2xl font-bold text-slate-900">
+                        180+
+                      </h4>
+                      <p className="text-xs text-slate-500">
+                        Cities
+                      </p>
+                    </div>
+
+                    <div className="text-center">
+                      <h4 className="text-2xl font-bold text-slate-900">
+                        ★ 4.9
+                      </h4>
+                      <p className="text-xs text-slate-500">
+                        Rating
+                      </p>
+                    </div>
+
+                  </div>
+
                 </div>
               </div>
             </div>

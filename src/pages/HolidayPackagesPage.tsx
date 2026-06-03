@@ -6,6 +6,7 @@ import { OfferBanner } from '../components/OfferBanner';
 import { mockPackages } from '../data/mockData';
 import type { Package } from '../data/mockData';
 import { Luggage, Check, X } from 'lucide-react';
+import { Navbar } from '../components/Navbar';
 
 export const HolidayPackagesPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -50,17 +51,40 @@ export const HolidayPackagesPage: React.FC = () => {
 
   return (
     <div className="pt-28 pb-20 min-h-screen bg-brand-light relative">
-      
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        {/* Page Header */}
-        <div className="mb-12 space-y-3 text-center md:text-left border-b border-[#E5E0D8] pb-8">
-          <span className="text-[10px] text-brand-purple font-bold uppercase tracking-[0.2em] block">03 / Curated Voyages</span>
-          <h1 className="text-4xl md:text-5xl font-serif text-brand-blue leading-tight">All-Inclusive Holiday Packages</h1>
-          <p className="text-slate-600 text-sm font-light leading-relaxed max-w-xl">
-            Bespoke tours pairing luxury accommodation, curated private activities, and custom flight solutions.
-          </p>
+      <Navbar />
+      <section className="relative overflow-hidden h-[550px] mb-14">
+
+        <img
+          src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
+
+        <div className="relative z-10 h-full flex items-center px-12 md:px-20">
+
+          <div className="max-w-3xl font-['Poppins']">
+
+            <span className="inline-flex px-5 py-2 rounded-full bg-white/10 backdrop-blur-md text-white text-sm">
+              Luxury Holiday Collection
+            </span>
+
+            <h1 className="text-6xl md:text-7xl font-bold text-white mt-6 leading-tight">
+              Curated Journeys Beyond Imagination
+            </h1>
+
+            <p className="text-white/80 text-lg mt-6 max-w-2xl">
+              Discover handpicked destinations, luxury resorts,
+              private experiences and unforgettable adventures.
+            </p>
+
+          </div>
+
         </div>
+
+      </section>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         {/* Search Panel */}
         <div className="mb-14">
@@ -70,37 +94,82 @@ export const HolidayPackagesPage: React.FC = () => {
         {/* Offers / Deals Section */}
         <div className="mb-16">
           <div className="mb-6 space-y-1">
-            <span className="text-[9px] text-brand-purple font-bold uppercase tracking-[0.15em] block mb-1">Club Benefits</span>
-            <h3 className="text-base font-serif text-brand-blue">Active Private Curation Deals</h3>
+            <span className="text-xs font-semibold font-['Poppins'] text-indigo-600 uppercase tracking-[0.25em] block mb-2">
+  Club Benefits
+</span>
+
+<h3 className="text-2xl font-semibold font-['Poppins'] text-slate-900 leading-tight">
+  Active Private Curation Deals
+</h3>
           </div>
           <OfferBanner />
         </div>
 
         {/* Categories Tab Selector */}
-        <div className="mb-10 flex flex-wrap gap-2 border-b border-[#E5E0D8] pb-4 justify-start">
-          {categories.map((cat) => {
-            const isActive = selectedCategory === cat.id;
-            return (
-              <button
-                key={cat.id}
-                onClick={() => setSelectedCategory(cat.id)}
-                className={`relative px-4 py-2.5 rounded-none text-[10px] font-bold uppercase tracking-[0.15em] transition-all ${
-                  isActive
-                    ? 'text-brand-purple bg-white border border-[#E5E0D8] border-b-transparent'
-                    : 'text-slate-500 hover:text-brand-purple'
-                }`}
-              >
-                <span>{cat.label}</span>
-                {isActive && (
-                  <motion.div
-                    layoutId="activePkgCat"
-                    className="absolute -bottom-[5px] left-0 right-0 h-[2px] bg-brand-purple z-10"
-                  />
-                )}
-              </button>
-            );
-          })}
-        </div>
+        <div className="mb-12">
+  <div
+    className="
+      flex
+      flex-wrap
+      gap-6
+      px-14
+      py-2
+      bg-white
+      rounded-[24px]
+      shadow-lg
+      border
+      border-slate-100
+      w-full
+      font-['Poppins']
+    "
+  >
+    {categories.map((cat) => {
+      const isActive = selectedCategory === cat.id;
+
+      return (
+        <button
+          key={cat.id}
+          onClick={() => setSelectedCategory(cat.id)}
+          className={`
+            relative
+            px-6
+            py-3
+            rounded-full
+            text-sm
+            font-medium
+            tracking-wide
+            transition-all
+            duration-300
+            ${
+              isActive
+                ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg'
+                : 'text-slate-600 hover:bg-slate-50 hover:text-indigo-600'
+            }
+          `}
+        >
+          {isActive && (
+            <motion.div
+              layoutId="activePkgCat"
+              className="
+                absolute
+                inset-0
+                rounded-full
+                bg-gradient-to-r
+                from-indigo-600
+                to-purple-600
+                -z-10
+              "
+            />
+          )}
+
+          <span className="relative z-10">
+            {cat.label}
+          </span>
+        </button>
+      );
+    })}
+  </div>
+</div>
 
         {/* Packages Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

@@ -17,88 +17,153 @@ interface FlightCardProps {
 export const FlightCard: React.FC<FlightCardProps> = ({ flight, onBook }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 15 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="glass-card p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:border-brand-purple transition-all duration-300 shadow-none border border-[#E5E0D8]"
-    >
-      {/* Airline Branding */}
-      <div className="flex items-center gap-4 min-w-[200px]">
-        {flight.airlineLogo ? (
-          <div className="w-12 h-12 bg-white rounded-none border border-[#E5E0D8] flex items-center justify-center p-2">
-            <span className="text-[10px] font-bold text-brand-purple tracking-widest">{flight.airlineName.slice(0, 3).toUpperCase()}</span>
-          </div>
-        ) : (
-          <div className="w-12 h-12 rounded-none bg-brand-light flex items-center justify-center border border-[#E5E0D8] text-brand-purple">
-            <Plane className="w-5 h-5" />
-          </div>
-        )}
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  whileHover={{
+    y: -6,
+    transition: { duration: 0.3 },
+  }}
+  className="group relative overflow-hidden rounded-3xl border border-white/20 bg-white/80 backdrop-blur-xl shadow-xl hover:shadow-2xl transition-all duration-300"
+>
+  {/* Top Ribbon */}
+  {flight.discountBadge && (
+    <div className="absolute top-0 right-0 bg-gradient-to-r from-purple-600 to-pink-500 text-white text-xs font-semibold px-4 py-1 rounded-bl-2xl z-10">
+      {flight.discountBadge}
+    </div>
+  )}
+
+  <div className="p-8">
+    <div className="flex flex-col lg:flex-row gap-8 items-center justify-between">
+
+      {/* Airline */}
+      <div className="flex items-center gap-4 min-w-[220px]">
+        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg">
+          <Plane className="w-7 h-7 text-white" />
+        </div>
+
         <div>
-          <h4 className="font-serif text-brand-blue text-base leading-tight">{flight.airlineName}</h4>
-          <span className="text-[10px] text-slate-500 uppercase tracking-wider block mt-1">{flight.flightNumber} • {flight.class}</span>
+          <h3 className="font-bold text-lg text-slate-900">
+            {flight.airlineName}
+          </h3>
+
+          <p className="text-sm text-slate-500">
+            {flight.flightNumber}
+          </p>
+
+          <span className="inline-flex mt-2 px-3 py-1 rounded-full bg-slate-100 text-xs font-medium">
+            {flight.class}
+          </span>
         </div>
       </div>
 
-      {/* Flight Schedule & Stops Line */}
-      <div className="flex-grow flex items-center justify-between gap-6 max-w-lg">
-        {/* Departure */}
-        <div className="text-left">
-          <span className="text-sm font-semibold text-slate-800 block leading-tight">{flight.departureTime}</span>
-          <span className="text-2xl font-light tracking-wide text-brand-blue block leading-tight my-1">{flight.departureCode}</span>
-          <span className="text-[10px] text-slate-500 font-normal uppercase tracking-wider block">{flight.departureCity}</span>
-        </div>
+      {/* Flight Route */}
+      <div className="flex-1 w-full max-w-3xl">
 
-        {/* Duration / Stops graphic */}
-        <div className="flex-grow flex flex-col items-center px-4 relative">
-          <span className="text-[9px] text-slate-500 uppercase tracking-widest mb-1">{flight.duration}</span>
+        <div className="flex items-center justify-between">
 
-          <div className="w-full flex items-center relative py-2">
-            <div className="w-1 h-1 bg-[#E5E0D8]" />
-            <div className="flex-grow h-[1px] border-t border-[#E5E0D8] relative flex justify-center">
-              {flight.stops > 0 && (
-                <div className="absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-brand-purple border border-white" />
-              )}
+          {/* Departure */}
+          <div>
+            <p className="text-xl font-bold text-slate-900">
+              {flight.departureTime}
+            </p>
+
+            <h4 className="text-xl font-semibold text-indigo-600">
+              {flight.departureCode}
+            </h4>
+
+            <p className="text-sm text-slate-500">
+              {flight.departureCity}
+            </p>
+          </div>
+
+          {/* Timeline */}
+          <div className="flex-1 px-8">
+
+            <div className="text-center mb-2">
+              <span className="text-sm font-medium text-slate-500">
+                {flight.duration}
+              </span>
             </div>
-            <Plane className="w-3.5 h-3.5 text-brand-purple/60 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rotate-90" />
-            <div className="w-1 h-1 bg-brand-purple" />
+
+            <div className="relative flex items-center">
+
+              <div className="h-[3px] bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full w-full" />
+
+              <div className="absolute left-1/2 -translate-x-1/2 bg-white rounded-full p-2 shadow-md">
+                <Plane className="w-4 h-4 text-indigo-600 rotate-90" />
+              </div>
+            </div>
+
+            <div className="text-center mt-2">
+              <span
+                className={`text-xs font-semibold ${
+                  flight.stops === 0
+                    ? "text-emerald-600"
+                    : "text-orange-500"
+                }`}
+              >
+                {flight.stops === 0
+                  ? "Non Stop"
+                  : `${flight.stops} Stop`}
+              </span>
+            </div>
           </div>
 
-          <span className={`text-[9px] uppercase font-bold tracking-widest ${flight.stops === 0 ? 'text-emerald-700' : 'text-brand-purple'}`}>
-            {flight.stops === 0 ? 'Non-Stop' : `${flight.stops} Stop${flight.stops > 1 ? 's' : ''}`}
-          </span>
-        </div>
+          {/* Arrival */}
+          <div className="text-right">
+            <p className="text-xl font-bold text-slate-900">
+              {flight.arrivalTime}
+            </p>
 
-        {/* Arrival */}
-        <div className="text-right">
-          <span className="text-sm font-semibold text-slate-800 block leading-tight">{flight.arrivalTime}</span>
-          <span className="text-2xl font-light tracking-wide text-slate-500 block leading-tight my-1">{flight.arrivalCode}</span>
-          <span className="text-[10px] text-slate-500 font-normal uppercase tracking-wider block">{flight.arrivalCity}</span>
+            <h4 className="text-xl font-semibold text-indigo-600">
+              {flight.arrivalCode}
+            </h4>
+
+            <p className="text-sm text-slate-500">
+              {flight.arrivalCity}
+            </p>
+          </div>
         </div>
       </div>
 
-      {/* Pricing & Booking CTA */}
-      <div className="flex flex-row md:flex-col items-center md:items-end justify-between md:justify-center gap-4 pt-4 md:pt-0 border-t md:border-t-0 md:border-l border-[#E5E0D8] md:pl-6 min-w-[160px]">
-        <div className="text-left md:text-right">
-          {flight.discountBadge && (
-            <span className="inline-block px-2.5 py-0.5 rounded-none text-[8px] font-bold uppercase tracking-widest bg-brand-purple/10 text-brand-purple border border-brand-purple/20 mb-1.5">
-              {flight.discountBadge}
+      {/* Price */}
+      <div className="min-w-[220px]">
+
+        <div className="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-2xl p-6">
+
+          <p className="text-xs uppercase tracking-widest text-slate-400">
+            Starting From
+          </p>
+
+          <div className="mt-2">
+            <span className="text-2xl font-bold">
+              ₹{flight.price}
             </span>
-          )}
-          <div className="flex items-baseline gap-1 justify-end">
-            <span className="text-2xl font-serif text-brand-blue">${flight.price}</span>
-            <span className="text-[9px] text-slate-500 font-semibold tracking-widest">USD</span>
           </div>
-          <span className={`text-[9px] font-bold uppercase tracking-widest block mt-1 ${flight.refundable ? 'text-emerald-700' : 'text-slate-400'}`}>
-            {flight.refundable ? '✓ Refundable' : '× Non-Refundable'}
-          </span>
-        </div>
 
-        <button
-          onClick={() => onBook?.(flight)}
-          className="btn-gold !py-2.5 !px-5 !text-[9px] uppercase tracking-[0.18em] font-bold shadow-none rounded-none"
-        >
-          Book Flight
-        </button>
+          <p
+            className={`mt-2 text-sm ${
+              flight.refundable
+                ? "text-green-400"
+                : "text-red-400"
+            }`}
+          >
+            {flight.refundable
+              ? "✓ Refundable"
+              : "✕ Non Refundable"}
+          </p>
+
+          <button
+            onClick={() => onBook?.(flight)}
+            className="mt-5 w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 font-semibold transition-all"
+          >
+            Book Now
+          </button>
+        </div>
       </div>
-    </motion.div>
+
+    </div>
+  </div>
+</motion.div>
   );
 };

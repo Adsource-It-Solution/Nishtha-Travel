@@ -1,186 +1,279 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { ShieldCheck, Compass, HeartHandshake, Award, Sparkles, Globe, Gem } from 'lucide-react';
-import { AnimatedCounters } from '../components/AnimatedCounters';
+import React from "react";
+// import { motion } from "framer-motion";
+import {
+  Plane,
+  BadgeDollarSign,
+  MapPinned,
+  Headphones,
+} from "lucide-react";
+import { Navbar } from "../components/Navbar";
 
 export const AboutPage: React.FC = () => {
+  const timeline = [
+    {
+      year: "1996",
+      image:
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=300",
+    },
+    {
+      year: "2006",
+      image:
+        "https://images.unsplash.com/photo-1488085061387-422e29b40080?w=300",
+    },
+    {
+      year: "2016",
+      image:
+        "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=300",
+    },
+    {
+      year: "2022",
+      image:
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300",
+    },
+    {
+      year: "2023",
+      image:
+        "https://images.unsplash.com/photo-1527631746610-bca00a040d60?w=300",
+    },
+    {
+      year: "2025",
+      image:
+        "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?w=300",
+    },
+  ];
+
   return (
-    <div className="pt-28 pb-20 min-h-screen bg-brand-light relative">
-      
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-20">
-        
-        {/* Cinematic Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-4">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-3.5 py-1 rounded-none bg-brand-purple/10 border border-brand-purple/20 text-brand-purple"
-          >
-            <Sparkles className="w-3.5 h-3.5" />
-            <span className="text-[9px] font-bold uppercase tracking-[0.2em]">Our Heritage</span>
-          </motion.div>
-          
-          <motion.h1
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-serif text-brand-blue tracking-tight leading-tight"
-          >
-            Crafting Bespoke <br />
-            <span className="text-brand-purple italic">Luxury Experiences</span>
-          </motion.h1>
-          
-          <motion.p
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-slate-600 font-light text-sm sm:text-base leading-relaxed"
-          >
-            Established in Gurgaon, Nishtha Travel Concierge Pvt Ltd delivers customized, premium global travel services for discerning travelers who seek exclusivity, adventure, and flawless detail.
-          </motion.p>
-        </div>
+    <div className="bg-white">
+      <Navbar/>
 
-        {/* Brand Narrative / Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="lg:col-span-5 space-y-6"
-          >
-            <span className="text-xs text-brand-purple font-bold uppercase tracking-widest block">Concierge Legacy</span>
-            <h2 className="text-3xl font-serif text-brand-blue tracking-tight leading-tight">
-              An International Signature of Trust
-            </h2>
-            <p className="text-slate-600 text-sm leading-relaxed font-light">
-              At Nishtha Travel Concierge, we believe that traveling is an art. We are not just a booking agency; we are architectural curators of your journeys. Our dedicated experts collaborate globally to secure private aviation channels, premium suite upgrades, custom yachts, and accelerated visa clearances.
-            </p>
-            <p className="text-slate-600 text-sm leading-relaxed font-light">
-              Whether arranging a honeymoon getaway in the Maldives, an elite business assembly in London, or an adventure through alpine sanctuaries, we manage every detail with complete exclusivity and absolute privacy.
-            </p>
-            
-            <div className="flex gap-4 items-center pt-2">
-              <div className="flex items-center justify-center w-12 h-12 rounded-none bg-brand-light border border-[#E5E0D8] text-brand-blue">
-                <Gem className="w-5 h-5 text-brand-purple animate-pulse" />
-              </div>
-              <div>
-                <h4 className="font-serif text-brand-blue text-sm">Ultra-Bespoke Standard</h4>
-                <p className="text-slate-500 text-xs mt-0.5">Custom itineraries tailor-made from the ground up</p>
-              </div>
-            </div>
-          </motion.div>
+      {/* HERO SECTION */}
+      <section className="relative h-[350px] mt-32 overflow-hidden">
+        <img
+          src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
+          className="absolute inset-0 w-full h-full object-cover"
+          alt=""
+        />
 
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="lg:col-span-7 relative rounded-none overflow-hidden border border-[#E5E0D8] aspect-[4/3] max-h-[450px]"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=1000&q=80"
-              alt="Discerning luxury travel concierge advising elite client"
-              className="w-full h-full object-cover brightness-[0.95]"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-brand-blue/30 via-transparent to-transparent" />
-          </motion.div>
-        </div>
+        <div className="absolute inset-0 bg-black/45" />
+         <div className="relative z-10 flex items-center justify-center h-full">
+          <div className="text-center text-white">
+            <h1 className="font-poppins text-5xl font-bold">
+              About Nishtha Travel
+            </h1>
 
-        {/* Counter Stats Section */}
-        <div className="py-8 border-y border-[#E5E0D8]">
-          <AnimatedCounters />
-        </div>
-
-        {/* Core Values */}
-        <div className="space-y-12">
-          <div className="text-center max-w-2xl mx-auto space-y-3">
-            <span className="text-xs text-brand-purple font-bold uppercase tracking-widest block">Signature Creed</span>
-            <h3 className="text-2xl sm:text-3xl font-serif text-brand-blue">What Defines Our Service</h3>
-            <p className="text-slate-600 text-xs sm:text-sm font-light leading-relaxed">
-              Every itinerary designed by our team is anchored in four core promises to guarantee travel perfection.
+            <p className="mt-4 text-sm">
+              Home • About Us
             </p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              {
-                icon: ShieldCheck,
-                title: 'Absolute Protection',
-                desc: 'Premium coverage, flexible cancellations, and all-day flight delay safeguards keep your travel secure.'
-              },
-              {
-                icon: Compass,
-                title: 'Bespoke Curations',
-                desc: 'No templates. Every holiday resort and transit suite is hand-picked to match your exact taste.'
-              },
-              {
-                icon: HeartHandshake,
-                title: 'Unrivaled Assistance',
-                desc: 'Our Gurgaon office and global network supply round-the-clock emergency support, direct by text.'
-              },
-              {
-                icon: Award,
-                title: 'Exclusive Access',
-                desc: 'Earn invitations to elite lounges, yacht cruises, private villas, and first-class check-in routes.'
-              }
-            ].map((value, idx) => {
-              const Icon = value.icon;
-              return (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 15 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: idx * 0.1 }}
-                  className="glass-card p-6 flex flex-col items-center text-center space-y-4 hover:border-brand-purple transition-all duration-300 shadow-none rounded-none bg-white border border-[#E5E0D8]"
-                >
-                  <div className="w-10 h-10 rounded-none bg-brand-light border border-[#E5E0D8] text-brand-purple flex items-center justify-center">
-                    <Icon className="w-5 h-5" />
-                  </div>
-                  <h4 className="font-serif text-brand-blue text-sm uppercase tracking-wider">{value.title}</h4>
-                  <p className="text-slate-500 text-xs leading-relaxed font-light">{value.desc}</p>
-                </motion.div>
-              );
-            })}
-          </div>
         </div>
+      </section>
 
-        {/* Corporate / B2B Concierge Callout */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="glass-card p-8 md:p-12 relative overflow-hidden bg-brand-blue border border-brand-purple/20 text-white rounded-none shadow-none"
-        >
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-8 space-y-3">
-              <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-none bg-white/10 border border-white/20 text-xs font-bold uppercase tracking-wider">
-                <Globe className="w-3.5 h-3.5 text-brand-purple" />
-                <span>B2B & Corporate Accounts</span>
-              </span>
-              <h3 className="text-2xl md:text-3xl font-serif leading-tight text-white">
-                Corporate Jet & Travel Management
-              </h3>
-              <p className="text-slate-300 text-xs md:text-sm max-w-2xl font-light leading-relaxed">
-                Empower your business executives with elite flight suite allocations, fast-tracked corporate visa assistance, priority lounge registrations, and 24/7 billing dispatch from our Gurgaon headquarters.
+      {/* ABOUT SECTION */}
+      <section className="py-24">
+        <div className="max-w-7xl mx-auto px-6">
+
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+
+            <div>
+              <h2 className="text-5xl font-bold text-slate-900 font-poppins">
+                Why We're Best Agency
+              </h2>
+
+              <p className="mt-8 text-slate-600 leading-8">
+                Welcome to Nishtha Travel Agency — your trusted
+                gateway to unforgettable journeys.
               </p>
+
+              <p className="mt-4 text-slate-600 leading-8">
+                We provide premium travel planning, curated
+                holiday packages, international tours, visa
+                assistance and luxury travel experiences
+                tailored to every traveler.
+              </p>
+
+              <div className="mt-10">
+                <h4 className="font-bold text-slate-900">
+                  Founder Name Will be here 
+                </h4>
+
+                <span className="text-sm text-slate-500">
+                  Founder & Director
+                </span>
+              </div>
             </div>
-            
-            <div className="lg:col-span-4 flex justify-start lg:justify-end">
-              <a
-                href="/contact"
-                className="btn-gold rounded-none"
-              >
-                Inquire B2B Account
-              </a>
+
+            <div className="grid grid-cols-2 gap-4">
+
+              <img
+                src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
+                className="rounded-[24px] h-[280px] object-cover w-full"
+              />
+
+              <img
+                src="https://images.unsplash.com/photo-1488085061387-422e29b40080"
+                className="rounded-[24px] h-[220px] mt-12 object-cover w-full"
+              />
+
+              <img
+                src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff"
+                className="rounded-[24px] h-[220px] object-cover w-full"
+              />
+
+              <img
+                src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
+                className="rounded-[24px] h-[280px] -mt-12 object-cover w-full"
+              />
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* SERVICES */}
+      <section className="pb-24">
+        <div className="max-w-7xl mx-auto px-6">
+
+          <div className="bg-[#F5F7FF] rounded-[32px] p-10">
+
+            <h2 className="text-center text-3xl font-bold font-poppins">
+              We're Providing Best Service Ever!
+            </h2>
+
+            <div className="grid md:grid-cols-4 gap-8 mt-10">
+
+              <FeatureCard
+                icon={<MapPinned />}
+                title="Local Guidance"
+                desc="Professional travel experts."
+              />
+
+              <FeatureCard
+                icon={<BadgeDollarSign />}
+                title="Deals & Discounts"
+                desc="Best prices on every package."
+              />
+
+              <FeatureCard
+                icon={<Plane />}
+                title="Save Money"
+                desc="Affordable luxury travel."
+              />
+
+              <FeatureCard
+                icon={<Headphones />}
+                title="24/7 Support"
+                desc="Always here to help."
+              />
+
             </div>
           </div>
-        </motion.div>
+        </div>
+      </section>
 
-      </div>
+      {/* TIMELINE */}
+      <section className="py-24 bg-slate-50">
+
+        <div className="max-w-7xl mx-auto px-6">
+
+          <div className="text-center">
+            <h2 className="text-5xl font-bold font-poppins">
+              Behind The Journey
+            </h2>
+
+            <p className="text-slate-500 mt-3">
+              Our growth through the years
+            </p>
+          </div>
+
+          <div className="grid grid-cols-6 gap-6 mt-16">
+
+            {timeline.map((item) => (
+              <div key={item.year} className="text-center">
+
+                <img
+                  src={item.image}
+                  className="w-24 h-24 rounded-full mx-auto object-cover border-4 border-white shadow-lg"
+                />
+
+                <p className="font-semibold mt-4">
+                  {item.year}
+                </p>
+              </div>
+            ))}
+
+          </div>
+
+          <div className="h-1 bg-blue-600 mt-10 rounded-full" />
+        </div>
+
+      </section>
+
+      {/* WHY CHOOSE US */}
+      <section className="py-24">
+
+        <div className="max-w-7xl mx-auto px-6">
+
+          <div className="text-center">
+
+            <h2 className="text-5xl font-bold font-poppins">
+              Why Travel With Us?
+            </h2>
+
+            <p className="text-slate-500 mt-3">
+              We create memorable journeys.
+            </p>
+
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 mt-16">
+
+            {[
+              "Expert Team",
+              "Best Price Guarantee",
+              "24/7 Customer Support",
+            ].map((item) => (
+              <div
+                key={item}
+                className="bg-white rounded-[28px] p-10 shadow-lg hover:shadow-2xl transition-all"
+              >
+                <h3 className="font-bold text-2xl">
+                  {item}
+                </h3>
+
+                <p className="mt-4 text-slate-600">
+                  Premium travel planning tailored
+                  for unforgettable experiences.
+                </p>
+              </div>
+            ))}
+
+          </div>
+
+        </div>
+      </section>
+
     </div>
   );
 };
+
+const FeatureCard = ({
+  icon,
+  title,
+  desc,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  desc: string;
+}) => (
+  <div className="text-center">
+    <div className="w-16 h-16 mx-auto rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600">
+      {icon}
+    </div>
+
+    <h3 className="font-bold mt-4">{title}</h3>
+
+    <p className="text-sm text-slate-500 mt-2">
+      {desc}
+    </p>
+  </div>
+);

@@ -60,19 +60,19 @@ export const Navbar: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <span className="text-sm font-extrabold tracking-[0.1em] font-sans text-blue-900 group-hover:text-brand-blue transition-colors block leading-tight">
+                    <span className="text-[24px] font-extrabold tracking-[0.1em] font-sans text-blue-900 group-hover:text-brand-blue transition-colors block leading-tight">
                       NISHTHA TRAVELS
                     </span>
-                    <span className="text-[8px] block font-bold tracking-[0.2em] uppercase text-purple-600 -mt-0.5 leading-none">
+                    <span className="text-[16px] block font-bold tracking-[0.2em] uppercase text-purple-600 -mt-0.5 leading-none">
                       Concierge PVT. LTD.
                     </span>
                   </div>
                 </Link>
 
                 {/* Search */}
-                <div className="flex-1 max-w-4xl">
+                <div className="flex-1 max-w-3xl">
                   <div className="relative">
-                    <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+                    <Search className="absolute left-5 top-1/2 -translate-y-1/2 w- h-5 text-gray-500" />
 
                     <input
                       type="text"
