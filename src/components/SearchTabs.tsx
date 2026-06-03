@@ -99,8 +99,8 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
                   type="button"
                   onClick={() => setFlightType('roundtrip')}
                   className={`px-3 py-4 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all border ${flightType === 'roundtrip'
-                    ? 'bg-brand-purple/5 text-brand-purple border-brand-purple/20'
-                    : 'bg-white border-soft-border text-slate-500 hover:text-brand-purple'
+                    ? 'bg-brand-purple/5 text-yellow-500 border-yellow-500/20'
+                    : 'bg-white border-soft-border text-slate-500 hover:text-yellow-500'
                     }`}
                 >
                   Round Trip
@@ -109,8 +109,8 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
                   type="button"
                   onClick={() => setFlightType('oneway')}
                   className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all border ${flightType === 'oneway'
-                    ? 'bg-brand-purple/5 text-brand-purple border-brand-purple/20'
-                    : 'bg-white border-soft-border text-slate-500 hover:text-brand-purple'
+                    ? 'bg-yellow-500/5 text-yellow-500 border-brand-purple/20'
+                    : 'bg-white border-soft-border text-slate-500 hover:text-yellow-500'
                     }`}
                 >
                   One Way
@@ -124,7 +124,7 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
                   onClick={() => setShowFlightDropdown(!showFlightDropdown)}
                   className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-slate-700 bg-white border border-soft-border px-4 py-2 rounded-xl transition-all hover:bg-slate-50"
                 >
-                  <Users className="w-3.5 h-3.5 text-brand-purple" />
+                  <Users className="w-3.5 h-3.5 text-yellow-500" />
                   <span>{passengers} Traveler{passengers > 1 ? 's' : ''}, {flightClass}</span>
                 </button>
 
@@ -183,7 +183,7 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
               {/* Departure Input */}
               <div className="lg:col-span-3 relative">
-                <label className="absolute top-2 left-4 text-[9px] font-bold text-brand-purple uppercase tracking-wider">From</label>
+                <label className="absolute top-2 left-4 text-[9px] font-bold text-slate-600 uppercase tracking-wider">From</label>
                 <div className="flex items-center">
                   <MapPin className="w-4 h-4 text-slate-400 absolute left-4 top-7 pointer-events-none" />
                   <input
@@ -209,7 +209,7 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
 
               {/* Destination Input */}
               <div className="lg:col-span-3 relative">
-                <label className="absolute top-2 left-4 text-[9px] font-bold text-brand-purple uppercase tracking-wider">To</label>
+                <label className="absolute top-2 left-4 text-[9px] font-bold text-slate-600 uppercase tracking-wider">To</label>
                 <div className="flex items-center">
                   <MapPin className="w-4 h-4 text-slate-400 absolute left-4 top-7 pointer-events-none" />
                   <input
@@ -225,7 +225,7 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
               {/* Dates */}
               <div className="lg:col-span-3 grid grid-cols-2 gap-2">
                 <div className="relative">
-                  <label className="absolute top-2 left-3.5 text-[9px] font-bold text-brand-purple uppercase tracking-wider">Depart</label>
+                  <label className="absolute top-2 left-3.5 text-[9px] font-bold text-slate-600 uppercase tracking-wider">Depart</label>
                   <Calendar className="w-3.5 h-3.5 text-slate-400 absolute left-3.5 top-7 pointer-events-none" />
                   <input
                     type="date"
@@ -236,7 +236,7 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
                 </div>
                 {flightType === 'roundtrip' ? (
                   <div className="relative">
-                    <label className="absolute top-2 left-3.5 text-[9px] font-bold text-brand-purple uppercase tracking-wider">Return</label>
+                    <label className="absolute top-2 left-3.5 text-[9px] font-bold text-slate-600 uppercase tracking-wider">Return</label>
                     <Calendar className="w-3.5 h-3.5 text-slate-400 absolute left-3.5 top-7 pointer-events-none" />
                     <input
                       type="date"
@@ -276,7 +276,7 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
                   onClick={() => setShowHotelDropdown(!showHotelDropdown)}
                   className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-slate-700 bg-white border border-soft-border px-4 py-2 rounded-xl transition-all hover:bg-slate-50"
                 >
-                  <Users className="w-3.5 h-3.5 text-brand-purple" />
+                  <Users className="w-3.5 h-3.5 text-slate-600" />
                   <span>{guests} Guest{guests > 1 ? 's' : ''}, {rooms} Room{rooms > 1 ? 's' : ''}</span>
                 </button>
 
@@ -336,7 +336,7 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
               {/* Destination */}
               <div className="lg:col-span-5 relative">
-                <label className="absolute top-2 left-4 text-[9px] font-bold text-brand-purple uppercase tracking-wider">Where To?</label>
+                <label className="absolute top-2 left-4 text-[9px] font-bold text-slate-600 uppercase tracking-wider">Where To?</label>
                 <div className="flex items-center">
                   <MapPin className="w-4 h-4 text-slate-400 absolute left-4 top-7 pointer-events-none" />
                   <input
@@ -352,7 +352,7 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
               {/* Dates */}
               <div className="lg:col-span-4 grid grid-cols-2 gap-2">
                 <div className="relative">
-                  <label className="absolute top-2 left-3.5 text-[9px] font-bold text-brand-purple uppercase tracking-wider">Check-In</label>
+                  <label className="absolute top-2 left-3.5 text-[9px] font-bold text-slate-600 uppercase tracking-wider">Check-In</label>
                   <Calendar className="w-3.5 h-3.5 text-slate-400 absolute left-3.5 top-7 pointer-events-none" />
                   <input
                     type="date"
@@ -362,7 +362,7 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
                   />
                 </div>
                 <div className="relative">
-                  <label className="absolute top-2 left-3.5 text-[9px] font-bold text-brand-purple uppercase tracking-wider">Check-Out</label>
+                  <label className="absolute top-2 left-3.5 text-[9px] font-bold text-slate-600 uppercase tracking-wider">Check-Out</label>
                   <Calendar className="w-3.5 h-3.5 text-slate-400 absolute left-3.5 top-7 pointer-events-none" />
                   <input
                     type="date"
@@ -412,7 +412,7 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
               {/* Destination */}
               <div className="lg:col-span-5 relative">
-                <label className="absolute top-2 left-4 text-[9px] font-bold text-brand-purple uppercase tracking-wider">Destination</label>
+                <label className="absolute top-2 left-4 text-[9px] font-bold text-slate-600 uppercase tracking-wider">Destination</label>
                 <div className="flex items-center">
                   <MapPin className="w-4 h-4 text-slate-400 absolute left-4 top-7 pointer-events-none" />
                   <input
@@ -427,7 +427,7 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
 
               {/* Month of Travel */}
               <div className="lg:col-span-4 relative">
-                <label className="absolute top-2 left-4 text-[9px] font-bold text-brand-purple uppercase tracking-wider">Travel Period</label>
+                <label className="absolute top-2 left-4 text-[9px] font-bold text-slate-600 uppercase tracking-wider">Travel Period</label>
                 <div className="flex items-center">
                   <Calendar className="w-4 h-4 text-slate-400 absolute left-4 top-7 pointer-events-none" />
                   <input

@@ -4,7 +4,6 @@ import {
   ArrowRight,
   CheckCircle2,
   Send,
-  Flame,
   ArrowLeft,
   MapPin,
   Calendar,
@@ -64,39 +63,45 @@ export const LandingPage: React.FC = () => {
           </div>
 
           {/* Hero Content */}
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-10">
-            {/* Large Luxury Typography */}
-            <div className="space-y-4 max-w-4xl mx-auto">
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.1 }}
-                className="text-4xl sm:text-6xl lg:text-7xl font-extrabold font-sans text-white tracking-tight leading-[1.05]"
-              >
-                Explore the World's <br />
-                <span className="text-white">Most Elite Retreats</span>
-              </motion.h1>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col space-y-10">
 
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.25 }}
-                className="text-white text-xs sm:text-base max-w-2xl mx-auto font-semibold leading-relaxed"
-              >
-                Curation of ultraluxury overwater sanctuaries, private aviation suites, and customized travel itineraries for the selective globetrotter.
-              </motion.p>
-            </div>
+  {/* Text Section */}
+  <div className="space-y-4 max-w-4xl">
+    <motion.h1
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7, delay: 0.1 }}
+      className="text-3xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.05] text-left"
+    >
+      Travel Farther,
+      <br />
+      Experience Deeper,
+      <br />
+      Live Better.
+    </motion.h1>
 
-            {/* Floating Search Panel */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="w-full pb-10 mt-10"
-            >
-              <SearchTabs />
-            </motion.div>
-          </div>
+    <motion.p
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7, delay: 0.25 }}
+      className="text-white/90 text-sm sm:text-lg max-w-2xl leading-relaxed text-left"
+    >
+      Explore extraordinary destinations crafted into unforgettable
+      experiences around the globe.
+    </motion.p>
+  </div>
+
+  {/* Search Bar */}
+  <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.8, delay: 0.4 }}
+    className="w-full pb-10"
+  >
+    <SearchTabs />
+  </motion.div>
+
+</div>
         </section>
 
         {/* 3. POPULAR DESTINATIONS */}
@@ -104,7 +109,7 @@ export const LandingPage: React.FC = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
               <div className="space-y-2">
-                <span className="text-xs text-brand-purple font-bold uppercase tracking-widest block">Global Curation</span>
+                {/* <span className="text-xs text-yellow-500 font-bold uppercase tracking-widest block">Global Curation</span> */}
                 <h2 className="text-3xl md:text-5xl font-extrabold text-brand-blue">Popular Destinations</h2>
               </div>
 
@@ -120,7 +125,7 @@ export const LandingPage: React.FC = () => {
                     key={opt.id}
                     onClick={() => setDestFilter(opt.id as any)}
                     className={`px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all border ${destFilter === opt.id
-                      ? 'bg-brand-purple border-transparent text-white font-bold shadow-sm'
+                      ? 'bg-yellow-500 border-transparent text-white font-bold shadow-sm'
                       : 'bg-white border-soft-border text-slate-600 hover:bg-slate-50'
                       }`}
                   >
@@ -174,10 +179,10 @@ export const LandingPage: React.FC = () => {
         <section className="py-24 bg-slate-50 relative border-t border-soft-border">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-              <span className="text-xs text-brand-purple font-bold uppercase tracking-widest flex items-center justify-center gap-1.5">
-                <Flame className="w-4 h-4 text-brand-purple" />
-                <span>Seasonal Offers</span>
-              </span>
+              {/* <span className="text-xs text-yellow-600 font-bold uppercase tracking-widest flex items-center justify-center gap-1.5">
+                <Flame className="w-4 h-4 text-yelllow-600" />
+                <span>Seasonal Offers</span> */}
+              {/* </span> */}
               <h2 className="text-3xl md:text-5xl font-extrabold text-brand-blue">Exclusive Member Promos</h2>
               <p className="text-slate-500 text-xs sm:text-sm font-semibold leading-relaxed">
                 Unlock private flight anomalies, luxury lodge suite vouchers, and corporate holiday price adjustments.
@@ -316,7 +321,7 @@ export const LandingPage: React.FC = () => {
                             <p className="text-slate-500 text-xl leading-relaxed">
                               {blog.readTime}
                             </p>
-                            <span className="text-brand-purple group-hover:text-brand-blue flex items-center gap-1 cursor-pointer transition-colors border-2 px-4">
+                            <span className="text-black group-hover:text-brand-blue flex items-center gap-1 cursor-pointer transition-colors border-2 rounded-full border-blue-800 px-4">
                               <span>Read</span>
                               <ArrowRight className="w-3.5 h-3.5" />
                             </span>

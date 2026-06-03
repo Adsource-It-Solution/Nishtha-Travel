@@ -64,8 +64,8 @@ export const DestinationCard: React.FC<DestinationCardProps> = ({
 
         {/* Rating */}
         <div className="absolute top-4 left-4 flex gap-2 z-20">
-          <span className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider bg-brand-purple text-brand-blue flex items-center gap-1 rounded-full">
-            <Star className="w-3 h-3 fill-brand-blue text-brand-blue" />
+          <span className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider bg-[#F6F4F3] text-brand-blue flex items-center gap-1 rounded-full">
+            <Star className="w-3 h-3 fill-yellow-500 text-yellow-600" />
             <span>{destination.rating}</span>
           </span>
 
@@ -84,7 +84,7 @@ export const DestinationCard: React.FC<DestinationCardProps> = ({
 
         {/* Title on Image */}
         <div className="absolute bottom-6 left-6 right-6 transition-all duration-700 group-hover:opacity-0">
-          <div className="flex items-center gap-2 text-brand-purple text-xs font-bold uppercase tracking-widest mb-2">
+          <div className="flex items-center gap-2 text-white text-[10px] font-bold uppercase tracking-widest mb-2">
             <MapPin className="w-4 h-4" />
             <span>{destination.country}</span>
           </div>
@@ -120,7 +120,7 @@ export const DestinationCard: React.FC<DestinationCardProps> = ({
         "
       >
         <div>
-          <div className="flex items-center gap-2 text-brand-purple font-bold text-xs uppercase tracking-wider mb-2">
+          <div className="flex items-center gap-2 text-black font-bold text-[10px] uppercase tracking-wider mb-2">
             <MapPin className="w-4 h-4" />
             {destination.country}
           </div>
@@ -160,7 +160,7 @@ export const DestinationCard: React.FC<DestinationCardProps> = ({
             w-full
             py-2
             rounded-xl
-            bg-brand-purple
+            bg-[#3B82F6]
             text-white
             text-sm
             font-bold

@@ -17,12 +17,12 @@ export const AnimatedCounters: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: idx * 0.1 }}
-            className="glass-card p-6 text-center hover:border-brand-purple/20 transition-all duration-300 relative group overflow-hidden"
+            className="glass-card p-6 text-center hover:border-brand-yellow-500/20 transition-all duration-300 relative group overflow-hidden"
           >
             {/* Background glowing line */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-[2px] bg-gradient-to-r from-transparent via-brand-purple to-transparent group-hover:w-2/3 transition-all duration-300" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-[2px] bg-gradient-to-r from-transparent via-yellow-500 to-transparent group-hover:w-2/3 transition-all duration-300" />
             
-            <div className="w-10 h-10 rounded-xl bg-brand-purple/5 border border-brand-purple/10 text-brand-purple flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+            <div className="w-10 h-10 rounded-xl bg-yellow-500/5 border border-blue-500/10 text-yellow-500 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
               <IconComponent className="w-5 h-5" />
             </div>
 

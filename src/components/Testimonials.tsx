@@ -38,7 +38,7 @@ export const Testimonials = () => {
               right-6
               w-20
               h-20
-              text-brand-purple/10
+              text-yellow-500/10
             "
           />
 
@@ -88,7 +88,7 @@ export const Testimonials = () => {
                 {testimonial.role}
               </p>
 
-              <span className="text-brand-purple text-sm font-semibold">
+              <span className="text-yellow-500 text-sm font-semibold">
                 {testimonial.location}
               </span>
             </div>

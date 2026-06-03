@@ -63,7 +63,7 @@ export const DestinationDetailsPage: React.FC = () => {
 
             <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 text-xs sm:text-sm pt-2">
               <span className="flex items-center gap-1 font-bold bg-brand-purple/10 text-brand-purple px-3 py-1 rounded-none border border-brand-purple/20">
-                <Star className="w-4 h-4 fill-brand-purple text-brand-purple" />
+                <Star className="w-4 h-4 fill-yellow-500 text-yellow-500" />
                 {destination.rating} ({destination.reviewsCount} guest ratings)
               </span>
               <span className="flex items-center gap-1.5 bg-white border border-[#E5E0D8] px-3 py-1 rounded-none text-slate-600 shadow-sm font-semibold">

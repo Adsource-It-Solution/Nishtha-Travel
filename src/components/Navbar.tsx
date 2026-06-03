@@ -52,9 +52,9 @@ export const Navbar: React.FC = () => {
               <div className="flex items-center justify-between gap-8 pb-2">
                 {/* Logo */}
                 <Link to="/" className="flex items-center gap-3 group">
-                  <div className="relative flex items-center justify-center w-28 h-12 bg-white transition-all border border-[#E5E0D8] rounded-lg">
+                  <div className="relative flex items-center justify-center w-16 h-14 transition-all">
                     <img
-                      src="/favicon.svg"
+                      src="/logo.png"
                       alt="Nishtha Travel Logo"
                       className="w-24 h-16 object-contain"
                     />
@@ -98,9 +98,9 @@ export const Navbar: React.FC = () => {
 
                 {/* Right Side */}
                 <div className="flex items-center gap-8">
-                  <button className="font-semibold flex items-center gap-2">
+                  {/* <button className="font-semibold flex items-center gap-2">
                     🌐 EN
-                  </button>
+                  </button> */}
 
                   <Link
                     to="/dashboard"
