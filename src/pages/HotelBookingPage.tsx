@@ -15,6 +15,7 @@ export const HotelBookingPage: React.FC = () => {
   const [hoveredHotelPin, setHoveredHotelPin] = useState<string | null>(null);
   const [bookingHotel, setBookingHotel] = useState<Hotel | null>(null);
   const [bookingConfirmed, setBookingConfirmed] = useState(false);
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -121,7 +122,11 @@ export const HotelBookingPage: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
           {/* 1. FILTER SIDEBAR (Desktop) */}
-          <div className="lg:col-span-3 space-y-6 lg:sticky lg:top-24 hidden lg:block font-['Poppins']">
+          <div className={`lg:col-span-3 space-y-6 lg:sticky lg:top-24 font-['Poppins'] ${
+            showMobileFilters 
+              ? 'fixed inset-0 z-50 bg-[#09131F]/45 backdrop-blur-[2px] p-4 flex items-center justify-center'
+              : 'hidden lg:block'
+          }`}>
 
             {/* FILTER CARD */}
             <div
@@ -133,8 +138,18 @@ export const HotelBookingPage: React.FC = () => {
       border
       border-slate-100
       backdrop-blur-xl
+      w-full
+      max-w-md
+      relative
     "
             >
+              {/* Close Button for mobile */}
+              <button 
+                onClick={() => setShowMobileFilters(false)}
+                className="lg:hidden absolute top-4 right-4 p-1 text-slate-400 hover:text-slate-650"
+              >
+                <X className="w-5 h-5" />
+              </button>
               <div className="flex items-center justify-between">
                 <div>
                   <span className="text-[11px] uppercase tracking-[0.25em] text-indigo-600 font-semibold">
@@ -327,6 +342,27 @@ export const HotelBookingPage: React.FC = () => {
                 <span className="text-[11px] tracking-[0.1em] text-slate-500 uppercase">
                   {loading ? 'Consulting Property Records...' : `${filteredHotels.length} Luxury Properties Curated`}
                 </span>
+
+                <button
+                  onClick={() => setShowMobileFilters(true)}
+                  className="
+                    lg:hidden
+                    bg-white
+                    border
+                    border-slate-200
+                    px-4
+                    py-2
+                    text-[10px]
+                    font-bold
+                    uppercase
+                    tracking-wider
+                    text-slate-700
+                    hover:bg-slate-50
+                    transition-all
+                  "
+                >
+                  Filter
+                </button>
               </div>
 
               <div className="grid grid-cols-1 gap-6">

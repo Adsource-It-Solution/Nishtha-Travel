@@ -32,16 +32,16 @@ export const Footer: React.FC = () => {
     <footer className="relative bg-black text-white overflow-hidden">
 
       {/* World Map */}
-       <div
-    className="absolute inset-0 z-99"
-    style={{
-      backgroundImage: "url('/footer-bg.webp')",
-      backgroundPosition: "center",
-      backgroundRepeat: "no-repeat",
-      backgroundSize: "80%",
-      opacity: 1,
-    }}
-  />
+      <div
+        className="absolute inset-0 z-99"
+        style={{
+          backgroundImage: "url('/footer-bg.webp')",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "80%",
+          opacity: 1,
+        }}
+      />
 
       {/* Overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/10 to-black/20" />
@@ -94,10 +94,10 @@ export const Footer: React.FC = () => {
               >
                 <div className=" flex items-center justify-center">
                   <img
-                      src="/logo.png"
-                      alt="Nishtha Travel Logo"
-                      className="w-24 h-16 object-contain"
-                    />
+                    src="/logo.png"
+                    alt="Nishtha Travel Logo"
+                    className="w-24 h-16 object-contain"
+                  />
                 </div>
 
                 <div>

@@ -185,7 +185,7 @@ export const AboutPage: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-6 gap-6 mt-16">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6 mt-16">
 
             {timeline.map((item) => (
               <div key={item.year} className="text-center">

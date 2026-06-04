@@ -174,8 +174,28 @@ export const Navbar: React.FC = () => {
               </div>
             </div>
 
-            {/* Mobile menu button */}
-            <div className="flex lg:hidden items-center">
+            {/* Mobile Layout (Logo & Menu Button) */}
+            <div className="flex lg:hidden items-center justify-between w-full">
+              {/* Mobile Logo */}
+              <Link to="/" className="flex items-center gap-2 group">
+                <div className="relative flex items-center justify-center w-12 h-10 transition-all">
+                  <img
+                    src="/logo.png"
+                    alt="Nishtha Travel Logo"
+                    className="w-16 h-10 object-contain"
+                  />
+                </div>
+                <div>
+                  <span className="text-[14px] font-extrabold tracking-[0.05em] font-sans text-blue-900 leading-tight block">
+                    NISHTHA TRAVELS
+                  </span>
+                  <span className="text-[9px] block font-bold tracking-[0.1em] uppercase text-purple-600 -mt-0.5 leading-none">
+                    Concierge PVT. LTD.
+                  </span>
+                </div>
+              </Link>
+
+              {/* Toggle Button */}
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="text-slate-600 hover:text-brand-purple p-2 focus:outline-none transition-colors"

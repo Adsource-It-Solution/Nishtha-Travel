@@ -144,7 +144,7 @@ export const LandingPage: React.FC = () => {
               {filteredDestinations.map((dest) => (
                 <div
                   key={dest.id}
-                  className="min-w-[380px] flex-shrink-0 snap-start"
+                  className="min-w-[290px] sm:min-w-[380px] flex-shrink-0 snap-start"
                 >
                   <DestinationCard destination={dest} />
                 </div>

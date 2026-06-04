@@ -59,7 +59,7 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
   return (
     <div className={`w-full ${compact ? '' : 'max-w-6xl mx-auto px-4'}`}>
       {/* Tab Buttons */}
-        <div className="relative top-8 z-20 flex flex-wrap gap-3 w-full">
+        <div className="relative top-8 z-20 flex flex-nowrap sm:flex-wrap gap-2 sm:gap-3 w-full">
           {[
             { id: 'flights', label: 'Tours', icon: Plane },
             { id: 'hotels', label: 'Hotels', icon: Hotel },
@@ -71,12 +71,12 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as TabType)}
-                className={`flex items-center gap-3 px-8 py-4 rounded-full border transition-all duration-300 font-bold text-lg ${active
+                className={`flex items-center justify-center gap-2 sm:gap-3 px-4 py-3 sm:px-8 sm:py-4 rounded-full border transition-all duration-300 font-bold text-xs sm:text-lg flex-1 sm:flex-initial ${active
                   ? 'bg-blue-500 text-white border-blue-500 shadow-lg'
                   : 'bg-white text-gray-800 border-gray-200 hover:border-blue-400'
                   }`}
               >
-                <Icon className="w-5 h-5" />
+                <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
                 {tab.label}
               </button>
             );

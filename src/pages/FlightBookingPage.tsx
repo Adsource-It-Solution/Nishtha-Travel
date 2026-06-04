@@ -19,6 +19,7 @@ export const FlightBookingPage: React.FC = () => {
   const [sortBy, setSortBy] = useState<'price' | 'duration'>('price');
   const [bookingFlight, setBookingFlight] = useState<Flight | null>(null);
   const [bookingConfirmed, setBookingConfirmed] = useState(false);
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   useEffect(() => {
     // Mimic API Fetch loading animation
@@ -137,7 +138,7 @@ return (
       <div className="max-w-7xl mx-auto px-6">
 
         {/* SECTION HEADER */}
-        <div className="mb-10 flex flex-col md:flex-row md:items-center md:justify-between">
+        <div className="mb-10 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
 
           <div>
             <span className="text-blue-600 font-semibold uppercase tracking-wider">
@@ -149,7 +150,26 @@ return (
             </h2>
           </div>
 
-          <div className="mt-4 md:mt-0">
+          <div className="mt-4 md:mt-0 flex gap-3">
+            <button
+              onClick={() => setShowMobileFilters(true)}
+              className="
+                lg:hidden
+                bg-white
+                border
+                border-slate-200
+                rounded-xl
+                px-4
+                py-3
+                text-sm
+                font-semibold
+                text-slate-700
+                hover:bg-slate-50
+                transition-all
+              "
+            >
+              Filters
+            </button>
 
             <select
               value={sortBy}
@@ -176,7 +196,11 @@ return (
         <div className="grid lg:grid-cols-12 gap-8">
 
           {/* SIDEBAR */}
-          <div className="lg:col-span-3">
+          <div className={`lg:col-span-3 ${
+            showMobileFilters
+              ? 'fixed inset-0 z-50 bg-[#09131F]/45 backdrop-blur-[2px] p-4 flex items-center justify-center'
+              : 'hidden lg:block'
+          }`}>
 
             <div className="
               bg-white
@@ -185,23 +209,34 @@ return (
               p-6
               sticky
               top-28
+              w-full
+              max-w-md
             ">
 
-              <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center justify-between mb-6 relative">
                 <h3 className="font-semibold text-lg">
                   Filters
                 </h3>
 
-                <button
-                  onClick={() => {
-                    setSelectedStops(null);
-                    setSelectedClass('all');
-                    setSelectedAirline('all');
-                  }}
-                  className="text-blue-600 text-sm font-medium"
-                >
-                  Reset
-                </button>
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => {
+                      setSelectedStops(null);
+                      setSelectedClass('all');
+                      setSelectedAirline('all');
+                    }}
+                    className="text-blue-600 text-sm font-medium"
+                  >
+                    Reset
+                  </button>
+
+                  <button
+                    onClick={() => setShowMobileFilters(false)}
+                    className="lg:hidden text-slate-400 hover:text-slate-650 p-1"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
               </div>
 
               {/* Stops */}

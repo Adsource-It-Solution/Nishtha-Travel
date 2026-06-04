@@ -70,7 +70,7 @@ export const UserDashboard: React.FC = () => {
 
           {/* Dashboard Left Sidebar Tabs Navigation */}
           <div className="lg:col-span-3 space-y-4">
-            <div className="glass-card p-4 space-y-1 shadow-none">
+            <div className="glass-card p-4 flex flex-row overflow-x-auto whitespace-nowrap gap-2 scrollbar-none lg:flex-col lg:space-y-1 shadow-none">
               {menuItems.map((item) => {
                 const isActive = activeTab === item.id;
                 const Icon = item.icon;
@@ -78,7 +78,7 @@ export const UserDashboard: React.FC = () => {
                   <button
                     key={item.id}
                     onClick={() => setActiveTab(item.id as ActiveTab)}
-                    className={`w-full flex items-center justify-between px-4 py-3 rounded-none text-[10px] font-bold uppercase tracking-[0.15em] transition-all focus:outline-none ${isActive
+                    className={`flex items-center justify-between px-4 py-3 rounded-none text-[10px] font-bold uppercase tracking-[0.15em] transition-all focus:outline-none shrink-0 lg:w-full ${isActive
                         ? 'bg-brand-blue text-white'
                         : 'text-slate-600 hover:bg-brand-purple/5 hover:text-brand-purple'
                       }`}

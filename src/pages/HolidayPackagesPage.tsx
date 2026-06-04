@@ -110,9 +110,14 @@ export const HolidayPackagesPage: React.FC = () => {
   <div
     className="
       flex
-      flex-wrap
-      gap-6
-      px-14
+      overflow-x-auto
+      whitespace-nowrap
+      scrollbar-none
+      gap-4
+      sm:gap-6
+      px-4
+      sm:px-6
+      lg:px-14
       py-2
       bg-white
       rounded-[24px]
@@ -140,6 +145,7 @@ export const HolidayPackagesPage: React.FC = () => {
             tracking-wide
             transition-all
             duration-300
+            shrink-0
             ${
               isActive
                 ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg'

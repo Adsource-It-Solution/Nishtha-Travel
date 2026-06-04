@@ -173,7 +173,7 @@ export const PackageDetailsPage: React.FC = () => {
 
             {/* Navigation Tabs */}
             <div className="space-y-6">
-              <div className="flex border-b border-[#E5E0D8] gap-8">
+              <div className="flex border-b border-[#E5E0D8] gap-8 overflow-x-auto whitespace-nowrap scrollbar-none pb-px">
                 {[
                   { id: 'itinerary', label: 'Itinerary' },
                   { id: 'inclusions', label: 'Inclusions' },
@@ -182,7 +182,7 @@ export const PackageDetailsPage: React.FC = () => {
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id as any)}
-                    className={`relative pb-3 text-xs font-bold uppercase tracking-[0.15em] transition-all ${
+                    className={`relative pb-3 text-xs font-bold uppercase tracking-[0.15em] transition-all shrink-0 ${
                       activeTab === tab.id ? 'text-brand-purple font-bold' : 'text-slate-500 hover:text-brand-purple'
                     }`}
                   >

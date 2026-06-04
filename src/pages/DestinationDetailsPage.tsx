@@ -99,7 +99,7 @@ export const DestinationDetailsPage: React.FC = () => {
 
             {/* Content Tabs Navigation */}
             <div className="space-y-6">
-              <div className="flex border-b border-[#E5E0D8] gap-6">
+              <div className="flex border-b border-[#E5E0D8] gap-6 overflow-x-auto whitespace-nowrap scrollbar-none pb-px">
                 {[
                   { id: 'itinerary', label: 'Bespoke Itinerary' },
                   { id: 'food', label: 'Local Gastronomy' },
@@ -108,7 +108,7 @@ export const DestinationDetailsPage: React.FC = () => {
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id as any)}
-                    className={`relative pb-3 text-xs font-bold uppercase tracking-[0.15em] transition-all ${activeTab === tab.id ? 'text-brand-purple font-bold' : 'text-slate-400 hover:text-brand-purple'}`}
+                    className={`relative pb-3 text-xs font-bold uppercase tracking-[0.15em] transition-all shrink-0 ${activeTab === tab.id ? 'text-brand-purple font-bold' : 'text-slate-400 hover:text-brand-purple'}`}
                   >
                     <span>{tab.label}</span>
                     {activeTab === tab.id && (

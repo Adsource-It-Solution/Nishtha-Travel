@@ -141,8 +141,23 @@ export const VisaPage: React.FC = () => {
                 />
               </div>
 
+              {/* Country Dropdown Selector (Mobile) */}
+              <div className="lg:hidden">
+                <select
+                  value={selectedCountry}
+                  onChange={(e) => setSelectedCountry(e.target.value)}
+                  className="w-full bg-white border border-[#E5E0D8] text-slate-800 rounded-none px-4 py-3 font-semibold text-xs focus:border-brand-purple focus:outline-none"
+                >
+                  {Object.keys(mockVisaRequirements).map((c) => (
+                    <option key={c} value={c}>
+                      {c}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
               {/* Country Buttons List */}
-              <div className="space-y-1.5 max-h-60 overflow-y-auto pr-1">
+              <div className="hidden lg:block space-y-1.5 max-h-60 overflow-y-auto pr-1">
                 {filteredCountries.map((c) => {
                   const isActive = selectedCountry === c;
                   return (
