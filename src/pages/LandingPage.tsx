@@ -49,14 +49,21 @@ export const LandingPage: React.FC = () => {
       <Navbar />
       <div className="relative bg-slate-50">
         {/* 1. CINEMATIC HERO SECTION */}
-        <section className="relative flex items-center justify-center pt-48 overflow-hidden border-b border-soft-border">
+        <section className="relative flex items-center justify-center pt-16 lg:pt-48 overflow-hidden border-b border-soft-border">
           {/* Background Image / Overlay */}
-          <div className="absolute">
-            <img
-              src="https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=1920&q=80"
-              alt="Luxury Maldives Resort"
-              className="w-full h-full object-cover brightness-[0.7]"
-            />
+          <div className="absolute inset-0">
+            <picture>
+              <source
+                media="(max-width: 1023px)"
+                srcSet="/mobile-image.jpg"
+              />
+
+              <img
+                src="https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=1920&q=80"
+                alt="Luxury Maldives Resort"
+                className="w-full h-full object-cover object-center brightness-[0.7]"
+              />
+            </picture>
             {/* Brand Color Gradient Overlay */}
             <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-brand-blue/15 to-slate-50" />
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.1),rgba(245,247,250,0.9))]" />
@@ -65,43 +72,43 @@ export const LandingPage: React.FC = () => {
           {/* Hero Content */}
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col space-y-10">
 
-  {/* Text Section */}
-  <div className="space-y-4 max-w-4xl">
-    <motion.h1
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, delay: 0.1 }}
-      className="text-3xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.05] text-left"
-    >
-      Travel Farther,
-      <br />
-      Experience Deeper,
-      <br />
-      Live Better.
-    </motion.h1>
+            {/* Text Section */}
+            <div className="space-y-4 max-w-4xl">
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.1 }}
+                className="text-3xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.05] text-left"
+              >
+                Travel Farther,
+                <br />
+                Experience Deeper,
+                <br />
+                Live Better.
+              </motion.h1>
 
-    <motion.p
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, delay: 0.25 }}
-      className="text-white/90 text-sm sm:text-lg max-w-2xl leading-relaxed text-left"
-    >
-      Explore extraordinary destinations crafted into unforgettable
-      experiences around the globe.
-    </motion.p>
-  </div>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.25 }}
+                className="text-white/90 text-sm sm:text-lg max-w-2xl leading-relaxed text-left"
+              >
+                Explore extraordinary destinations crafted into unforgettable
+                experiences around the globe.
+              </motion.p>
+            </div>
 
-  {/* Search Bar */}
-  <motion.div
-    initial={{ opacity: 0, y: 30 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.8, delay: 0.4 }}
-    className="w-full pb-10"
-  >
-    <SearchTabs />
-  </motion.div>
+            {/* Search Bar */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="w-full pb-10"
+            >
+              <SearchTabs />
+            </motion.div>
 
-</div>
+          </div>
         </section>
 
         {/* 3. POPULAR DESTINATIONS */}

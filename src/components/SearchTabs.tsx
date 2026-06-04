@@ -71,10 +71,11 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as TabType)}
-                className={`flex items-center justify-center gap-2 sm:gap-3 px-4 py-3 sm:px-8 sm:py-4 rounded-full border transition-all duration-300 font-bold text-xs sm:text-lg flex-1 sm:flex-initial ${active
-                  ? 'bg-blue-500 text-white border-blue-500 shadow-lg'
-                  : 'bg-white text-gray-800 border-gray-200 hover:border-blue-400'
-                  }`}
+               className={`flex items-center justify-center gap-1.5 sm:gap-0 px-3 py-2 sm:px-5 sm:py-2 my-2 mx-3 rounded-full border transition-all duration-300 font-semibold text-[11px] sm:text-sm flex-1 sm:flex-initial ${
+  active
+    ? 'bg-blue-500 text-white border-blue-500 shadow-md'
+    : 'bg-white text-gray-800 border-gray-200 hover:border-blue-400'
+}`}
               >
                 <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
                 {tab.label}
