@@ -12,7 +12,17 @@ import { UserDashboard } from './pages/UserDashboard';
 import { AboutPage } from './pages/AboutPage';
 import { ContactPage } from './pages/ContactPage';
 import { VisaPage } from './pages/VisaPage';
+
+// Import new extension pages
+import { CabsPage } from './pages/CabsPage';
+import { CabDetailsPage } from './pages/CabDetailsPage';
+import { TrainsPage } from './pages/TrainsPage';
+import { LoginPage } from './pages/LoginPage';
+import { AdminLoginPage } from './pages/AdminLoginPage';
+import { AdminDashboard } from './pages/AdminDashboard';
+
 import './App.css';
+import { HolidayDetails } from './components/HolidayDetails';
 
 function App() {
   return (
@@ -31,6 +41,17 @@ function App() {
           <Route path="about" element={<AboutPage />} />
           <Route path="contact" element={<ContactPage />} />
           <Route path="visa" element={<VisaPage />} />
+          <Route path="holiday-itinerary/:id" element={<HolidayDetails />} />
+
+          {/* New extension routes */}
+          <Route path="cabs" element={<CabsPage />} />
+          <Route path="cab/:id" element={<CabDetailsPage />} />
+          <Route path="trains" element={<TrainsPage />} />
+
+          {/* Auth and Admin routes */}
+          <Route path="login" element={<LoginPage />} />
+          <Route path="admin/login" element={<AdminLoginPage />} />
+          <Route path="admin/dashboard" element={<AdminDashboard />} />
         </Route>
       </Routes>
     </Router>

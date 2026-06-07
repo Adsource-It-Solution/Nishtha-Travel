@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { User, Briefcase, Heart, Wallet, Bell, Settings, Award, MapPin, CheckCircle2, ShieldCheck, Mail, Phone, Save, Gift, Check } from 'lucide-react';
 import { mockHotels, mockFlights } from '../data/mockData';
@@ -15,6 +15,27 @@ export const UserDashboard: React.FC = () => {
   const [profilePhone, setProfilePhone] = useState('+91 99999 88888');
   const [passportNum, setPassportNum] = useState('IN892740B');
   const [showSettingsSuccess, setShowSettingsSuccess] = useState(false);
+
+  // Bookings state
+  const [bookings, setBookings] = useState<any[]>([]);
+  const [bookingsLoading, setBookingsLoading] = useState(true);
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
+  useEffect(() => {
+    if (activeTab === 'bookings') {
+      setBookingsLoading(true);
+      fetch(`${apiUrl}/api/bookings`)
+        .then(res => res.json())
+        .then(data => {
+          setBookings(data);
+          setBookingsLoading(false);
+        })
+        .catch(err => {
+          console.error('Error fetching bookings:', err);
+          setBookingsLoading(false);
+        });
+    }
+  }, [activeTab, apiUrl]);
 
   const handleSaveSettings = (e: React.FormEvent) => {
     e.preventDefault();
@@ -113,86 +134,251 @@ export const UserDashboard: React.FC = () => {
                 >
                   <h2 className="text-base font-serif text-brand-blue uppercase tracking-widest border-b border-[#E5E0D8] pb-3">Curated Reservations</h2>
 
-                  {/* Booking Card 1 (Hotel) */}
-                  <div className="glass-card p-6 flex flex-col md:flex-row justify-between gap-6 border-l-2 border-l-brand-purple shadow-none">
-                    <div className="space-y-4 flex-grow">
-                      <div className="flex items-center gap-3 flex-wrap">
-                        <span className="px-2.5 py-0.5 rounded-none text-[8px] font-bold uppercase tracking-[0.2em] bg-brand-purple/10 text-brand-purple border border-brand-purple/20">
-                          Resort Stay
-                        </span>
-                        <span className="text-[10px] text-slate-500 font-semibold tracking-wider">Confirmation: #MLE-89240</span>
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-serif text-brand-blue">{mockHotels[0].name}</h3>
-                        <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-1">
-                          <MapPin className="w-3.5 h-3.5 text-brand-purple" />
-                          <span>{mockHotels[0].location}</span>
-                        </div>
-                      </div>
-                      <div className="grid grid-cols-2 gap-4 max-w-sm">
-                        <div>
-                          <span className="text-[9px] text-slate-500 uppercase tracking-widest font-bold block">Arrival</span>
-                          <span className="text-xs text-brand-blue font-bold block mt-0.5">June 15, 2026</span>
-                        </div>
-                        <div>
-                          <span className="text-[9px] text-slate-500 uppercase tracking-widest font-bold block">Departure</span>
-                          <span className="text-xs text-brand-blue font-bold block mt-0.5">June 25, 2026</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex flex-row md:flex-col items-center md:items-end justify-between md:justify-center gap-4 pt-4 md:pt-0 border-t md:border-t-0 md:border-l border-[#E5E0D8] md:pl-6 min-w-[140px]">
-                      <div className="text-left md:text-right">
-                        <span className="text-[10px] text-emerald-700 font-bold uppercase tracking-wider block">✓ Confirmed</span>
-                        <span className="text-[10px] text-slate-500 block mt-1">2 Guests • 1 Suite</span>
-                      </div>
-                      <button className="btn-navy rounded-none !py-2 !px-4">
-                        Voucher
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Booking Card 2 (Flight) */}
-                  <div className="glass-card p-6 flex flex-col md:flex-row justify-between gap-6 border-l-2 border-l-brand-blue shadow-none">
-                    <div className="space-y-4 flex-grow">
-                      <div className="flex items-center gap-3 flex-wrap">
-                        <span className="px-2.5 py-0.5 rounded-none text-[8px] font-bold uppercase tracking-[0.2em] bg-brand-blue/10 text-brand-blue border border-brand-blue/20">
-                          Aviation Flight
-                        </span>
-                        <span className="text-[10px] text-slate-500 font-semibold tracking-wider">Itinerary: #LHR-QR704</span>
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-serif text-brand-blue">{mockFlights[1].airlineName}</h3>
-                        <div className="flex items-center gap-6 mt-3 py-3 border-y border-[#E5E0D8] max-w-md">
-                          <div>
-                            <span className="text-[9px] text-slate-500 uppercase tracking-widest block">Depart</span>
-                            <span className="text-base font-serif text-brand-blue block mt-1">{mockFlights[1].departureCode}</span>
-                            <span className="text-[10px] text-slate-500 block">{mockFlights[1].departureCity}</span>
-                          </div>
-                          <div className="flex-grow flex flex-col items-center px-4 relative">
-                            <span className="text-[9px] text-slate-500 uppercase tracking-widest">{mockFlights[1].duration}</span>
-                            <div className="w-full h-[1px] bg-[#E5E0D8] relative my-1">
-                              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-brand-purple" />
+                  {bookingsLoading ? (
+                    [...Array(2)].map((_, i) => (
+                      <div key={i} className="glass-card p-6 h-40 animate-pulse bg-white border border-[#E5E0D8]" />
+                    ))
+                  ) : bookings.length > 0 ? (
+                    bookings.map((booking: any) => {
+                      const details = booking.details || {};
+                      
+                      // Render based on booking type
+                      if (booking.type === 'cab') {
+                        return (
+                          <div key={booking.id} className="glass-card p-6 flex flex-col md:flex-row justify-between gap-6 border-l-2 border-l-emerald-500 shadow-none bg-white border border-[#E5E0D8]">
+                            <div className="space-y-4 flex-grow">
+                              <div className="flex items-center gap-3 flex-wrap">
+                                <span className="px-2.5 py-0.5 rounded-none text-[8px] font-bold uppercase tracking-[0.2em] bg-emerald-50 text-emerald-700 border border-emerald-250">
+                                  Cab Chauffeur Ride
+                                </span>
+                                <span className="text-[10px] text-slate-500 font-semibold tracking-wider">Confirmation: #{booking.confirmationCode}</span>
+                              </div>
+                              <div>
+                                <h3 className="text-lg font-serif text-brand-blue">{details.cabName || 'Luxury Sedan'}</h3>
+                                <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-1">
+                                  <MapPin className="w-3.5 h-3.5 text-brand-purple" />
+                                  <span>Pickup: {details.pickup} → Dropoff: {details.dropoff}</span>
+                                </div>
+                              </div>
+                              <div className="grid grid-cols-2 gap-4 max-w-sm">
+                                <div>
+                                  <span className="text-[9px] text-slate-500 uppercase tracking-widest font-bold block">Scheduled Date</span>
+                                  <span className="text-xs text-brand-blue font-bold block mt-0.5">{details.date} at {details.time}</span>
+                                </div>
+                                <div>
+                                  <span className="text-[9px] text-slate-500 uppercase tracking-widest font-bold block">Trip Classification</span>
+                                  <span className="text-xs text-brand-blue font-bold block mt-0.5 capitalize">{details.tripType} Transfer</span>
+                                </div>
+                              </div>
                             </div>
-                            <span className="text-[9px] text-brand-purple font-bold uppercase tracking-wider">1 Stop</span>
+                            <div className="flex flex-row md:flex-col items-center md:items-end justify-between md:justify-center gap-4 pt-4 md:pt-0 border-t md:border-t-0 md:border-l border-[#E5E0D8] md:pl-6 min-w-[140px]">
+                              <div className="text-left md:text-right">
+                                <span className="text-[10px] text-emerald-750 font-bold uppercase tracking-wider block">✓ {booking.status}</span>
+                                <span className="text-[10px] text-slate-500 block mt-1">{details.passengerName}</span>
+                              </div>
+                              <button className="btn-navy rounded-none !py-2 !px-4 !text-[9px] uppercase tracking-wider">
+                                Chauffeur Info
+                              </button>
+                            </div>
                           </div>
-                          <div>
-                            <span className="text-[9px] text-slate-500 uppercase tracking-widest block">Arrive</span>
-                            <span className="text-base font-serif text-brand-blue block mt-1">{mockFlights[1].arrivalCode}</span>
-                            <span className="text-[10px] text-slate-500 block">{mockFlights[1].arrivalCity}</span>
+                        );
+                      }
+
+                      if (booking.type === 'train') {
+                        return (
+                          <div key={booking.id} className="glass-card p-6 flex flex-col md:flex-row justify-between gap-6 border-l-2 border-l-orange-500 shadow-none bg-white border border-[#E5E0D8]">
+                            <div className="space-y-4 flex-grow">
+                              <div className="flex items-center gap-3 flex-wrap">
+                                <span className="px-2.5 py-0.5 rounded-none text-[8px] font-bold uppercase tracking-[0.2em] bg-orange-50 text-orange-700 border border-orange-250">
+                                  Rail Booking
+                                </span>
+                                <span className="text-[10px] text-slate-500 font-semibold tracking-wider">PNR Code: #{booking.confirmationCode}</span>
+                              </div>
+                              <div>
+                                <h3 className="text-lg font-serif text-brand-blue">{details.trainName} (#{details.trainNumber})</h3>
+                                <div className="flex items-center gap-6 mt-3 py-3 border-y border-[#E5E0D8] max-w-md">
+                                  <div>
+                                    <span className="text-[9px] text-slate-500 uppercase tracking-widest block">Station From</span>
+                                    <span className="text-base font-serif text-brand-blue block mt-1">{details.departureCode}</span>
+                                    <span className="text-[10px] text-slate-500 block">{details.departureCity}</span>
+                                  </div>
+                                  <div className="flex-grow flex flex-col items-center px-4 relative">
+                                    <span className="text-[9px] text-slate-500 uppercase tracking-widest">{details.duration}</span>
+                                    <div className="w-full h-[1px] bg-[#E5E0D8] relative my-1">
+                                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-orange-500 rounded-full" />
+                                    </div>
+                                    <span className="text-[9px] text-brand-purple font-bold uppercase tracking-wider">Class: {details.class}</span>
+                                  </div>
+                                  <div>
+                                    <span className="text-[9px] text-slate-500 uppercase tracking-widest block">Station To</span>
+                                    <span className="text-base font-serif text-brand-blue block mt-1">{details.arrivalCode}</span>
+                                    <span className="text-[10px] text-slate-500 block">{details.arrivalCity}</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="flex flex-row md:flex-col items-center md:items-end justify-between md:justify-center gap-4 pt-4 md:pt-0 border-t md:border-t-0 md:border-l border-[#E5E0D8] md:pl-6 min-w-[140px]">
+                              <div className="text-left md:text-right">
+                                <span className="text-[10px] text-emerald-750 font-bold uppercase tracking-wider block">✓ Confirmed</span>
+                                <span className="text-[10px] text-slate-500 block mt-1">Seat: {details.seatPreference}</span>
+                              </div>
+                              <button className="btn-navy rounded-none !py-2 !px-4 !text-[9px] uppercase tracking-wider">
+                                Ticket PDF
+                              </button>
+                            </div>
+                          </div>
+                        );
+                      }
+
+                      if (booking.type === 'package') {
+                        return (
+                          <div key={booking.id} className="glass-card p-6 flex flex-col md:flex-row justify-between gap-6 border-l-2 border-l-yellow-500 shadow-none bg-white border border-[#E5E0D8]">
+                            <div className="space-y-4 flex-grow">
+                              <div className="flex items-center gap-3 flex-wrap">
+                                <span className="px-2.5 py-0.5 rounded-none text-[8px] font-bold uppercase tracking-[0.2em] bg-yellow-50 text-yellow-750 border border-yellow-200">
+                                  Holiday Package
+                                </span>
+                                <span className="text-[10px] text-slate-500 font-semibold tracking-wider">Booking Code: #{booking.confirmationCode}</span>
+                              </div>
+                              <div>
+                                <h3 className="text-lg font-serif text-brand-blue">{details.packageTitle}</h3>
+                                <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-1">
+                                  <MapPin className="w-3.5 h-3.5 text-brand-purple" />
+                                  <span>{details.destination} • {details.duration}</span>
+                                </div>
+                              </div>
+                              <div className="grid grid-cols-2 gap-4 max-w-sm">
+                                <div>
+                                  <span className="text-[9px] text-slate-500 uppercase tracking-widest font-bold block">Travel Date</span>
+                                  <span className="text-xs text-brand-blue font-bold block mt-0.5">{details.travelDate}</span>
+                                </div>
+                                <div>
+                                  <span className="text-[9px] text-slate-500 uppercase tracking-widest font-bold block">Lead Guest</span>
+                                  <span className="text-xs text-brand-blue font-bold block mt-0.5">{details.passengerName}</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="flex flex-row md:flex-col items-center md:items-end justify-between md:justify-center gap-4 pt-4 md:pt-0 border-t md:border-t-0 md:border-l border-[#E5E0D8] md:pl-6 min-w-[140px]">
+                              <div className="text-left md:text-right">
+                                <span className="text-[10px] text-emerald-750 font-bold uppercase tracking-wider block">✓ Confirmed</span>
+                                <span className="text-sm font-serif text-brand-blue block mt-1">₹{details.price}</span>
+                              </div>
+                              <Link to={`/package/${details.packageId}`} className="btn-navy rounded-none !py-2 !px-4 !text-[9px] text-center uppercase tracking-wider">
+                                View Itinerary
+                              </Link>
+                            </div>
+                          </div>
+                        );
+                      }
+
+                      // Fallback for flights/hotels if booked via API
+                      return (
+                        <div key={booking.id} className="glass-card p-6 flex flex-col md:flex-row justify-between gap-6 border-l-2 border-l-brand-blue shadow-none bg-white border border-[#E5E0D8]">
+                          <div className="space-y-4 flex-grow">
+                            <div className="flex items-center gap-3 flex-wrap">
+                              <span className="px-2.5 py-0.5 rounded-none text-[8px] font-bold uppercase tracking-[0.2em] bg-brand-blue/10 text-brand-blue border border-brand-blue/20">
+                                {booking.type} Booking
+                              </span>
+                              <span className="text-[10px] text-slate-500 font-semibold tracking-wider">Confirmation: #{booking.confirmationCode}</span>
+                            </div>
+                            <div>
+                              <h3 className="text-lg font-serif text-brand-blue">{details.name || details.airlineName || 'Nishtha Curated Reservation'}</h3>
+                              <p className="text-xs text-slate-500">Date: {details.date || details.travelDate || 'June 15, 2026'}</p>
+                            </div>
+                          </div>
+                          <div className="flex flex-row md:flex-col items-center md:items-end justify-between md:justify-center gap-4 pt-4 md:pt-0 border-t md:border-t-0 md:border-l border-[#E5E0D8] md:pl-6 min-w-[140px]">
+                            <div className="text-left md:text-right">
+                              <span className="text-[10px] text-emerald-700 font-bold uppercase tracking-wider block">✓ {booking.status}</span>
+                            </div>
                           </div>
                         </div>
+                      );
+                    })
+                  ) : (
+                    // Default seeded mock examples for visual layout if database is empty
+                    <>
+                      {/* Seeded Hotel Booking Example */}
+                      <div className="glass-card p-6 flex flex-col md:flex-row justify-between gap-6 border-l-2 border-l-brand-purple shadow-none bg-white border border-[#E5E0D8]">
+                        <div className="space-y-4 flex-grow">
+                          <div className="flex items-center gap-3 flex-wrap">
+                            <span className="px-2.5 py-0.5 rounded-none text-[8px] font-bold uppercase tracking-[0.2em] bg-brand-purple/10 text-brand-purple border border-brand-purple/20">
+                              Resort Stay
+                            </span>
+                            <span className="text-[10px] text-slate-500 font-semibold tracking-wider">Confirmation: #MLE-89240</span>
+                          </div>
+                          <div>
+                            <h3 className="text-lg font-serif text-brand-blue">{mockHotels[0].name}</h3>
+                            <div className="flex items-center gap-1.5 text-xs text-slate-500 mt-1">
+                              <MapPin className="w-3.5 h-3.5 text-brand-purple" />
+                              <span>{mockHotels[0].location}</span>
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-2 gap-4 max-w-sm">
+                            <div>
+                              <span className="text-[9px] text-slate-500 uppercase tracking-widest font-bold block">Arrival</span>
+                              <span className="text-xs text-brand-blue font-bold block mt-0.5">June 15, 2026</span>
+                            </div>
+                            <div>
+                              <span className="text-[9px] text-slate-500 uppercase tracking-widest font-bold block">Departure</span>
+                              <span className="text-xs text-brand-blue font-bold block mt-0.5">June 25, 2026</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex flex-row md:flex-col items-center md:items-end justify-between md:justify-center gap-4 pt-4 md:pt-0 border-t md:border-t-0 md:border-l border-[#E5E0D8] md:pl-6 min-w-[140px]">
+                          <div className="text-left md:text-right">
+                            <span className="text-[10px] text-emerald-700 font-bold uppercase tracking-wider block">✓ Confirmed</span>
+                            <span className="text-[10px] text-slate-500 block mt-1">2 Guests • 1 Suite</span>
+                          </div>
+                          <button className="btn-navy rounded-none !py-2 !px-4">
+                            Voucher
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex flex-row md:flex-col items-center md:items-end justify-between md:justify-center gap-4 pt-4 md:pt-0 border-t md:border-t-0 md:border-l border-[#E5E0D8] md:pl-6 min-w-[140px]">
-                      <div className="text-left md:text-right">
-                        <span className="text-[10px] text-emerald-700 font-bold uppercase tracking-wider block">✓ Confirmed</span>
-                        <span className="text-[10px] text-slate-500 block mt-1">2 Passengers • Business</span>
+
+                      {/* Seeded Flight Booking Example */}
+                      <div className="glass-card p-6 flex flex-col md:flex-row justify-between gap-6 border-l-2 border-l-brand-blue shadow-none bg-white border border-[#E5E0D8]">
+                        <div className="space-y-4 flex-grow">
+                          <div className="flex items-center gap-3 flex-wrap">
+                            <span className="px-2.5 py-0.5 rounded-none text-[8px] font-bold uppercase tracking-[0.2em] bg-brand-blue/10 text-brand-blue border border-brand-blue/20">
+                              Aviation Flight
+                            </span>
+                            <span className="text-[10px] text-slate-500 font-semibold tracking-wider">Itinerary: #LHR-QR704</span>
+                          </div>
+                          <div>
+                            <h3 className="text-lg font-serif text-brand-blue">{mockFlights[1].airlineName}</h3>
+                            <div className="flex items-center gap-6 mt-3 py-3 border-y border-[#E5E0D8] max-w-md">
+                              <div>
+                                <span className="text-[9px] text-slate-500 uppercase tracking-widest block">Depart</span>
+                                <span className="text-base font-serif text-brand-blue block mt-1">{mockFlights[1].departureCode}</span>
+                                <span className="text-[10px] text-slate-500 block">{mockFlights[1].departureCity}</span>
+                              </div>
+                              <div className="flex-grow flex flex-col items-center px-4 relative">
+                                <span className="text-[9px] text-slate-500 uppercase tracking-widest">{mockFlights[1].duration}</span>
+                                <div className="w-full h-[1px] bg-[#E5E0D8] relative my-1">
+                                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-brand-purple" />
+                                </div>
+                                <span className="text-[9px] text-brand-purple font-bold uppercase tracking-wider">1 Stop</span>
+                              </div>
+                              <div>
+                                <span className="text-[9px] text-slate-500 uppercase tracking-widest block">Arrive</span>
+                                <span className="text-base font-serif text-brand-blue block mt-1">{mockFlights[1].arrivalCode}</span>
+                                <span className="text-[10px] text-slate-500 block">{mockFlights[1].arrivalCity}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex flex-row md:flex-col items-center md:items-end justify-between md:justify-center gap-4 pt-4 md:pt-0 border-t md:border-t-0 md:border-l border-[#E5E0D8] md:pl-6 min-w-[140px]">
+                          <div className="text-left md:text-right">
+                            <span className="text-[10px] text-emerald-700 font-bold uppercase tracking-wider block">✓ Confirmed</span>
+                            <span className="text-[10px] text-slate-500 block mt-1">2 Passengers • Business</span>
+                          </div>
+                          <button className="btn-navy rounded-none !py-2 !px-4">
+                            Boarding Pass
+                          </button>
+                        </div>
                       </div>
-                      <button className="btn-navy rounded-none !py-2 !px-4">
-                        Boarding Pass
-                      </button>
-                    </div>
-                  </div>
+                    </>
+                  )}
                 </motion.div>
               )}
 

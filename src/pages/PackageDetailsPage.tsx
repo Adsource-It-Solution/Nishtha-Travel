@@ -1,93 +1,169 @@
-import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Star, MapPin, Heart, ArrowLeft, CheckCircle2, ChevronDown, Clock, ShieldCheck, Check } from 'lucide-react';
+import { Star, MapPin, Heart, ArrowLeft, CheckCircle2, ChevronDown, Clock, ShieldCheck, Check, Send } from 'lucide-react';
 import { mockPackages } from '../data/mockData';
 
-// Detailed custom itineraries for each package to make mock details fully rich
-const packageItineraries: Record<string, {
+interface ItineraryDay {
+  day: number;
+  title: string;
+  details: string;
+}
+
+interface PackageDetails {
   description: string;
   highlights: string[];
-  days: { day: number; title: string; details: string }[];
+  days: ItineraryDay[];
   faqs: { question: string; answer: string }[];
-}> = {
-  'pkg-1': {
-    description: "Indulge in a sensory retreat where the azure ocean meets unmatched luxury. Maldives Overwater Sanctuary packages provide exclusive access to private seaplanes, water villas with slide amenities, personal butler service, and guided reef snorkeling excursions.",
-    highlights: ["Private Seaplane Transfers", "Unlimited Overwater Spa Sessions", "Undersea Fine Dining Reservation", "Guided Marine Snorkeling", "Personal 24/7 Island Host"],
-    days: [
-      { day: 1, title: "Private Seaplane Arrival & Sunset Dinner", details: "Arrive at Malé Airport and board a chartered seaplane to the resort. Enjoy a sunset candlelit dinner on the beach." },
-      { day: 2, title: "Reef Excursion & Marine Biologist Tour", details: "Snorkel in the crystalline house reef accompanied by a dedicated marine biologist, identifying sea turtles and coral restoration fields." },
-      { day: 3, title: "Undersea Gastronomy & Sunset Yoga", details: "Dine five meters below the surface at our award-winning undersea restaurant. Followed by a relaxing private yoga session at dusk." },
-      { day: 4, title: "Sandbank Picnic & Lagoon Spa", details: "Sail on a luxury yacht to a private, sandbank islet for a curated gourmet picnic. Enjoy a signature spa treatment in the afternoon." },
-      { day: 5, title: "Leisure Morning & Departure", details: "Enjoy breakfast in your private pool. Board the return seaplane to Malé for your international flight home." }
-    ],
-    faqs: [
-      { question: "Is the international flight included?", answer: "This package covers domestic transfers (seaplane). International flights can be booked separately or added via our flight desk." },
-      { question: "What is the policy for butler service?", answer: "A personal butler is assigned to your water villa upon arrival and is reachable 24/7 via mobile messenger." }
-    ]
-  },
-  'pkg-2': {
-    description: "Discover cliffside splendor and Italian romance. This Amalfi Coast package presents curated stays at historic Positano hotels, private Riva speedboat excursions to Capri, private vineyard tastings, and chauffeured transport.",
-    highlights: ["Historic Cliffside Accommodation", "Private Riva Speedboat to Capri", "Michelin-Star Dining Access", "Private Lemon Grove Cooking Class", "Chauffeured Executive Mercedes Transfers"],
-    days: [
-      { day: 1, title: "Naples to Positano Private Escort", details: "Your private chauffeur welcomes you at Naples Airport. Check-in to your cliffside suite with panoramic Mediterranean views." },
-      { day: 2, title: "Capri & Blue Grotto Riva Cruise", details: "Board a private Riva yacht. Cruise past the Faraglioni rocks, explore the Blue Grotto, and enjoy lunch on Capri island." },
-      { day: 3, title: "Lemon Grove Culinary Masterclass", details: "Join a local chef in a historic terraced lemon grove. Prepare traditional handmade pasta and sample local limoncello." },
-      { day: 4, title: "Ravello Gardens & Concert Evening", details: "Visit the serene Villa Cimbrone gardens in Ravello. Attend an exclusive sunset classical concert overlooking the coast." },
-      { day: 5, title: "Path of the Gods Guided Trek", details: "Hike the legendary Path of the Gods trail with a private guide, capturing the most breathtaking panoramic photography." },
-      { day: 6, title: "Amalfi Vineyards Wine Tasting", details: "Spend the day touring boutique vineyards situated on volcanic slopes. Taste vintage wines paired with cured cheeses." },
-      { day: 7, title: "Farewell & Departure Transfer", details: "Chauffeured transit back to Naples Airport for your departure flight." }
-    ],
-    faqs: [
-      { question: "Can we extend our stay to Rome?", answer: "Absolutely. Our concierge team specializes in tailored extensions and can seamlessly coordinate hotel and high-speed rail transfers." },
-      { question: "Is yacht fuel included in the price?", answer: "Yes, all private yacht charters include fuel, crew, insurance, and complimentary snacks." }
-    ]
-  },
-  'pkg-3': {
-    description: "Step into a timeless painting. Kyoto Autumn Serenity showcases traditional Ryokan stays, authentic Kaiseki banquets, guided Zen garden strolls, and private tea ceremony credentials.",
-    highlights: ["Traditional Premium Ryokan Lodging", "Authentic Multi-Course Kaiseki Dinners", "First-Class Shinkansen Bullet Train", "Private Kyoto Temple Tours", "Traditional Geisha Tea Ceremony Access"],
-    days: [
-      { day: 1, title: "Kyoto Arrival & Ryokan Welcoming", details: "Arrive via bullet train. Check-in to a luxury Ryokan. Savor a multi-course Kaiseki dinner served in your room." },
-      { day: 2, title: "Golden Pavilion & Bamboo Grove Guided Stroll", details: "Explore Kinkaku-ji (Golden Pavilion) and wander the towering bamboo pathways of Arashiyama with a private local historian." },
-      { day: 3, title: "Zen Garden Meditation & Tea Ceremony", details: "Participate in a private tea ceremony in a historic wooden teahouse, followed by guided meditation at Ryoan-ji." },
-      { day: 4, title: "Fushimi Inari Shrine & Gion Evening walk", details: "Walk under the thousands of vermilion torii gates at Fushimi Inari. Walk through historic Gion with a culture specialist." },
-      { day: 5, title: "Uji Matcha Field Daytrip", details: "Travel to Uji, the cradle of Japanese green tea. Tour organic tea fields and learn traditional matcha grinding techniques." },
-      { day: 6, title: "Departure", details: "Transfer to Kyoto Station for your departure or onward travel to Tokyo." }
-    ],
-    faqs: [
-      { question: "Are shoes permitted in the Ryokan?", answer: "No, guests must remove outdoor footwear at the entry hall. Indoor slippers are provided, and tatami mats are walked on in socks." }
-    ]
-  }
-};
+}
 
 export const PackageDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const [activeTab, setActiveTab] = useState<'itinerary' | 'inclusions' | 'faqs'>('itinerary');
+  const navigate = useNavigate();
+  
+  // Package details states
+  const [pkg, setPkg] = useState<any>(null);
+  const [details, setDetails] = useState<PackageDetails | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  // Tabs / UI states
+  const [activeTab, setActiveTab] = useState<'itinerary' | 'inclusions' | 'faqs' | 'enquiry'>('itinerary');
   const [expandedDay, setExpandedDay] = useState<number | null>(1);
   const [isLiked, setIsLiked] = useState(false);
+  const [showBookingModal, setShowBookingModal] = useState(false);
   const [bookingConfirmed, setBookingConfirmed] = useState(false);
+  const [bookingResponse, setBookingResponse] = useState<any>(null);
 
-  const pkg = mockPackages.find((p) => p.id === id) || mockPackages[0];
-  const details = packageItineraries[pkg.id] || {
-    description: `Embark on a curated voyage to ${pkg.destination}. Experience hand-selected accommodations, exclusive local coordinates, and seamless transitions under the guidance of Nishtha Travel Concierge.`,
-    highlights: ["Curated Accommodation", "Luxury Ground Transportation", "Bespoke Activities & Guides", "24/7 Concierge Protection"],
-    days: [
-      { day: 1, title: "Arrival & VIP Meet & Greet", details: `Touchdown in ${pkg.destination}. Private airport transfer to your luxury suite. Sunset cocktails and overview briefing.` },
-      { day: 2, title: "Guided Exploration & Local Discovery", details: "Embark on a customized tour of key historical landmarks, led by an expert local guide." },
-      { day: 3, title: "Curated Activity & Leisure Evening", details: "Spend the day enjoying curated recreational excursions or relax in luxury resort spas." },
-      { day: 4, title: "Departure", details: "Private chauffeur transfer to the international terminal for your onward journey." }
-    ],
-    faqs: [
-      { question: "Is this itinerary customizable?", answer: "Yes, every detail of this package can be customized by our concierge desk. Get in touch to tailor dates, transfers, or suites." }
-    ]
-  };
+  // Enquiry Form State
+  const [enquiryName, setEnquiryName] = useState('Alexander Mercer');
+  const [enquiryEmail, setEnquiryEmail] = useState('alex.mercer@nishtha-concierge.com');
+  const [enquiryPhone, setEnquiryPhone] = useState('+91 99999 88888');
+  const [enquiryDate, setEnquiryDate] = useState('2026-06-15');
+  const [enquiryMsg, setEnquiryMsg] = useState('');
+  const [enquirySubmitted, setEnquirySubmitted] = useState(false);
+
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
+  useEffect(() => {
+    // 1. Find package base properties from mockData as immediate placeholder
+    const basePkg = mockPackages.find((p) => p.id === id);
+    
+    // 2. Fetch full details from the backend
+    setLoading(true);
+    fetch(`${apiUrl}/api/packages/${id}`)
+      .then(res => {
+        if (!res.ok) throw new Error('Package details not found in database');
+        return res.json();
+      })
+      .then(data => {
+        setPkg(data);
+        setDetails(data.itinerary);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.warn('Fallback to local mock package details:', err);
+        // Fallback locally
+        if (basePkg) {
+          setPkg(basePkg);
+          // Load a default mock itinerary
+          setDetails({
+            description: `Embark on a curated voyage to ${basePkg.destination}. Experience hand-selected accommodations, exclusive local coordinates, and seamless transitions under the guidance of Nishtha Travel Concierge.`,
+            highlights: basePkg.features || ["Curated Accommodation", "Luxury Ground Transportation", "Bespoke Activities & Guides", "24/7 Concierge Protection"],
+            days: [
+              { day: 1, title: "Arrival & VIP Meet & Greet", details: `Touchdown in ${basePkg.destination}. Private airport transfer to your luxury suite. Sunset cocktails and overview briefing.` },
+              { day: 2, title: "Guided Exploration & Local Discovery", details: "Embark on a customized tour of key historical landmarks, led by an expert local guide." },
+              { day: 3, title: "Curated Activity & Leisure Evening", details: "Spend the day enjoying curated recreational excursions or relax in luxury resort spas." },
+              { day: 4, title: "Departure", details: "Private chauffeur transfer to the international terminal for your onward journey." }
+            ],
+            faqs: [
+              { question: "Is this itinerary customizable?", answer: "Yes, every detail of this package can be customized by our concierge desk. Get in touch to tailor dates, transfers, or suites." }
+            ]
+          });
+        }
+        setLoading(false);
+      });
+  }, [id, apiUrl]);
 
   const handleBookPackage = () => {
-    setBookingConfirmed(true);
-    setTimeout(() => {
-      setBookingConfirmed(false);
-    }, 4000);
+    if (!pkg) return;
+
+    const payload = {
+      packageId: pkg.id,
+      packageTitle: pkg.title,
+      destination: pkg.destination,
+      duration: pkg.duration,
+      price: pkg.price,
+      passengerName: enquiryName,
+      passengerEmail: enquiryEmail,
+      passengerPhone: enquiryPhone,
+      travelDate: enquiryDate
+    };
+
+    fetch(`${apiUrl}/api/bookings/package`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then(res => res.json())
+      .then(data => {
+        setBookingResponse(data);
+        setBookingConfirmed(true);
+        setTimeout(() => {
+          setBookingConfirmed(false);
+          setShowBookingModal(false);
+          navigate('/dashboard');
+        }, 4000);
+      })
+      .catch(err => {
+        console.error('Error booking package:', err);
+        alert('There was an error booking your package. Please try again.');
+      });
   };
+
+  const handleSendEnquiry = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!enquiryName || !enquiryEmail || !enquiryMsg) {
+      alert('Please fill out all required enquiry fields');
+      return;
+    }
+
+    const payload = {
+      name: enquiryName,
+      email: enquiryEmail,
+      phone: enquiryPhone,
+      travelDate: enquiryDate,
+      message: enquiryMsg,
+      packageId: pkg?.id,
+      packageName: pkg?.title
+    };
+
+    fetch(`${apiUrl}/api/enquiries`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then(res => {
+        if (!res.ok) throw new Error('Network response error');
+        return res.json();
+      })
+      .then(() => {
+        setEnquirySubmitted(true);
+        setEnquiryMsg('');
+        setTimeout(() => setEnquirySubmitted(false), 5000);
+      })
+      .catch(err => {
+        console.error('Error sending enquiry:', err);
+        alert('Could not submit enquiry at this moment. Please try again.');
+      });
+  };
+
+  if (loading || !pkg || !details) {
+    return (
+      <div className="min-h-screen bg-brand-light flex items-center justify-center">
+        <div className="w-16 h-16 border-4 border-t-brand-purple border-brand-blue rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="bg-brand-light min-h-screen text-slate-800 relative">
@@ -105,8 +181,8 @@ export const PackageDetailsPage: React.FC = () => {
         <div className="absolute top-28 left-0 right-0 z-10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
             <Link
-              to="/"
-              className="flex items-center gap-2 px-4 py-2 rounded-none bg-white border border-[#E5E0D8] hover:bg-brand-light text-xs font-bold uppercase tracking-widest transition-all shadow-none text-slate-700"
+              to="/packages"
+              className="flex items-center gap-2 px-4 py-2 bg-white border border-[#E5E0D8] hover:bg-brand-light text-xs font-bold uppercase tracking-widest transition-all text-slate-700"
             >
               <ArrowLeft className="w-3.5 h-3.5 text-brand-purple" />
               <span>Back Explore</span>
@@ -114,7 +190,7 @@ export const PackageDetailsPage: React.FC = () => {
 
             <button
               onClick={() => setIsLiked(!isLiked)}
-              className="w-10 h-10 rounded-none bg-white border border-[#E5E0D8] flex items-center justify-center text-slate-500 hover:text-red-500 transition-all shadow-none"
+              className="w-10 h-10 bg-white border border-[#E5E0D8] flex items-center justify-center text-slate-500 hover:text-red-500 transition-all"
             >
               <Heart className={`w-5 h-5 ${isLiked ? 'fill-red-500 text-red-500 scale-105' : ''}`} />
             </button>
@@ -134,11 +210,11 @@ export const PackageDetailsPage: React.FC = () => {
             </h1>
 
             <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 text-xs sm:text-sm pt-2">
-              <span className="flex items-center gap-1 font-bold bg-brand-purple/10 text-brand-purple px-3 py-1 rounded-none border border-brand-purple/20">
+              <span className="flex items-center gap-1 font-bold bg-brand-purple/10 text-brand-purple px-3 py-1 border border-brand-purple/20">
                 <Star className="w-4 h-4 fill-brand-purple text-brand-purple" />
                 {pkg.rating} Rating
               </span>
-              <span className="flex items-center gap-1.5 bg-white border border-[#E5E0D8] px-3 py-1 rounded-none text-slate-600 shadow-none font-semibold">
+              <span className="flex items-center gap-1.5 bg-white border border-[#E5E0D8] px-3 py-1 text-slate-605 font-semibold">
                 <Clock className="w-4 h-4 text-brand-purple" />
                 <span>{pkg.duration}</span>
               </span>
@@ -163,7 +239,7 @@ export const PackageDetailsPage: React.FC = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4">
                 {details.highlights.map((hl, idx) => (
-                  <div key={idx} className="flex items-center gap-3 bg-white border border-[#E5E0D8] p-4 rounded-none">
+                  <div key={idx} className="flex items-center gap-3 bg-white border border-[#E5E0D8] p-4">
                     <CheckCircle2 className="w-4 h-4 text-brand-purple shrink-0" />
                     <span className="text-xs font-bold text-brand-blue uppercase tracking-wide">{hl}</span>
                   </div>
@@ -177,7 +253,8 @@ export const PackageDetailsPage: React.FC = () => {
                 {[
                   { id: 'itinerary', label: 'Itinerary' },
                   { id: 'inclusions', label: 'Inclusions' },
-                  { id: 'faqs', label: 'FAQs' }
+                  { id: 'faqs', label: 'FAQs' },
+                  { id: 'enquiry', label: 'Send Enquiry' }
                 ].map((tab) => (
                   <button
                     key={tab.id}
@@ -203,7 +280,7 @@ export const PackageDetailsPage: React.FC = () => {
                   {details.days.map((d) => {
                     const isExpanded = expandedDay === d.day;
                     return (
-                      <div key={d.day} className="bg-white border border-[#E5E0D8] rounded-none overflow-hidden">
+                      <div key={d.day} className="bg-white border border-[#E5E0D8] overflow-hidden">
                         <button
                           onClick={() => setExpandedDay(isExpanded ? null : d.day)}
                           className="w-full flex items-center justify-between p-5 text-left font-serif text-brand-blue"
@@ -225,7 +302,7 @@ export const PackageDetailsPage: React.FC = () => {
                               exit={{ height: 0 }}
                               className="overflow-hidden"
                             >
-                              <p className="p-5 pt-0 border-t border-[#E5E0D8] text-slate-600 text-xs sm:text-sm font-light leading-relaxed">
+                              <p className="p-5 pt-0 border-t border-[#E5E0D8] text-slate-650 text-xs sm:text-sm font-light leading-relaxed">
                                 {d.details}
                               </p>
                             </motion.div>
@@ -242,7 +319,7 @@ export const PackageDetailsPage: React.FC = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-white border border-[#E5E0D8] p-8">
                   <div className="space-y-3">
                     <h4 className="text-[10px] font-bold text-brand-blue uppercase tracking-widest border-b border-[#E5E0D8] pb-2">Included Privileges</h4>
-                    {pkg.includedServices.map((service, idx) => (
+                    {pkg.includedServices && pkg.includedServices.map((service: string, idx: number) => (
                       <div key={idx} className="flex gap-2 items-center text-xs text-slate-600 font-light">
                         <Check className="w-4 h-4 text-emerald-600" />
                         <span>Premium {service} accommodations</span>
@@ -276,12 +353,103 @@ export const PackageDetailsPage: React.FC = () => {
               {activeTab === 'faqs' && (
                 <div className="space-y-4">
                   {details.faqs.map((faq, idx) => (
-                    <div key={idx} className="bg-white border border-[#E5E0D8] p-6 rounded-none">
+                    <div key={idx} className="bg-white border border-[#E5E0D8] p-6">
                       <h4 className="font-serif text-brand-blue text-sm sm:text-base font-semibold">{faq.question}</h4>
                       <p className="text-slate-600 text-xs sm:text-sm font-light leading-relaxed mt-2">{faq.answer}</p>
                     </div>
                   ))}
                 </div>
+              )}
+
+              {/* Tab Content: Enquiry Form */}
+              {activeTab === 'enquiry' && (
+                <form onSubmit={handleSendEnquiry} className="bg-white border border-[#E5E0D8] p-6 sm:p-8 space-y-4">
+                  <h4 className="font-serif text-brand-blue text-base font-bold border-b border-slate-100 pb-2">Holiday Package Enquiry</h4>
+                  <p className="text-xs text-slate-500 leading-relaxed font-light mb-4">
+                    Send us your preferred details. Our concierge agent will reply with custom quotes and upgrades within 2 hours.
+                  </p>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1">
+                      <label className="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Your Name</label>
+                      <input
+                        type="text"
+                        required
+                        value={enquiryName}
+                        onChange={(e) => setEnquiryName(e.target.value)}
+                        className="glass-input px-4 py-2.5 w-full text-xs font-semibold focus:outline-none focus:border-brand-purple"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Email Address</label>
+                      <input
+                        type="email"
+                        required
+                        value={enquiryEmail}
+                        onChange={(e) => setEnquiryEmail(e.target.value)}
+                        className="glass-input px-4 py-2.5 w-full text-xs font-semibold focus:outline-none focus:border-brand-purple"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Phone Number</label>
+                      <input
+                        type="text"
+                        value={enquiryPhone}
+                        onChange={(e) => setEnquiryPhone(e.target.value)}
+                        className="glass-input px-4 py-2.5 w-full text-xs font-semibold focus:outline-none focus:border-brand-purple"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Preferred Date of Departure</label>
+                      <input
+                        type="date"
+                        value={enquiryDate}
+                        onChange={(e) => setEnquiryDate(e.target.value)}
+                        className="glass-input px-4 py-2.5 w-full text-xs font-semibold focus:outline-none focus:border-brand-purple"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Your message & Custom Requirements</label>
+                    <textarea
+                      required
+                      rows={4}
+                      value={enquiryMsg}
+                      onChange={(e) => setEnquiryMsg(e.target.value)}
+                      placeholder="Specify customized hotel star requests, private transfers requests, extra day plans, etc."
+                      className="glass-input px-4 py-2.5 w-full text-xs font-semibold focus:outline-none focus:border-brand-purple resize-none"
+                    />
+                  </div>
+
+                  <div className="pt-2 flex justify-between items-center">
+                    <span className="text-[10px] text-slate-400 font-light max-w-[60%]">
+                      By submitting, you agree to allow Nishtha Travel representatives to coordinate via phone call/email.
+                    </span>
+
+                    <AnimatePresence mode="wait">
+                      {enquirySubmitted ? (
+                        <motion.div
+                          key="success"
+                          initial={{ opacity: 0, scale: 0.95 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          className="bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold px-4 py-2 flex items-center gap-1.5"
+                        >
+                          <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                          <span>Enquiry Submitted</span>
+                        </motion.div>
+                      ) : (
+                        <button
+                          type="submit"
+                          className="btn-gold flex items-center gap-2 px-6 py-3 text-xs uppercase tracking-wider font-bold"
+                        >
+                          <Send size={14} />
+                          <span>Send Enquiry</span>
+                        </button>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </form>
               )}
             </div>
 
@@ -318,39 +486,21 @@ export const PackageDetailsPage: React.FC = () => {
                 <span className="text-xs text-slate-500 uppercase tracking-widest font-bold">Estimated Cost</span>
                 <div className="text-right">
                   <div className="flex items-baseline gap-1">
-                    <span className="text-2xl font-serif text-brand-blue">${pkg.price}</span>
-                    <span className="text-[10px] text-slate-400 font-sans font-bold">USD</span>
+                    <span className="text-2xl font-serif text-brand-blue">₹{pkg.price}</span>
+                    <span className="text-[10px] text-slate-400 font-sans font-bold">INR</span>
                   </div>
                   {pkg.originalPrice && (
-                    <span className="text-xs text-slate-400 line-through font-semibold block">${pkg.originalPrice}</span>
+                    <span className="text-xs text-slate-400 line-through font-semibold block">₹{pkg.originalPrice}</span>
                   )}
                 </div>
               </div>
 
-              <AnimatePresence mode="wait">
-                {bookingConfirmed ? (
-                  <motion.div
-                    key="success"
-                    initial={{ opacity: 0, scale: 0.98 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="p-5 bg-brand-light border border-[#E5E0D8] text-center space-y-3"
-                  >
-                    <CheckCircle2 className="w-8 h-8 text-brand-purple mx-auto animate-pulse" />
-                    <h5 className="font-serif text-brand-blue text-sm font-semibold">Voyage Booked</h5>
-                    <p className="text-[10px] text-slate-500 font-light leading-relaxed">
-                      Your parameters have been logged. We've synchronized this request with your Nishtha Concierge Dashboard.
-                    </p>
-                  </motion.div>
-                ) : (
-                  <button
-                    onClick={handleBookPackage}
-                    className="btn-gold w-full py-4 text-[10px] uppercase tracking-widest font-bold rounded-none shadow-none"
-                  >
-                    Confirm Curated Voyage
-                  </button>
-                )}
-              </AnimatePresence>
+              <button
+                onClick={() => setShowBookingModal(true)}
+                className="btn-gold w-full py-4 text-[10px] uppercase tracking-widest font-bold rounded-none shadow-none text-center block"
+              >
+                Confirm Curated Voyage
+              </button>
 
               {/* Security Assurance */}
               <div className="text-[9px] text-slate-500 text-center flex items-center justify-center gap-1.5 pt-2 border-t border-[#E5E0D8]">
@@ -363,6 +513,125 @@ export const PackageDetailsPage: React.FC = () => {
         </div>
       </div>
 
+      {/* Booking Modal Overlay */}
+      <AnimatePresence>
+        {showBookingModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => {
+                if (!bookingConfirmed) setShowBookingModal(false);
+              }}
+              className="absolute inset-0 bg-slate-900/40 backdrop-blur-[2px]"
+            />
+
+            {/* Modal Box */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.98, y: 12 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.98, y: 12 }}
+              className="bg-white border border-[#E5E0D8] p-8 md:p-10 max-w-md w-full relative z-10 space-y-6 rounded-none shadow-none"
+            >
+              {!bookingConfirmed ? (
+                <>
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <span className="text-[9px] text-brand-purple font-bold uppercase tracking-[0.15em] block">Package Selection</span>
+                      <h3 className="text-xl font-serif text-brand-blue mt-1">Book Curated Voyage</h3>
+                    </div>
+                    <button
+                      onClick={() => setShowBookingModal(false)}
+                      className="text-slate-400 hover:text-slate-655 p-1"
+                    >
+                      ×
+                    </button>
+                  </div>
+
+                  {/* Summary Box */}
+                  <div className="p-5 bg-brand-light border border-[#E5E0D8] space-y-4">
+                    <div>
+                      <span className="text-[9px] text-slate-500 uppercase tracking-widest block">Selected Itinerary</span>
+                      <h4 className="font-serif text-brand-blue text-lg leading-tight mt-1">{pkg.title}</h4>
+                      <span className="text-xs text-slate-500 mt-1 block">{pkg.destination} • {pkg.duration}</span>
+                    </div>
+
+                    <div className="border-t border-[#E5E0D8] pt-3 mt-3 flex justify-between items-center text-xs">
+                      <span className="text-slate-500 font-light">Rate per person</span>
+                      <span className="font-bold text-slate-800">₹{pkg.price}</span>
+                    </div>
+                    <div className="flex justify-between items-center text-xs pt-1">
+                      <span className="text-slate-500 font-light uppercase tracking-wider">Total Package Cost</span>
+                      <span className="text-xl font-serif text-brand-blue">₹{pkg.price}</span>
+                    </div>
+                  </div>
+
+                  {/* Personal details inputs for quick checkout */}
+                  <div className="space-y-3">
+                    <label className="text-[9px] font-bold text-slate-400 uppercase tracking-widest block">Traveler Checkout Info</label>
+                    <input
+                      type="text"
+                      placeholder="Traveler Name"
+                      value={enquiryName}
+                      onChange={(e) => setEnquiryName(e.target.value)}
+                      className="glass-input px-3 py-2 w-full text-xs font-semibold focus:outline-none"
+                    />
+                    <div className="grid grid-cols-2 gap-2">
+                      <input
+                        type="text"
+                        placeholder="Mobile Number"
+                        value={enquiryPhone}
+                        onChange={(e) => setEnquiryPhone(e.target.value)}
+                        className="glass-input px-3 py-2 w-full text-xs font-semibold focus:outline-none"
+                      />
+                      <input
+                        type="date"
+                        placeholder="Travel Date"
+                        value={enquiryDate}
+                        onChange={(e) => setEnquiryDate(e.target.value)}
+                        className="glass-input px-3 py-2 w-full text-xs font-semibold focus:outline-none"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="grid grid-cols-2 gap-3 pt-2">
+                    <button
+                      onClick={() => setShowBookingModal(false)}
+                      className="btn-navy rounded-none"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={handleBookPackage}
+                      className="btn-gold rounded-none"
+                    >
+                      Confirm Package
+                    </button>
+                  </div>
+                </>
+              ) : (
+                // SUCCESS STATE
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="text-center py-8 space-y-4"
+                >
+                  <div className="w-16 h-16 rounded-none bg-brand-light border border-[#E5E0D8] flex items-center justify-center mx-auto text-brand-purple animate-pulse">
+                    <Check className="w-8 h-8 text-brand-purple animate-bounce" />
+                  </div>
+                  <h3 className="text-2xl font-serif text-brand-blue">Voyage Confirmed</h3>
+                  <p className="text-slate-500 text-xs font-light max-w-xs mx-auto leading-relaxed">
+                    Your luxury package booking is confirmed. Reservation code: <strong>{bookingResponse?.confirmationCode}</strong>. We will reach out within 2 hours to coordinate flight timings and bespoke tour selections from our concierge desk.
+                  </p>
+                </motion.div>
+              )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Plane, Hotel, Luggage, MapPin, Calendar, Users, Search, ArrowRightLeft, } from 'lucide-react';
+import { Plane, Hotel, MapPin, Calendar, Users, Search, ArrowRightLeft } from 'lucide-react';
+import TrainIcon from '@mui/icons-material/Train';
 
-type TabType = 'flights' | 'hotels' | 'packages';
+type TabType = 'flights' | 'trains' | 'hotels';
 
 interface SearchTabsProps {
   initialTab?: TabType;
@@ -23,6 +24,12 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
   const [passengers, setPassengers] = useState(2);
   const [showFlightDropdown, setShowFlightDropdown] = useState(false);
 
+  // Search States - Trains
+  const [trainFrom, setTrainFrom] = useState('New Delhi (NDLS)');
+  const [trainTo, setTrainTo] = useState('Mumbai Central (MMCT)');
+  const [trainDate, setTrainDate] = useState('2026-06-15');
+  const [trainClass, setTrainClass] = useState('all');
+
   // Search States - Hotels
   const [hotelLoc, setHotelLoc] = useState('London');
   const [hotelCheckIn, setHotelCheckIn] = useState('2026-06-15');
@@ -31,14 +38,14 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
   const [rooms, setRooms] = useState(1);
   const [showHotelDropdown, setShowHotelDropdown] = useState(false);
 
-  // Search States - Packages
-  const [pkgDestination, setPkgDestination] = useState('Amalfi Coast, Italy');
-  const [pkgDate, setPkgDate] = useState('2026-07');
-  const [pkgCategory, setPkgCategory] = useState('luxury');
-
   const handleFlightSearch = (e: React.FormEvent) => {
     e.preventDefault();
     navigate(`/flights?from=${encodeURIComponent(flightFrom)}&to=${encodeURIComponent(flightTo)}&dep=${flightDepDate}&ret=${flightRetDate}&class=${flightClass}&passengers=${passengers}`);
+  };
+
+  const handleTrainSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    navigate(`/trains?from=${encodeURIComponent(trainFrom)}&to=${encodeURIComponent(trainTo)}&date=${trainDate}&class=${trainClass}`);
   };
 
   const handleHotelSearch = (e: React.FormEvent) => {
@@ -46,50 +53,45 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
     navigate(`/hotels?loc=${encodeURIComponent(hotelLoc)}&in=${hotelCheckIn}&out=${hotelCheckOut}&guests=${guests}`);
   };
 
-  const handlePackageSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    navigate(`/packages?dest=${encodeURIComponent(pkgDestination)}&date=${pkgDate}&cat=${pkgCategory}`);
-  };
-
   const swapLocations = () => {
     setFlightFrom(flightTo);
     setFlightTo(flightFrom);
   };
 
+  const swapTrainLocations = () => {
+    setTrainFrom(trainTo);
+    setTrainTo(trainFrom);
+  };
+
   return (
     <div className={`w-full ${compact ? '' : 'max-w-6xl mx-auto px-4'}`}>
       {/* Tab Buttons */}
-        <div className="relative top-8 z-20 flex flex-nowrap sm:flex-wrap gap-2 sm:gap-3 w-full">
-          {[
-            { id: 'flights', label: 'Tours', icon: Plane },
-            { id: 'hotels', label: 'Hotels', icon: Hotel },
-            { id: 'packages', label: 'Packages', icon: Luggage },
-          ].map((tab) => {
-            const Icon = tab.icon;
-            const active = activeTab === tab.id;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id as TabType)}
-               className={`flex items-center justify-center gap-1.5 sm:gap-0 px-3 py-2 sm:px-5 sm:py-2 my-2 mx-3 rounded-full border transition-all duration-300 font-semibold text-[11px] sm:text-sm flex-1 sm:flex-initial ${
-  active
-    ? 'bg-blue-500 text-white border-blue-500 shadow-md'
-    : 'bg-white text-gray-800 border-gray-200 hover:border-blue-400'
-}`}
-              >
-                <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
-                {tab.label}
-              </button>
-            );
-          })}
-        </div>
+      <div className="relative top-8 z-20 flex flex-nowrap sm:flex-wrap gap-2 sm:gap-3 w-full overflow-x-auto scrollbar-none pb-2">
+        {[
+          { id: 'flights', label: 'Flights', icon: Plane },
+          { id: 'trains', label: 'Trains', icon: TrainIcon },
+          { id: 'hotels', label: 'Hotels', icon: Hotel }
+        ].map((tab) => {
+          const Icon = tab.icon;
+          const active = activeTab === tab.id;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id as TabType)}
+              className={`flex items-center justify-center gap-1.5 px-4 py-2 my-2 mx-1.5 rounded-full border transition-all duration-300 font-semibold text-[11px] sm:text-sm shrink-0 ${active
+                ? 'bg-blue-500 text-white border-blue-500 shadow-md'
+                : 'bg-white text-gray-800 border-gray-200 hover:border-blue-400'
+                }`}
+            >
+              <Icon className="w-4 h-4 sm:w-5 h-5" />
+              {tab.label}
+            </button>
+          );
+        })}
+      </div>
 
       {/* Booking Form Card */}
       <div className="glass-card p-6 md:p-8 relative shadow-luxury rounded-lg z-0">
-        {/* <div className="absolute top-0 right-0 p-3 flex items-center gap-1.5 text-[10px] text-brand-purple bg-brand-purple/5 border-l border-b border-soft-border rounded-tr-2xl rounded-bl-2xl font-bold tracking-wider uppercase">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>Concierge Intelligence Desk</span>
-        </div> */}
 
         {/* Flight Booking Panel */}
         {activeTab === 'flights' && (
@@ -99,7 +101,7 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
                 <button
                   type="button"
                   onClick={() => setFlightType('roundtrip')}
-                  className={`px-3 py-4 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all border ${flightType === 'roundtrip'
+                  className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all border ${flightType === 'roundtrip'
                     ? 'bg-brand-purple/5 text-yellow-500 border-yellow-500/20'
                     : 'bg-white border-soft-border text-slate-500 hover:text-yellow-500'
                     }`}
@@ -264,6 +266,99 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
           </form>
         )}
 
+        {/* Train Booking Panel */}
+        {activeTab === 'trains' && (
+          <form onSubmit={handleTrainSearch} className="space-y-6">
+            <div className="flex flex-wrap items-center justify-between gap-4 border-b border-soft-border pb-4">
+              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                Elite Rail Journeys & Luxury Cabins
+              </div>
+              <div className="flex gap-4">
+                <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-slate-600">
+                  <span>Class:</span>
+                  <select
+                    value={trainClass}
+                    onChange={(e) => setTrainClass(e.target.value)}
+                    className="bg-white border border-soft-border text-dark-text rounded-lg px-3 py-1 focus:border-brand-purple outline-none font-bold cursor-pointer text-[10px]"
+                  >
+                    <option value="all">All Classes</option>
+                    <option value="SL">Sleeper (SL)</option>
+                    <option value="1A">First AC (1A)</option>
+                    <option value="2A">Second AC (2A)</option>
+                    <option value="3A">Third AC (3A)</option>
+                    <option value="EC">Executive Chair Car (EC)</option>
+                    <option value="CC">AC Chair Car (CC)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+              {/* From Train */}
+              <div className="lg:col-span-4 relative">
+                <label className="absolute top-2 left-4 text-[9px] font-bold text-slate-600 uppercase tracking-wider">From Station</label>
+                <div className="flex items-center">
+                  <MapPin className="w-4 h-4 text-slate-400 absolute left-4 top-7 pointer-events-none" />
+                  <input
+                    type="text"
+                    value={trainFrom}
+                    onChange={(e) => setTrainFrom(e.target.value)}
+                    className="glass-input pl-10 pt-7 pb-2 w-full font-bold text-xs text-dark-text focus:outline-none"
+                    placeholder="Departure city or station"
+                  />
+                </div>
+              </div>
+
+              {/* Swap Button */}
+              <div className="lg:col-span-1 flex justify-center -my-2 lg:my-0">
+                <button
+                  type="button"
+                  onClick={swapTrainLocations}
+                  className="w-10 h-10 rounded-full bg-slate-50 hover:bg-brand-purple hover:text-white border border-soft-border flex items-center justify-center text-slate-500 transition-all duration-300 shadow-sm"
+                >
+                  <ArrowRightLeft className="w-4 h-4 rotate-90 lg:rotate-0" />
+                </button>
+              </div>
+
+              {/* To Train */}
+              <div className="lg:col-span-4 relative">
+                <label className="absolute top-2 left-4 text-[9px] font-bold text-slate-600 uppercase tracking-wider">To Station</label>
+                <div className="flex items-center">
+                  <MapPin className="w-4 h-4 text-slate-400 absolute left-4 top-7 pointer-events-none" />
+                  <input
+                    type="text"
+                    value={trainTo}
+                    onChange={(e) => setTrainTo(e.target.value)}
+                    className="glass-input pl-10 pt-7 pb-2 w-full font-bold text-xs text-dark-text focus:outline-none"
+                    placeholder="Destination station"
+                  />
+                </div>
+              </div>
+
+              {/* Date */}
+              <div className="lg:col-span-2 relative">
+                <label className="absolute top-2 left-4 text-[9px] font-bold text-slate-600 uppercase tracking-wider">Travel Date</label>
+                <div className="flex items-center">
+                  <Calendar className="w-4 h-4 text-slate-400 absolute left-4 top-7 pointer-events-none" />
+                  <input
+                    type="date"
+                    value={trainDate}
+                    onChange={(e) => setTrainDate(e.target.value)}
+                    className="glass-input pl-10 pt-7 pb-2 w-full font-bold text-xs text-dark-text focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              {/* Submit */}
+              <div className="lg:col-span-1">
+                <button type="submit" className="btn-gold w-full py-4 h-full font-extrabold text-xs uppercase tracking-wider flex items-center justify-center">
+                  <Search className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </form>
+        )}
+
         {/* Hotel Booking Panel */}
         {activeTab === 'hotels' && (
           <form onSubmit={handleHotelSearch} className="space-y-6">
@@ -299,7 +394,7 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
                           <button
                             type="button"
                             onClick={() => setGuests(guests + 1)}
-                            className="w-8 h-8 rounded-lg bg-slate-50 border border-soft-border hover:bg-slate-100 flex items-center justify-center font-bold text-slate-600 text-sm"
+                            className="w-8 h-8 rounded-lg bg-slate-50 border border-soft-border hover:bg-slate-100 flex items-center justify-center font-bold text-slate-650 text-sm"
                           >
                             +
                           </button>
@@ -379,72 +474,6 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
                 <button type="submit" className="btn-gold w-full py-4 h-full font-extrabold text-xs uppercase tracking-wider flex items-center justify-center gap-1.5">
                   <Search className="w-4 h-4" />
                   <span>Search Hotels</span>
-                </button>
-              </div>
-            </div>
-          </form>
-        )}
-
-        {/* Packages Booking Panel */}
-        {activeTab === 'packages' && (
-          <form onSubmit={handlePackageSearch} className="space-y-6">
-            <div className="flex flex-wrap items-center justify-between gap-4 border-b border-soft-border pb-4">
-              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                Curated Luxury Itineraries & Tour Packages
-              </div>
-              <div className="flex gap-4">
-                <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-slate-600">
-                  <span>Category:</span>
-                  <select
-                    value={pkgCategory}
-                    onChange={(e) => setPkgCategory(e.target.value)}
-                    className="bg-white border border-soft-border text-dark-text rounded-lg px-3 py-1 focus:border-brand-purple outline-none font-bold cursor-pointer text-[10px]"
-                  >
-                    <option value="luxury">Luxury</option>
-                    <option value="honeymoon">Honeymoon</option>
-                    <option value="adventure">Adventure</option>
-                    <option value="international">International</option>
-                    <option value="domestic">Domestic</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
-              {/* Destination */}
-              <div className="lg:col-span-5 relative">
-                <label className="absolute top-2 left-4 text-[9px] font-bold text-slate-600 uppercase tracking-wider">Destination</label>
-                <div className="flex items-center">
-                  <MapPin className="w-4 h-4 text-slate-400 absolute left-4 top-7 pointer-events-none" />
-                  <input
-                    type="text"
-                    value={pkgDestination}
-                    onChange={(e) => setPkgDestination(e.target.value)}
-                    className="glass-input pl-10 pt-7 pb-2 w-full font-bold text-xs text-dark-text focus:outline-none"
-                    placeholder="Where would you like to explore?"
-                  />
-                </div>
-              </div>
-
-              {/* Month of Travel */}
-              <div className="lg:col-span-4 relative">
-                <label className="absolute top-2 left-4 text-[9px] font-bold text-slate-600 uppercase tracking-wider">Travel Period</label>
-                <div className="flex items-center">
-                  <Calendar className="w-4 h-4 text-slate-400 absolute left-4 top-7 pointer-events-none" />
-                  <input
-                    type="month"
-                    value={pkgDate}
-                    onChange={(e) => setPkgDate(e.target.value)}
-                    className="glass-input pl-10 pt-7 pb-2 w-full font-bold text-xs text-dark-text focus:outline-none"
-                  />
-                </div>
-              </div>
-
-              {/* Submit */}
-              <div className="lg:col-span-3">
-                <button type="submit" className="btn-gold w-full py-4 h-full font-extrabold text-xs uppercase tracking-wider flex items-center justify-center gap-1.5">
-                  <Search className="w-4 h-4" />
-                  <span>Search Packages</span>
                 </button>
               </div>
             </div>

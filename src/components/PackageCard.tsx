@@ -156,25 +156,26 @@ export const PackageCard: React.FC<PackageCardProps> = ({
 
         {/* Price Row */}
         <div className="flex items-end justify-between mb-3">
-          <button
-            onClick={() => onBook?.(pkg)}
+          <Link
+            to={`/holiday-itinerary/${pkg.id}`}
             className="
-              bg-[#2F80ED]
-              hover:bg-blue-700
-              text-white
-              px-4
-              py-2
-              rounded-2xl
-              font-bold
-              flex
-              items-center
-              gap-2
-              transition-all
-            "
+            bg-[#2F80ED]
+            hover:bg-blue-700
+            text-white
+            px-4
+            py-2
+            rounded-2xl
+            font-bold
+            flex
+            items-center
+            gap-2
+            transition-all
+            cursor-pointer
+  "
           >
             Book Now
             <ArrowUpRight className="w-4 h-4" />
-          </button>
+          </Link>
 
           <div className="text-right">
             <p className="text-gray-500 text-[12px] font-semibold">

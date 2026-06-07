@@ -1,5 +1,6 @@
 import React, { Suspense, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import {
   ArrowRight,
   CheckCircle2,
@@ -18,9 +19,10 @@ import { PackageCard } from '../components/PackageCard';
 import { Testimonials } from '../components/Testimonials';
 import { AnimatedCounters } from '../components/AnimatedCounters';
 import { OfferBanner } from '../components/OfferBanner';
-import { mockDestinations, mockPackages, mockBlogs } from '../data/mockData';
+import { mockDestinations, mockPackages, mockBlogs, mockCabs } from '../data/mockData';
 import { Navbar } from '../components/Navbar';
 import { lazy } from "react";
+import { CabCard } from '../components/CabCards';
 
 const TravelSignatureSection = lazy(
   () => import("../components/NishtaChosse")
@@ -141,12 +143,6 @@ export const LandingPage: React.FC = () => {
                 ))}
               </div>
             </div>
-            {/* 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {filteredDestinations.map((dest) => (
-                <DestinationCard key={dest.id} destination={dest} />
-              ))}
-            </div> */}
             <div className="flex gap-6 overflow-x-auto pb-4 snap-x">
               {filteredDestinations.map((dest) => (
                 <div
@@ -160,8 +156,50 @@ export const LandingPage: React.FC = () => {
           </div>
         </section>
 
-        {/* 4. AI RECOMMENDATIONS PLANNER */}
-        {/* <AIRecommendationSection /> */}
+        {/* 4. Cab Booking Sections */}
+        <section className="py-24 bg-slate-50 relative">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col lg:flex-row justify-between items-end gap-8 mb-16">
+              <div className="max-w-2xl">
+                <h2 className="mt-4 text-5xl font-bold text-brand-blue">
+                  Executive Fleet Collection
+                </h2>
+                <p className="mt-4 text-slate-500">
+                  Luxury chauffeur-driven vehicles for airport transfers,
+                  employee transportation, corporate mobility and outstation journeys.
+                </p>
+              </div>
+              <Link
+                to="/cabs"
+                className="
+              btn-gold
+              flex
+              items-center
+              gap-2
+            "
+              >
+                View Full Fleet
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+            <div className="flex gap-6 overflow-x-auto pb-4 snap-x scrollbar-hide">
+              {mockCabs.map((cab) => (
+                <div
+                  key={cab.id}
+                  className="
+                      min-w-[320px]
+                      sm:min-w-[380px]
+                      lg:min-w-[420px]
+                      flex-shrink-0
+                      snap-start
+                  "
+                >
+                  <CabCard cab={cab} />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
         {/* 5. TRENDING HOLIDAY PACKAGES */}
         <section className="py-18 bg-white relative">

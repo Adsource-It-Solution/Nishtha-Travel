@@ -87,28 +87,206 @@ export const HolidayPackagesPage: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         {/* Search Panel */}
-        <div className="mb-14">
-          <SearchTabs initialTab="packages" compact />
-        </div>
+        <section className="relative z-20 -mt-16">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="bg-white rounded-[32px] shadow-[0_20px_60px_rgba(0,0,0,0.12)] p-6 md:p-8">
+
+              <div className="mb-8">
+                <h2 className="text-3xl font-bold text-gray-900">
+                  Plan Your Dream Holiday
+                </h2>
+                <p className="text-gray-600 mt-2">
+                  Share your travel preferences and get a customized holiday package.
+                  <span className='text-black text-xl font-bold mx-2'>Enquiry Now</span>
+                </p>
+              </div>
+
+              <form className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+
+                {/* Full Name */}
+                <input
+                  type="text"
+                  placeholder="Full Name"
+                  className="border rounded-xl px-4 py-3"
+                />
+
+                {/* Mobile */}
+                <input
+                  type="tel"
+                  placeholder="Mobile Number"
+                  className="border rounded-xl px-4 py-3"
+                />
+
+                {/* Email */}
+                <input
+                  type="email"
+                  placeholder="Email Address"
+                  className="border rounded-xl px-4 py-3"
+                />
+
+                {/* City */}
+                <input
+                  type="text"
+                  placeholder="Your City"
+                  className="border rounded-xl px-4 py-3"
+                />
+
+                {/* Destination */}
+                <input
+                  type="text"
+                  placeholder="Destination"
+                  className="border rounded-xl px-4 py-3"
+                />
+
+                {/* Departure City */}
+                <input
+                  type="text"
+                  placeholder="Departure City"
+                  className="border rounded-xl px-4 py-3"
+                />
+
+                {/* Travel Date */}
+                <input
+                  type="date"
+                  className="border rounded-xl px-4 py-3"
+                />
+
+                {/* Duration */}
+                <input
+                  type="text"
+                  placeholder="Duration (e.g. 5N/6D)"
+                  className="border rounded-xl px-4 py-3"
+                />
+
+                {/* Adults */}
+                <input
+                  type="number"
+                  min="1"
+                  placeholder="Adults"
+                  className="border rounded-xl px-4 py-3"
+                />
+
+                {/* Children */}
+                <input
+                  type="number"
+                  min="0"
+                  placeholder="Children"
+                  className="border rounded-xl px-4 py-3"
+                />
+
+                {/* Infants */}
+                <input
+                  type="number"
+                  min="0"
+                  placeholder="Infants"
+                  className="border rounded-xl px-4 py-3"
+                />
+
+                {/* Rooms */}
+                <input
+                  type="number"
+                  min="1"
+                  placeholder="Rooms Required"
+                  className="border rounded-xl px-4 py-3"
+                />
+
+                {/* Budget */}
+                <select className="border rounded-xl px-4 py-3">
+                  <option>Budget Range</option>
+                  <option>₹20,000 - ₹50,000</option>
+                  <option>₹50,000 - ₹1,00,000</option>
+                  <option>₹1,00,000 - ₹2,00,000</option>
+                  <option>₹2,00,000+</option>
+                </select>
+
+                {/* Hotel Category */}
+                <select className="border rounded-xl px-4 py-3">
+                  <option>Hotel Category</option>
+                  <option>3 Star</option>
+                  <option>4 Star</option>
+                  <option>5 Star</option>
+                  <option>Luxury Resort</option>
+                </select>
+
+                {/* Package Type */}
+                <select className="border rounded-xl px-4 py-3">
+                  <option>Package Type</option>
+                  <option>Family</option>
+                  <option>Honeymoon</option>
+                  <option>Group Tour</option>
+                  <option>Adventure</option>
+                  <option>Corporate</option>
+                </select>
+
+                {/* Flight Required */}
+                <select className="border rounded-xl px-4 py-3">
+                  <option>Flight Booking Required?</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                </select>
+
+                {/* Cab Required */}
+                <select className="border rounded-xl px-4 py-3">
+                  <option>Cab / Sightseeing Required?</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                </select>
+
+                {/* Visa */}
+                <select className="border rounded-xl px-4 py-3">
+                  <option>Visa Assistance Required?</option>
+                  <option>Yes</option>
+                  <option>No</option>
+                </select>
+
+                {/* Special Occasion */}
+                <select className="border rounded-xl px-4 py-3">
+                  <option>Special Occasion</option>
+                  <option>Honeymoon</option>
+                  <option>Anniversary</option>
+                  <option>Birthday</option>
+                  <option>Family Vacation</option>
+                  <option>None</option>
+                </select>
+
+                {/* Notes */}
+                <textarea
+                  rows={4}
+                  placeholder="Tell us your requirements, hotel preferences, sightseeing interests, meal preferences, etc."
+                  className="border rounded-xl px-4 py-3 lg:col-span-4"
+                />
+
+                {/* Submit */}
+                <button
+                  type="submit"
+                  className="lg:col-span-4 bg-gradient-to-r from-orange-500 to-red-500 text-white py-4 rounded-xl font-semibold hover:opacity-90 transition"
+                >
+                  Get Free Holiday Quote
+                </button>
+
+              </form>
+            </div>
+          </div>
+        </section>
 
         {/* Offers / Deals Section */}
         <div className="mb-16">
           <div className="mb-6 space-y-1">
             <span className="text-xs font-semibold font-['Poppins'] text-indigo-600 uppercase tracking-[0.25em] block mb-2">
-  Club Benefits
-</span>
+              Club Benefits
+            </span>
 
-<h3 className="text-2xl font-semibold font-['Poppins'] text-slate-900 leading-tight">
-  Active Private Curation Deals
-</h3>
+            <h3 className="text-2xl font-semibold font-['Poppins'] text-slate-900 leading-tight">
+              Active Private Curation Deals
+            </h3>
           </div>
           <OfferBanner />
         </div>
 
         {/* Categories Tab Selector */}
         <div className="mb-12">
-  <div
-    className="
+          <div
+            className="
       flex
       overflow-x-auto
       whitespace-nowrap
@@ -127,15 +305,15 @@ export const HolidayPackagesPage: React.FC = () => {
       w-full
       font-['Poppins']
     "
-  >
-    {categories.map((cat) => {
-      const isActive = selectedCategory === cat.id;
+          >
+            {categories.map((cat) => {
+              const isActive = selectedCategory === cat.id;
 
-      return (
-        <button
-          key={cat.id}
-          onClick={() => setSelectedCategory(cat.id)}
-          className={`
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setSelectedCategory(cat.id)}
+                  className={`
             relative
             px-6
             py-3
@@ -146,17 +324,16 @@ export const HolidayPackagesPage: React.FC = () => {
             transition-all
             duration-300
             shrink-0
-            ${
-              isActive
-                ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg'
-                : 'text-slate-600 hover:bg-slate-50 hover:text-indigo-600'
-            }
+            ${isActive
+                      ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg'
+                      : 'text-slate-600 hover:bg-slate-50 hover:text-indigo-600'
+                    }
           `}
-        >
-          {isActive && (
-            <motion.div
-              layoutId="activePkgCat"
-              className="
+                >
+                  {isActive && (
+                    <motion.div
+                      layoutId="activePkgCat"
+                      className="
                 absolute
                 inset-0
                 rounded-full
@@ -165,17 +342,17 @@ export const HolidayPackagesPage: React.FC = () => {
                 to-purple-600
                 -z-10
               "
-            />
-          )}
+                    />
+                  )}
 
-          <span className="relative z-10">
-            {cat.label}
-          </span>
-        </button>
-      );
-    })}
-  </div>
-</div>
+                  <span className="relative z-10">
+                    {cat.label}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
 
         {/* Packages Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

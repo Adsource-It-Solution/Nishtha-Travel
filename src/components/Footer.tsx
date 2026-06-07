@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  Mail,
-  Phone,
   MapPin,
   Instagram,
   Facebook,
@@ -10,6 +8,8 @@ import {
   Globe,
   Send,
 } from "lucide-react";
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
+import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined';
 
 export const Footer: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -51,43 +51,10 @@ export const Footer: React.FC = () => {
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[140px]" />
 
       <div className="relative z-10">
-
-        {/* TOP CTA */}
-        {/* <div className="max-w-7xl mx-auto px-6 pt-20">
-
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-[40px] p-8 md:p-14 flex flex-col lg:flex-row items-center justify-between gap-8 shadow-2xl">
-
-            <div>
-              <span className="uppercase tracking-[4px] text-white/80 text-xs font-bold">
-                Travel With Confidence
-              </span>
-
-              <h2 className="text-4xl md:text-5xl font-black text-white mt-3">
-                Ready For Your Next Adventure?
-              </h2>
-
-              <p className="text-white/80 mt-3 max-w-xl">
-                Discover curated luxury vacations,
-                premium travel experiences and
-                unforgettable journeys with Nishtha Travel.
-              </p>
-            </div>
-
-            <button className="bg-white text-black px-8 py-4 rounded-full font-bold hover:scale-105 transition-all">
-              Start Planning
-            </button>
-
-          </div>
-        </div> */}
-
-        {/* MAIN FOOTER */}
         <div className="max-w-7xl mx-auto px-6 py-20">
 
           <div className="grid lg:grid-cols-5 gap-12">
-
-            {/* BRAND */}
             <div className="lg:col-span-2">
-
               <Link
                 to="/"
                 className="flex items-center gap-4"
@@ -99,28 +66,22 @@ export const Footer: React.FC = () => {
                     className="w-24 h-16 object-contain"
                   />
                 </div>
-
                 <div>
-                  <h3 className="text-[24px] font-extrabold tracking-[0.1em] font-sans text-white group-hover:text-brand-blue transition-colors block leading-tight">
-                    NISHTHA TRAVEL
-                  </h3>
-
-                  <span className="text-[16px] block font-bold tracking-[0.2em] uppercase text-purple-600 -mt-0.5 leading-none">
-                    Concierge PVT. LTD.
-                  </span>
+                  <img
+                    src="/favicon.png"
+                    alt="Nishtha Travel Logo"
+                    className="w-56 h-16 object-contain"
+                  />
                 </div>
               </Link>
-
               <p className="text-slate-400 mt-6 max-w-md leading-relaxed">
                 Nishtha Travel Concierge specializes
                 in luxury travel experiences, premium
                 holiday packages, international tours,
                 visa facilitation and bespoke travel planning.
               </p>
-
               {/* Social */}
               <div className="flex gap-4 mt-8">
-
                 {[Instagram, Facebook, Twitter, Globe].map(
                   (Icon, idx) => (
                     <a
@@ -148,8 +109,6 @@ export const Footer: React.FC = () => {
 
               </div>
             </div>
-
-            {/* SERVICES */}
             <div>
               <h4 className="text-white font-bold uppercase tracking-wider mb-6">
                 Services
@@ -157,13 +116,12 @@ export const Footer: React.FC = () => {
 
               <ul className="space-y-4 text-slate-400">
                 <li><Link to="/flights">Luxury Flights</Link></li>
+                <li><Link to="/trains">Train Ticket Booking</Link></li>
                 <li><Link to="/hotels">Premium Hotels</Link></li>
                 <li><Link to="/packages">Holiday Packages</Link></li>
-                <li><Link to="/about">Corporate Travel</Link></li>
+                <li><Link to="/cabs">Affordable Cabs</Link></li>
               </ul>
             </div>
-
-            {/* COMPANY */}
             <div>
               <h4 className="text-white font-bold uppercase tracking-wider mb-6">
                 Company
@@ -184,23 +142,29 @@ export const Footer: React.FC = () => {
                 Contact
               </h4>
 
-              <div className="space-y-4 text-slate-400">
+              <div className="space-y-6 text-slate-400 ">
 
                 <div className="flex gap-3">
                   <MapPin className="w-5 h-5 text-yellow-400 shrink-0" />
-                  <span>
-                    Gurgaon, Haryana, India
-                  </span>
+                  <div className="flex flex-col">
+                    <span>
+                      H No.-C355, Gali No. 5
+                    </span>
+                    <span>
+                      Bhoop Singh Nagar, Jail Road, Near IOC Gas Plant PO Bhondsi, Gurgaon-122102
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex flex-row">
+                  <PhoneOutlinedIcon className="size-5 text-yellow-500" />
+                  <span className="px-2 border-r-2">9718216528</span>
+                  <span className="px-2">9718566528</span>
                 </div>
 
                 <div className="flex gap-3">
-                  <Phone className="w-5 h-5 text-yellow-400" />
-                  <span>+91 99999 99999</span>
-                </div>
-
-                <div className="flex gap-3">
-                  <Mail className="w-5 h-5 text-yellow-400" />
-                  <span>info@nishthatravel.com</span>
+                  <EmailOutlinedIcon className="size-5 text-yellow-500" />
+                  <a href="mailto:nishtharadhapatel@gmail.com">nishtharadhapatel@gmail.com</a>
                 </div>
 
               </div>

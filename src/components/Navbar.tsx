@@ -24,9 +24,10 @@ export const Navbar: React.FC = () => {
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'Flights', path: '/flights' },
+    { name: 'Trains', path: '/trains' },
     { name: 'Hotels', path: '/hotels' },
     { name: 'Holiday Packages', path: '/packages' },
-    // { name: 'Visa Services', path: '/visa' },
+    { name: 'Cabs', path: '/cabs' },
     { name: 'About', path: '/about' },
     { name: 'Contact', path: '/contact' },
   ];
@@ -37,11 +38,10 @@ export const Navbar: React.FC = () => {
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-  scrolled || isOpen
-    ? 'bg-white border-b border-[#E5E0D8] py-2 lg:py-3 shadow-sm'
-    : 'bg-brand-light/90 backdrop-blur-sm py-2 lg:py-4 border-b border-transparent'
-}`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled || isOpen
+          ? 'bg-white border-b border-[#E5E0D8] py-2 lg:py-3 shadow-sm'
+          : 'bg-brand-light/90 backdrop-blur-sm py-2 lg:py-4 border-b border-transparent'
+          }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
@@ -61,12 +61,11 @@ export const Navbar: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <span className="text-[24px] font-extrabold tracking-[0.1em] font-sans text-blue-900 group-hover:text-brand-blue transition-colors block leading-tight">
-                      NISHTHA TRAVELS
-                    </span>
-                    <span className="text-[16px] block font-bold tracking-[0.2em] uppercase text-purple-600 -mt-0.5 leading-none">
-                      Concierge PVT. LTD.
-                    </span>
+                    <img
+                      src="/favicon.png"
+                      alt="Nishtha Travel Logo"
+                      className="w-56 h-16 object-contain"
+                    />
                   </div>
                 </Link>
 
@@ -104,7 +103,7 @@ export const Navbar: React.FC = () => {
                   </button> */}
 
                   <Link
-                    to="/dashboard"
+                    to="/login"
                     className="
           bg-black
           text-white
@@ -165,9 +164,15 @@ export const Navbar: React.FC = () => {
                       WhatsApp
                     </p>
 
-                    <p className="font-bold text-lg text-green-600">
-                      +91 99999 99999
-                    </p>
+                    <div className="font-bold text-lg text-green-600 flex flex-row gap-2">
+                      <a href="tel:+919718216528" className="">
+                        9718216528
+                      </a>
+                      <div className='border-l-2' />
+                      <a href="tel:+919718566528" className="">
+                        9718566528
+                      </a>
+                    </div>
                   </div>
 
                 </div>
@@ -187,12 +192,14 @@ export const Navbar: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <span className="text-[14px] font-extrabold tracking-[0.05em] font-sans text-blue-900 leading-tight block">
-                    NISHTHA TRAVELS
-                  </span>
-                  <span className="text-[9px] block font-bold tracking-[0.1em] uppercase text-purple-600 -mt-0.5 leading-none">
+                  <img
+                    src="/favicon.png"
+                    alt="Nishtha Travel Logo"
+                    className="w-40 h-20 object-contain"
+                  />
+                  {/* <span className="text-[9px] block font-bold tracking-[0.1em] uppercase text-purple-600 -mt-0.5 leading-none">
                     Concierge PVT. LTD.
-                  </span>
+                  </span> */}
                 </div>
               </Link>
 

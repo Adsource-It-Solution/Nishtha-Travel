@@ -69,13 +69,37 @@ export interface Package {
   originalPrice?: number;
   image: string;
   rating: number;
-  includedServices: string[];
   category: string;
+  featured: boolean;
+  tourType: string;
   discountPercentage?: number;
+  features: string[];
+  includedServices: string[];
 
-  featured?: boolean;
-  tourType?: string;
-  features?: string[];
+  // NEW FIELDS
+  overview?: string;
+
+  gallery?: string[];
+
+  itinerary?: {
+    day: number;
+    title: string;
+    description: string;
+  }[];
+
+  exclusions?: string[];
+
+  highlights?: string[];
+
+  hotels?: {
+    name: string;
+    category: string;
+    image: string;
+  }[];
+
+  policies?: string[];
+
+  location?: string;
 }
 
 export interface Testimonial {
@@ -86,6 +110,18 @@ export interface Testimonial {
   content: string;
   rating: number;
   location: string;
+}
+
+export interface Cab {
+  id: string;
+  name: string;
+  type: string;
+  image: string;
+  rate: string;
+  capacity: string;
+  luggage: string;
+  description: string;
+  featured?: boolean;
 }
 
 export interface Offer {
@@ -354,6 +390,61 @@ export const mockFlights: Flight[] = [
   }
 ];
 
+export const mockCabs: Cab[] = [
+  {
+    id: "cab-1",
+    name: "Mercedes-Benz S-Class",
+    type: "First Class Luxury",
+    image:
+      "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&q=80",
+    rate: "₹45/km",
+    capacity: "3 Guests",
+    luggage: "2 Bags",
+    description:
+      "Executive chauffeur service with reclining leather seats, WiFi and luxury comfort.",
+    featured: true,
+  },
+
+  {
+    id: "cab-2",
+    name: "BMW 7 Series",
+    type: "Business Elite",
+    image:
+      "https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=1200&q=80",
+    rate: "₹42/km",
+    capacity: "3 Guests",
+    luggage: "2 Bags",
+    description:
+      "Premium executive sedan for airport transfers and business travel.",
+  },
+
+  {
+    id: "cab-3",
+    name: "Range Rover Sport",
+    type: "Luxury SUV",
+    image:
+      "https://images.unsplash.com/photo-1608508060098-29b209d61e93?auto=format&fit=crop&w=1200&q=80",
+    rate: "₹38/km",
+    capacity: "4 Guests",
+    luggage: "4 Bags",
+    description:
+      "Luxury SUV designed for family trips, corporate guests and outstation travel.",
+  },
+
+  {
+    id: "cab-4",
+    name: "Mercedes V-Class",
+    type: "Executive Van",
+    image:
+      "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=1200&q=80",
+    rate: "₹50/km",
+    capacity: "6 Guests",
+    luggage: "6 Bags",
+    description:
+      "Luxury group transportation with captain seats and meeting space.",
+  },
+];
+
 export const mockPackages: Package[] = [
   {
     id: "pkg-1",
@@ -383,7 +474,57 @@ export const mockPackages: Package[] = [
       "Private Seaplane",
       "All Meals",
       "Excursions"
-    ]
+    ],
+    overview:
+      "Experience luxury overwater villas, crystal-clear lagoons, private beaches and unforgettable sunsets in the Maldives.",
+
+    highlights: [
+      "Overwater Villa Stay",
+      "Private Seaplane Transfer",
+      "Snorkeling Adventure",
+      "Sunset Cruise",
+      "Luxury Spa Experience",
+    ],
+
+    itinerary: [
+      {
+        day: 1,
+        title: "Arrival in Maldives",
+        description:
+          "Arrive at Male Airport and transfer to your luxury resort by seaplane.",
+      },
+      {
+        day: 2,
+        title: "Beach Relaxation",
+        description:
+          "Enjoy white sand beaches and water sports activities.",
+      },
+      {
+        day: 3,
+        title: "Snorkeling Tour",
+        description:
+          "Explore vibrant coral reefs and marine life.",
+      },
+      {
+        day: 4,
+        title: "Sunset Cruise",
+        description:
+          "Private yacht cruise with dinner and entertainment.",
+      },
+      {
+        day: 5,
+        title: "Departure",
+        description:
+          "Breakfast and transfer back to airport.",
+      },
+    ],
+
+    exclusions: [
+      "Personal Expenses",
+      "Travel Insurance",
+      "Visa Fees",
+      "Laundry Charges",
+    ],
   },
 
   {
@@ -413,7 +554,57 @@ export const mockPackages: Package[] = [
       "Private Riva Yacht",
       "Cooking Class",
       "Transfers"
-    ]
+    ],
+    overview:
+      "Experience luxury overwater villas, crystal-clear lagoons, private beaches and unforgettable sunsets in the Maldives.",
+
+    highlights: [
+      "Overwater Villa Stay",
+      "Private Seaplane Transfer",
+      "Snorkeling Adventure",
+      "Sunset Cruise",
+      "Luxury Spa Experience",
+    ],
+
+    itinerary: [
+      {
+        day: 1,
+        title: "Arrival in Maldives",
+        description:
+          "Arrive at Male Airport and transfer to your luxury resort by seaplane.",
+      },
+      {
+        day: 2,
+        title: "Beach Relaxation",
+        description:
+          "Enjoy white sand beaches and water sports activities.",
+      },
+      {
+        day: 3,
+        title: "Snorkeling Tour",
+        description:
+          "Explore vibrant coral reefs and marine life.",
+      },
+      {
+        day: 4,
+        title: "Sunset Cruise",
+        description:
+          "Private yacht cruise with dinner and entertainment.",
+      },
+      {
+        day: 5,
+        title: "Departure",
+        description:
+          "Breakfast and transfer back to airport.",
+      },
+    ],
+
+    exclusions: [
+      "Personal Expenses",
+      "Travel Insurance",
+      "Visa Fees",
+      "Laundry Charges",
+    ],
   },
 
   {
@@ -441,7 +632,57 @@ export const mockPackages: Package[] = [
       "Kaiseki Dinners",
       "Bullet Train Pass",
       "Guided Temples"
-    ]
+    ],
+    overview:
+      "Experience luxury overwater villas, crystal-clear lagoons, private beaches and unforgettable sunsets in the Maldives.",
+
+    highlights: [
+      "Overwater Villa Stay",
+      "Private Seaplane Transfer",
+      "Snorkeling Adventure",
+      "Sunset Cruise",
+      "Luxury Spa Experience",
+    ],
+
+    itinerary: [
+      {
+        day: 1,
+        title: "Arrival in Maldives",
+        description:
+          "Arrive at Male Airport and transfer to your luxury resort by seaplane.",
+      },
+      {
+        day: 2,
+        title: "Beach Relaxation",
+        description:
+          "Enjoy white sand beaches and water sports activities.",
+      },
+      {
+        day: 3,
+        title: "Snorkeling Tour",
+        description:
+          "Explore vibrant coral reefs and marine life.",
+      },
+      {
+        day: 4,
+        title: "Sunset Cruise",
+        description:
+          "Private yacht cruise with dinner and entertainment.",
+      },
+      {
+        day: 5,
+        title: "Departure",
+        description:
+          "Breakfast and transfer back to airport.",
+      },
+    ],
+
+    exclusions: [
+      "Personal Expenses",
+      "Travel Insurance",
+      "Visa Fees",
+      "Laundry Charges",
+    ],
   },
 
   {
@@ -471,7 +712,57 @@ export const mockPackages: Package[] = [
       "Ski Passes",
       "Heli-Skiing",
       "Wellness Baths"
-    ]
+    ],
+    overview:
+      "Experience luxury overwater villas, crystal-clear lagoons, private beaches and unforgettable sunsets in the Maldives.",
+
+    highlights: [
+      "Overwater Villa Stay",
+      "Private Seaplane Transfer",
+      "Snorkeling Adventure",
+      "Sunset Cruise",
+      "Luxury Spa Experience",
+    ],
+
+    itinerary: [
+      {
+        day: 1,
+        title: "Arrival in Maldives",
+        description:
+          "Arrive at Male Airport and transfer to your luxury resort by seaplane.",
+      },
+      {
+        day: 2,
+        title: "Beach Relaxation",
+        description:
+          "Enjoy white sand beaches and water sports activities.",
+      },
+      {
+        day: 3,
+        title: "Snorkeling Tour",
+        description:
+          "Explore vibrant coral reefs and marine life.",
+      },
+      {
+        day: 4,
+        title: "Sunset Cruise",
+        description:
+          "Private yacht cruise with dinner and entertainment.",
+      },
+      {
+        day: 5,
+        title: "Departure",
+        description:
+          "Breakfast and transfer back to airport.",
+      },
+    ],
+
+    exclusions: [
+      "Personal Expenses",
+      "Travel Insurance",
+      "Visa Fees",
+      "Laundry Charges",
+    ],
   },
 
   {
@@ -501,7 +792,57 @@ export const mockPackages: Package[] = [
       "Private Guide",
       "Chauffeur",
       "Desert Safari"
-    ]
+    ],
+    overview:
+      "Experience luxury overwater villas, crystal-clear lagoons, private beaches and unforgettable sunsets in the Maldives.",
+
+    highlights: [
+      "Overwater Villa Stay",
+      "Private Seaplane Transfer",
+      "Snorkeling Adventure",
+      "Sunset Cruise",
+      "Luxury Spa Experience",
+    ],
+
+    itinerary: [
+      {
+        day: 1,
+        title: "Arrival in Maldives",
+        description:
+          "Arrive at Male Airport and transfer to your luxury resort by seaplane.",
+      },
+      {
+        day: 2,
+        title: "Beach Relaxation",
+        description:
+          "Enjoy white sand beaches and water sports activities.",
+      },
+      {
+        day: 3,
+        title: "Snorkeling Tour",
+        description:
+          "Explore vibrant coral reefs and marine life.",
+      },
+      {
+        day: 4,
+        title: "Sunset Cruise",
+        description:
+          "Private yacht cruise with dinner and entertainment.",
+      },
+      {
+        day: 5,
+        title: "Departure",
+        description:
+          "Breakfast and transfer back to airport.",
+      },
+    ],
+
+    exclusions: [
+      "Personal Expenses",
+      "Travel Insurance",
+      "Visa Fees",
+      "Laundry Charges",
+    ],
   },
 
   {
@@ -529,7 +870,57 @@ export const mockPackages: Package[] = [
       "Helicopter Ride",
       "National Park Passes",
       "Breakfast"
-    ]
+    ],
+    overview:
+      "Experience luxury overwater villas, crystal-clear lagoons, private beaches and unforgettable sunsets in the Maldives.",
+
+    highlights: [
+      "Overwater Villa Stay",
+      "Private Seaplane Transfer",
+      "Snorkeling Adventure",
+      "Sunset Cruise",
+      "Luxury Spa Experience",
+    ],
+
+    itinerary: [
+      {
+        day: 1,
+        title: "Arrival in Maldives",
+        description:
+          "Arrive at Male Airport and transfer to your luxury resort by seaplane.",
+      },
+      {
+        day: 2,
+        title: "Beach Relaxation",
+        description:
+          "Enjoy white sand beaches and water sports activities.",
+      },
+      {
+        day: 3,
+        title: "Snorkeling Tour",
+        description:
+          "Explore vibrant coral reefs and marine life.",
+      },
+      {
+        day: 4,
+        title: "Sunset Cruise",
+        description:
+          "Private yacht cruise with dinner and entertainment.",
+      },
+      {
+        day: 5,
+        title: "Departure",
+        description:
+          "Breakfast and transfer back to airport.",
+      },
+    ],
+
+    exclusions: [
+      "Personal Expenses",
+      "Travel Insurance",
+      "Visa Fees",
+      "Laundry Charges",
+    ],
   }
 ];
 
