@@ -18,7 +18,6 @@ interface PackageCardProps {
 
 export const PackageCard: React.FC<PackageCardProps> = ({
   pkg,
-  onBook,
 }) => {
   return (
     <motion.div

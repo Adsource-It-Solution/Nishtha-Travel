@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, } from 'react-router-dom';
 import { Navbar } from '../components/Navbar';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, } from 'framer-motion';
 import { auth, googleProvider } from '../firebase';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, signInWithCredential, PhoneAuthProvider } from 'firebase/auth';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, } from 'firebase/auth';
 import { Mail, Lock, Phone, ShieldCheck, Chrome, UserPlus, LogIn, ArrowRight } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Navbar } from '../components/Navbar';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Luggage, ClipboardList, Plus, Trash2, Save, FileText, CheckCircle, Mail, Phone, Calendar, MapPin, Tag, AlertCircle } from 'lucide-react';
+import { Luggage, ClipboardList, Plus, Trash2, Save, FileText, CheckCircle, Mail, Phone, Calendar, MapPin, AlertCircle } from 'lucide-react';
 
 interface ItineraryDay {
   day: number;

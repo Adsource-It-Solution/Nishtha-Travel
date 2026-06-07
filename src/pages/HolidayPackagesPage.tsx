@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { SearchTabs } from '../components/SearchTabs';
 import { PackageCard } from '../components/PackageCard';
 import { OfferBanner } from '../components/OfferBanner';
 import { mockPackages } from '../data/mockData';
