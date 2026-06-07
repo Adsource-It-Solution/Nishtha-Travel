@@ -11,7 +11,6 @@ import { BlogDetailsPage } from './pages/BlogDetailsPage';
 import { UserDashboard } from './pages/UserDashboard';
 import { AboutPage } from './pages/AboutPage';
 import { ContactPage } from './pages/ContactPage';
-import { VisaPage } from './pages/VisaPage';
 
 // Import new extension pages
 import { CabsPage } from './pages/CabsPage';
