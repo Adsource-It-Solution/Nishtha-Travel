@@ -39,7 +39,6 @@ function App() {
           <Route path="dashboard" element={<UserDashboard />} />
           <Route path="about" element={<AboutPage />} />
           <Route path="contact" element={<ContactPage />} />
-          <Route path="visa" element={<VisaPage />} />
           <Route path="holiday-itinerary/:id" element={<HolidayDetails />} />
 
           {/* New extension routes */}
