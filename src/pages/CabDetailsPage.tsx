@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Navbar } from '../components/Navbar';
 import { ArrowLeft, Users, Briefcase, CheckCircle2, Shield, Calendar, Clock, MapPin, Sparkles, Send } from 'lucide-react';
+import { mockCabs } from '../data/mockData';
 
 interface Cab {
   id: string;
@@ -41,21 +42,33 @@ export const CabDetailsPage: React.FC = () => {
 
   const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
-  useEffect(() => {
-    fetch(`${apiUrl}/api/cabs/${id}`)
-      .then(res => {
-        if (!res.ok) throw new Error('Cab not found');
-        return res.json();
-      })
-      .then(data => {
-        setCab(data);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error('Error fetching cab:', err);
-        setLoading(false);
-      });
-  }, [id, apiUrl]);
+useEffect(() => {
+  fetch(`${apiUrl}/api/cabs/${id}`)
+    .then((res) => {
+      if (!res.ok) throw new Error("Cab not found");
+      return res.json();
+    })
+    .then((data) => {
+      setCab(data);
+      setLoading(false);
+    })
+    .catch((err) => {
+      console.warn(
+        "API cab not found. Using mock cab data.",
+        err
+      );
+
+      const mockCab = mockCabs.find(
+        (cab) => cab.id === id
+      );
+
+      if (mockCab) {
+        setCab(mockCab);
+      }
+
+      setLoading(false);
+    });
+}, [id, apiUrl]);
 
   const handleBookCab = (e: React.FormEvent) => {
     e.preventDefault();

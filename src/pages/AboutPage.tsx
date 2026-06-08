@@ -44,7 +44,7 @@ export const AboutPage: React.FC = () => {
 
   return (
     <div className="bg-white">
-      <Navbar/>
+      <Navbar />
 
       {/* HERO SECTION */}
       <section className="relative h-[350px] mt-32 overflow-hidden">
@@ -55,7 +55,7 @@ export const AboutPage: React.FC = () => {
         />
 
         <div className="absolute inset-0 bg-black/45" />
-         <div className="relative z-10 flex items-center justify-center h-full">
+        <div className="relative z-10 flex items-center justify-center h-full">
           <div className="text-center text-white">
             <h1 className="font-poppins text-5xl font-bold">
               About Nishtha Travel
@@ -79,21 +79,22 @@ export const AboutPage: React.FC = () => {
                 Why We're Best Agency
               </h2>
 
-              <p className="mt-8 text-slate-600 leading-8">
-                Welcome to Nishtha Travel Agency — your trusted
-                gateway to unforgettable journeys.
+              <p className="mt-8 text-slate-600 leading-8 text-justify">
+                Both the founders after working for years in multiple areas realised their strength is in managing the people mobility business and that is how Nishtha Travel Concierge Private Limited was born.
+
+                We plan to bring to doorstep of every Indian (Aam Aadmi) the mobility, travel, Air and train ticketing with local transportation needs. Our AI engine is designed to understand your preference and provide best travel solutions and holiday packages.
               </p>
 
-              <p className="mt-4 text-slate-600 leading-8">
-                We provide premium travel planning, curated
-                holiday packages, international tours, visa
-                assistance and luxury travel experiences
-                tailored to every traveler.
+              <p className="mt-4 text-slate-600 leading-8 text-justify">
+                With over a decade of experience in managing fleet and employee transportation, both have the vision of making Nishtha Travel Concierge Pvt Ltd the preferred and trusted partner of every company in India for their employee transportation and all mobility needs.
+              </p>
+              <p className="mt-4 text-slate-600 leading-8 text-justify">
+                We plan to bring to doorstep of every Indian (Aam Aadmi) the mobility, travel, Air and train ticketing with local transportation needs. Our AI engine is designed to understand your preference and provide best travel solutions and holiday packages.
               </p>
 
               <div className="mt-10">
                 <h4 className="font-bold text-slate-900">
-                  Founder Name Will be here 
+                  Mr Ramji Patel & Mrs Radha Patel
                 </h4>
 
                 <span className="text-sm text-slate-500">

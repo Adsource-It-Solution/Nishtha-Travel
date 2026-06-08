@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Navbar } from '../components/Navbar';
-import { Car, Users, Briefcase, Star, ArrowRight, ShieldCheck, HelpCircle } from 'lucide-react';
+import { Car, ShieldCheck, HelpCircle } from 'lucide-react';
+import { mockCabs } from "../data/mockData";
 
 interface Cab {
   id: string;
@@ -26,15 +27,35 @@ export const CabsPage: React.FC = () => {
   const [selectedFilter, setSelectedFilter] = useState<'all' | 'luxury' | 'suv' | 'coach'>('all');
   const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
+  // useEffect(() => {
+  //   fetch(`${apiUrl}/api/cabs`)
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       setCabs(data);
+  //       setLoading(false);
+  //     })
+  //     .catch(err => {
+  //       console.error('Error fetching cabs:', err);
+  //       setLoading(false);
+  //     });
+  // }, [apiUrl]);
   useEffect(() => {
     fetch(`${apiUrl}/api/cabs`)
-      .then(res => res.json())
-      .then(data => {
-        setCabs(data);
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.length > 0) {
+          setCabs(data);
+        } else {
+          setCabs(mockCabs);
+        }
+
         setLoading(false);
       })
-      .catch(err => {
-        console.error('Error fetching cabs:', err);
+      .catch((err) => {
+        console.error("Error fetching cabs:", err);
+
+        // fallback to mock data
+        setCabs(mockCabs);
         setLoading(false);
       });
   }, [apiUrl]);
@@ -247,64 +268,156 @@ export const CabsPage: React.FC = () => {
             ))}
           </div>
         ) : filteredCabs.length > 0 ? (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {filteredCabs.map(cab => (
               <motion.div
                 key={cab.id}
-                whileHover={{ y: -6 }}
-                className="bg-white border border-[#E5E0D8] rounded-[28px] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col md:flex-row"
+                whileHover={{ y: -8 }}
+                transition={{ duration: 0.3 }}
+                className="
+    bg-white
+    rounded-[32px]
+    overflow-hidden
+    border
+    border-slate-200
+    shadow-sm
+    hover:shadow-2xl
+    transition-all
+    duration-500
+  "
               >
-                {/* Image side */}
-                <div className="md:w-1/2 h-[260px] md:h-auto relative">
+                {/* Image Section */}
+                <div className="relative h-[280px] overflow-hidden">
+
                   <img
                     src={cab.image}
                     alt={cab.name}
-                    className="w-full h-full object-cover"
+                    className="
+        w-full
+        h-full
+        object-cover
+        transition-transform
+        duration-700
+        hover:scale-105
+        border-b-2
+      "
                   />
-                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
-                    <Star className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
-                    <span>{cab.rating}</span>
+
+                  {/* Category Badge */}
+                  <div
+                    className="
+        absolute
+        top-5
+        right-5
+        bg-[#FACC15]
+        text-black
+        px-5
+        py-2
+        rounded-full
+        text-sm
+        font-bold
+      "
+                  >
+                    {cab.category}
                   </div>
+
+                  {/* Featured Badge */}
+                  <div
+                    className=" absolute top-20 right-5 bg-[#F97316] text-white px-5 py-2 rounded-full text-sm font-bold"
+                  >
+                    Premium
+                  </div>
+
+                  {/* Rating */}
+                  <div
+                    className=" absolute bottom-5 left-5 bg-white px-4 py-2 rounded-full flex items-center gap-2 shadow-lg"
+                  >
+                    <span className="text-yellow-500">★</span>
+
+                    <span className="font-bold text-slate-900">
+                      {cab.rating}
+                    </span>
+
+                    <span className="text-slate-500 text-xs">
+                      ({cab.reviewsCount})
+                    </span>
+                  </div>
+
                 </div>
 
-                {/* Details side */}
-                <div className="md:w-1/2 p-6 flex flex-col justify-between">
-                  <div>
-                    <span className="text-[10px] text-brand-purple font-bold uppercase tracking-wider block mb-1">
-                      {cab.type}
-                    </span>
-                    <h3 className="text-xl font-bold text-slate-900 mb-2 font-serif">{cab.name}</h3>
-                    <p className="text-slate-500 text-xs leading-relaxed line-clamp-3 mb-4 font-light">
-                      {cab.description}
-                    </p>
+                {/* Content */}
+                <div className="p-7">
 
-                    {/* Quick Specs */}
-                    <div className="flex gap-4 text-xs text-slate-500 mb-6">
-                      <div className="flex items-center gap-1.5">
-                        <Users className="w-4 h-4 text-slate-400" />
-                        <span>Max {cab.capacity} passengers</span>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <Briefcase className="w-4 h-4 text-slate-400" />
-                        <span>{cab.luggage} bags</span>
-                      </div>
+                  <h3
+                    className=" text-2xl font-bold text-brand-blue leading-tight mb-4"
+                  >
+                    {cab.name}
+                  </h3>
+
+                  <p
+                    className=" text-slate-600 text-sm leading-7 mb-5"
+                  >
+                    {cab.description}
+                  </p>
+
+                  {/* Features */}
+                  <div className="flex flex-wrap gap-2 mb-6">
+
+                    {cab.features.slice(0, 4).map((feature) => (
+                      <span
+                        key={feature}
+                        className=" px-3 py-1.5 bg-blue-50 text-brand-blue rounded-full text-xs font-medium"
+                      >
+                        {feature}
+                      </span>
+                    ))}
+
+                  </div>
+
+                  {/* Specs */}
+                  <div
+                    className=" flex justify-between items-center border-y border-slate-100 py-4 mb-6"
+                  >
+                    <div className="text-center">
+                      <p className="text-xs text-slate-400">Seats</p>
+                      <p className="font-bold">{cab.capacity}</p>
+                    </div>
+
+                    <div className="text-center">
+                      <p className="text-xs text-slate-400">Bags</p>
+                      <p className="font-bold">{cab.luggage}</p>
+                    </div>
+
+                    <div className="text-center">
+                      <p className="text-xs text-slate-400">Rate</p>
+                      <p className="font-bold text-[#F97316]">
+                        ₹{cab.pricePerKm}/km
+                      </p>
                     </div>
                   </div>
 
-                  {/* Booking row */}
-                  <div className="flex items-center justify-between border-t border-slate-100 pt-4">
+                  {/* Price & CTA */}
+                  <div className="flex items-center justify-between">
+
                     <div>
-                      <span className="text-[10px] text-slate-400 block font-semibold">Rate starting from</span>
-                      <span className="text-lg font-bold text-slate-900 font-serif">₹{cab.pricePerKm}/km</span>
+                      <p className="text-xs text-slate-400">
+                        Starting From
+                      </p>
+
+                      <h4 className="text-3xl font-bold text-slate-900">
+                        ₹{cab.basePrice}
+                      </h4>
                     </div>
+
                     <Link
                       to={`/cab/${cab.id}`}
-                      className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider px-5 py-3 rounded-xl transition-all flex items-center gap-1.5"
+                      className="l bg-blue-600 hover:bg-blue-700 text-white px-7 py-4 rounded-2xl font-bold transition-all "
                     >
-                      <span>Reserve</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
+                      Book Now
                     </Link>
+
                   </div>
+
                 </div>
               </motion.div>
             ))}

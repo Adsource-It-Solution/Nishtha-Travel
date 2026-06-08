@@ -269,11 +269,11 @@ export const HolidayPackagesPage: React.FC = () => {
         </section>
 
         {/* Offers / Deals Section */}
-        <div className="mb-16">
+        <div className="mb-14 mt-10">
           <div className="mb-6 space-y-1">
-            <span className="text-xs font-semibold font-['Poppins'] text-indigo-600 uppercase tracking-[0.25em] block mb-2">
+            {/* <span className="text-xs font-semibold font-['Poppins'] text-indigo-600 uppercase tracking-[0.25em] block mb-2">
               Club Benefits
-            </span>
+            </span> */}
 
             <h3 className="text-2xl font-semibold font-['Poppins'] text-slate-900 leading-tight">
               Active Private Curation Deals

@@ -390,59 +390,314 @@ export const mockFlights: Flight[] = [
   }
 ];
 
-export const mockCabs: Cab[] = [
+export const mockCabs = [
   {
     id: "cab-1",
-    name: "Mercedes-Benz S-Class",
-    type: "First Class Luxury",
-    image:
-      "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&q=80",
-    rate: "₹45/km",
-    capacity: "3 Guests",
-    luggage: "2 Bags",
+    name: "Maruti Suzuki Dzire",
+    type: "sedan",
+    category: "Corporate Sedan",
+    image: "/fleet/dzire.webp",
+    rating: 4.8,
+    reviewsCount: 124,
+    capacity: 4,
+    luggage: 2,
+    pricePerKm: 14,
+    basePrice: 1200,
     description:
-      "Executive chauffeur service with reclining leather seats, WiFi and luxury comfort.",
-    featured: true,
+      "Comfortable and economical sedan ideal for airport transfers, city travel and employee transportation.",
+    features: [
+      "Air Conditioning",
+      "Professional Driver",
+      "GPS Tracking",
+      "Sanitized Vehicle"
+    ]
   },
 
   {
     id: "cab-2",
-    name: "BMW 7 Series",
-    type: "Business Elite",
-    image:
-      "https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=1200&q=80",
-    rate: "₹42/km",
-    capacity: "3 Guests",
-    luggage: "2 Bags",
+    name: "Honda City",
+    type: "sedan",
+    category: "Executive Sedan",
+    image: "/fleet/honda-city.avif",
+    rating: 4.9,
+    reviewsCount: 96,
+    capacity: 4,
+    luggage: 3,
+    pricePerKm: 18,
+    basePrice: 1500,
     description:
-      "Premium executive sedan for airport transfers and business travel.",
+      "Premium sedan offering superior comfort for business meetings and executive travel.",
+    features: [
+      "Leather Seats",
+      "WiFi Available",
+      "Professional Driver",
+      "Airport Transfers"
+    ]
   },
 
   {
     id: "cab-3",
-    name: "Range Rover Sport",
-    type: "Luxury SUV",
-    image:
-      "https://images.unsplash.com/photo-1608508060098-29b209d61e93?auto=format&fit=crop&w=1200&q=80",
-    rate: "₹38/km",
-    capacity: "4 Guests",
-    luggage: "4 Bags",
+    name: "Toyota Innova Crysta",
+    type: "suv",
+    category: "Premium SUV",
+    image: "/fleet/innova.jpg",
+    rating: 4.9,
+    reviewsCount: 183,
+    capacity: 7,
+    luggage: 5,
+    pricePerKm: 24,
+    basePrice: 2200,
     description:
-      "Luxury SUV designed for family trips, corporate guests and outstation travel.",
+      "India's most preferred luxury people mover for family tours and corporate delegations.",
+    features: [
+      "7 Seater",
+      "Captain Seats",
+      "Large Luggage Space",
+      "Airport Pickup"
+    ]
   },
 
   {
     id: "cab-4",
-    name: "Mercedes V-Class",
-    type: "Executive Van",
-    image:
-      "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=1200&q=80",
-    rate: "₹50/km",
-    capacity: "6 Guests",
-    luggage: "6 Bags",
+    name: "Toyota Hycross",
+    type: "suv",
+    category: "Luxury SUV",
+    image: "/fleet/hycross.avif",
+    rating: 5.0,
+    reviewsCount: 75,
+    capacity: 7,
+    luggage: 5,
+    pricePerKm: 28,
+    basePrice: 2600,
     description:
-      "Luxury group transportation with captain seats and meeting space.",
+      "Advanced hybrid SUV with premium interiors and exceptional ride comfort.",
+    features: [
+      "Hybrid Technology",
+      "Premium Interiors",
+      "Panoramic Roof",
+      "Luxury Ride"
+    ]
   },
+
+  {
+    id: "cab-5",
+    name: "Mahindra XUV700",
+    type: "suv",
+    category: "Executive SUV",
+    image: "/fleet/xuv700.avif",
+    rating: 4.8,
+    reviewsCount: 112,
+    capacity: 6,
+    luggage: 4,
+    pricePerKm: 22,
+    basePrice: 2100,
+    description:
+      "Modern SUV packed with luxury features for outstation and business travel.",
+    features: [
+      "ADAS Safety",
+      "Luxury Interior",
+      "Sunroof",
+      "Premium Audio"
+    ]
+  },
+
+  {
+    id: "cab-6",
+    name: "Mercedes-Benz E-Class",
+    type: "luxury",
+    category: "Luxury Sedan",
+    image: "/fleet/eclass.jpg",
+    rating: 5.0,
+    reviewsCount: 64,
+    capacity: 4,
+    luggage: 3,
+    pricePerKm: 55,
+    basePrice: 6000,
+    description:
+      "Luxury chauffeur-driven sedan designed for VIP and executive transportation.",
+    features: [
+      "Executive Seating",
+      "Luxury Chauffeur",
+      "WiFi",
+      "VIP Service"
+    ]
+  },
+
+  {
+    id: "cab-7",
+    name: "BMW 5 Series",
+    type: "luxury",
+    category: "Luxury Sedan",
+    image: "/fleet/bmw5.avif",
+    rating: 5.0,
+    reviewsCount: 52,
+    capacity: 4,
+    luggage: 3,
+    pricePerKm: 60,
+    basePrice: 6500,
+    description:
+      "Elegant executive sedan for premium business and leisure travel.",
+    features: [
+      "Luxury Leather Seats",
+      "Business Travel",
+      "Premium Audio",
+      "VIP Driver"
+    ]
+  },
+
+  {
+    id: "cab-8",
+    name: "Mercedes-Benz S-Class",
+    type: "luxury",
+    category: "Ultra Luxury",
+    image: "/fleet/sclass.jpg",
+    rating: 5.0,
+    reviewsCount: 43,
+    capacity: 4,
+    luggage: 3,
+    pricePerKm: 85,
+    basePrice: 10000,
+    description:
+      "Flagship luxury vehicle offering unmatched comfort and prestige.",
+    features: [
+      "VIP Transport",
+      "Massage Seats",
+      "Luxury Cabin",
+      "Premium Chauffeur"
+    ]
+  },
+
+  {
+    id: "cab-9",
+    name: "Toyota Fortuner",
+    type: "suv",
+    category: "Luxury SUV",
+    image: "/fleet/fortuner.avif",
+    rating: 4.8,
+    reviewsCount: 140,
+    capacity: 7,
+    luggage: 5,
+    pricePerKm: 30,
+    basePrice: 3000,
+    description:
+      "Powerful SUV suitable for long-distance journeys and corporate roadshows.",
+    features: [
+      "Powerful Engine",
+      "Premium Seating",
+      "Long Distance Travel",
+      "Large Luggage Space"
+    ]
+  },
+
+  {
+    id: "cab-10",
+    name: "12-Seater Tempo Traveller",
+    type: "traveller",
+    category: "Group Travel",
+    image: "/fleet/traveller12.jpg",
+    rating: 4.7,
+    reviewsCount: 88,
+    capacity: 12,
+    luggage: 10,
+    pricePerKm: 32,
+    basePrice: 4500,
+    description:
+      "Comfortable group transportation for family tours and corporate outings.",
+    features: [
+      "12 Seater",
+      "Pushback Seats",
+      "Tour Packages",
+      "Corporate Trips"
+    ]
+  },
+
+  {
+    id: "cab-11",
+    name: "17-Seater Tempo Traveller",
+    type: "traveller",
+    category: "Group Travel",
+    image: "/fleet/traveller17.webp",
+    rating: 4.8,
+    reviewsCount: 73,
+    capacity: 17,
+    luggage: 12,
+    pricePerKm: 38,
+    basePrice: 5500,
+    description:
+      "Spacious premium traveller with reclining seats and luggage storage.",
+    features: [
+      "17 Seater",
+      "Reclining Seats",
+      "Group Tours",
+      "Corporate Events"
+    ]
+  },
+
+  {
+    id: "cab-12",
+    name: "Force Urbania",
+    type: "coach",
+    category: "Premium Van",
+    image: "/fleet/urbania.webp",
+    rating: 4.9,
+    reviewsCount: 61,
+    capacity: 13,
+    luggage: 12,
+    pricePerKm: 40,
+    basePrice: 6000,
+    description:
+      "Modern luxury people mover with premium interiors and enhanced comfort.",
+    features: [
+      "Luxury Van",
+      "Premium Seating",
+      "Executive Travel",
+      "Modern Interior"
+    ]
+  },
+
+  {
+    id: "cab-13",
+    name: "Mini Coach Bus",
+    type: "coach",
+    category: "Corporate Shuttle",
+    image: "/fleet/minibus.jpg",
+    rating: 4.8,
+    reviewsCount: 54,
+    capacity: 25,
+    luggage: 15,
+    pricePerKm: 55,
+    basePrice: 8500,
+    description:
+      "Ideal for employee transportation, conferences and corporate events.",
+    features: [
+      "25 Seater",
+      "Employee Transport",
+      "Corporate Shuttle",
+      "AC Coach"
+    ]
+  },
+
+  {
+    id: "cab-14",
+    name: "Volvo Luxury Coach",
+    type: "coach",
+    category: "Luxury Bus",
+    image: "/fleet/volvo.jpg",
+    rating: 5.0,
+    reviewsCount: 91,
+    capacity: 45,
+    luggage: 30,
+    pricePerKm: 95,
+    basePrice: 15000,
+    description:
+      "Premium long-distance coach featuring reclining seats and onboard amenities.",
+    features: [
+      "45 Seater",
+      "Luxury Coach",
+      "Reclining Seats",
+      "Long Distance Travel"
+    ]
+  }
 ];
 
 export const mockPackages: Package[] = [
@@ -773,7 +1028,7 @@ export const mockPackages: Package[] = [
     duration: "8 Days, 7 Nights",
     price: 1350,
     originalPrice: 1600,
-    image: "https://images.unsplash.com/photo-1477587458883-471a5ed08ff4?auto=format&fit=crop&w=1200&q=80",
+    image: "/Amer_Fort_Entrance.jpg",
     rating: 4.8,
     category: "domestic",
     discountPercentage: 15,

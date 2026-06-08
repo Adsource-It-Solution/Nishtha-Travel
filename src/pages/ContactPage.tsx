@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import {Navbar} from "../components/Navbar";
+import { Navbar } from "../components/Navbar";
 import {
   Phone,
   Mail,
   MapPin,
-  Clock,
   Send,
   Headphones,
   Shield,
@@ -56,54 +55,43 @@ export const ContactPage: React.FC = () => {
       <section className="py-20 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6">
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-            <div className="bg-white rounded-[28px] p-8 shadow-lg hover:shadow-xl transition-all">
+            <div className="bg-white rounded-[28px] p-8 shadow-lg hover:shadow-xl transition-all flex justify-center flex-col items-center">
               <Phone className="w-10 h-10 text-blue-600" />
               <h3 className="font-poppins font-semibold text-xl mt-5">
                 Call Us
               </h3>
               <p className="text-slate-500 mt-3">
-                +91 99999 99999
+                <span className="px-2 border-r-2">9718216528</span>
+                <span className="px-2 mt-4">9718566528</span>
               </p>
             </div>
 
-            <div className="bg-white rounded-[28px] p-8 shadow-lg hover:shadow-xl transition-all">
+            <div className="bg-white rounded-[28px] p-8 shadow-lg hover:shadow-xl transition-all flex justify-center flex-col items-center">
               <Mail className="w-10 h-10 text-blue-600" />
               <h3 className="font-poppins font-semibold text-xl mt-5">
                 Email Us
               </h3>
               <p className="text-slate-500 mt-3">
-                info@nishthatravel.com
+                nishtharadhapatel@gmail.com
               </p>
             </div>
 
-            <div className="bg-white rounded-[28px] p-8 shadow-lg hover:shadow-xl transition-all">
+            <div className="bg-white rounded-[28px] p-8 shadow-lg hover:shadow-xl transition-all flex justify-center flex-col items-center text-justify">
               <MapPin className="w-10 h-10 text-blue-600" />
               <h3 className="font-poppins font-semibold text-xl mt-5">
                 Visit Office
               </h3>
               <p className="text-slate-500 mt-3">
-                Gurgaon, Haryana, India
-              </p>
-            </div>
-
-            <div className="bg-white rounded-[28px] p-8 shadow-lg hover:shadow-xl transition-all">
-              <Clock className="w-10 h-10 text-blue-600" />
-              <h3 className="font-poppins font-semibold text-xl mt-5">
-                Working Hours
-              </h3>
-              <p className="text-slate-500 mt-3">
-                Mon - Sat
-                <br />
-                09:00 AM - 08:00 PM
+                H No.-C355, Gali No. 5,
+                Bhoop Singh Nagar, Jail Road, Near IOC Gas Plant PO Bhondsi, Gurgaon-122102, India
               </p>
             </div>
 
           </div>
         </div>
       </section>
-
       {/* FORM + MAP */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-6">
@@ -201,10 +189,9 @@ export const ContactPage: React.FC = () => {
 
               <iframe
                 title="Google Map"
-                src="https://maps.google.com/maps?q=gurgaon&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                src="https://maps.google.com/maps?q=H%20No.-C355%2C%20Gali%20No.%205%2C%20Bhoop%20Singh%20Nagar%2C%20Jail%20Road%2C%20Near%20IOC%20Gas%20Plant%20PO%20Bhondsi%2C%20Gurgaon-122102%2C%20India&z=15&output=embed"
                 className="w-full h-full min-h-[650px]"
               />
-
             </div>
 
           </div>
