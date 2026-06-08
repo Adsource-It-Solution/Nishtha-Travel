@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
@@ -19,7 +19,7 @@ import { PackageCard } from '../components/PackageCard';
 import { Testimonials } from '../components/Testimonials';
 import { AnimatedCounters } from '../components/AnimatedCounters';
 import { OfferBanner } from '../components/OfferBanner';
-import { mockDestinations, mockPackages, mockBlogs, mockCabs } from '../data/mockData';
+import { mockDestinations, mockPackages, mockBlogs, mockCabs, type Cab } from '../data/mockData';
 import { Navbar } from '../components/Navbar';
 import { lazy } from "react";
 import { CabCard } from '../components/CabCards';
@@ -45,6 +45,48 @@ export const LandingPage: React.FC = () => {
   const filteredDestinations = destFilter === 'all'
     ? mockDestinations
     : mockDestinations.filter(d => d.category === destFilter);
+
+    const [cabs, setCabs] = useState<Cab[]>([]);
+      const [loading, setLoading] = useState(true);
+      const [selectedFilter,] = useState<'all' | 'luxury' | 'suv' | 'coach'>('all');
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    
+      // useEffect(() => {
+      //   fetch(`${apiUrl}/api/cabs`)
+      //     .then(res => res.json())
+      //     .then(data => {
+      //       setCabs(data);
+      //       setLoading(false);
+      //     })
+      //     .catch(err => {
+      //       console.error('Error fetching cabs:', err);
+      //       setLoading(false);
+      //     });
+      // }, [apiUrl]);
+      useEffect(() => {
+        fetch(`${apiUrl}/api/cabs`)
+          .then((res) => res.json())
+          .then((data) => {
+            if (data && data.length > 0) {
+              setCabs(data);
+            } else {
+              setCabs(mockCabs);
+            }
+    
+            setLoading(false);
+          })
+          .catch((err) => {
+            console.error("Error fetching cabs:", err);
+    
+            // fallback to mock data
+            setCabs(mockCabs);
+            setLoading(false);
+          });
+      }, [apiUrl]);
+    
+      const filteredCabs = selectedFilter === 'all'
+        ? cabs
+        : cabs.filter(c => c.category === selectedFilter);
 
   return (
     <div>
@@ -183,20 +225,28 @@ export const LandingPage: React.FC = () => {
               </Link>
             </div>
             <div className="flex gap-6 overflow-x-auto pb-4 snap-x scrollbar-hide">
-              {mockCabs.map((cab) => (
-                <div
-                  key={cab.id}
-                  className="
-                      min-w-[320px]
-                      sm:min-w-[380px]
-                      lg:min-w-[420px]
-                      flex-shrink-0
-                      snap-start
-                  "
-                >
-                  <CabCard cab={cab} />
-                </div>
-              ))}
+              <div className="flex gap-6 overflow-x-auto pb-4 snap-x">
+                {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {[...Array(2)].map((_, i) => (
+              <div key={i} className="bg-white rounded-[28px] border border-[#E5E0D8] h-[280px] animate-pulse" />
+            ))}
+          </div>
+        ) : filteredCabs.slice(0, 5).map((cab) => (
+                  <div
+                    key={cab.id}
+                    className="
+        min-w-[280px]
+        sm:min-w-[320px]
+        lg:min-w-[340px]
+        flex-shrink-0
+        snap-start
+      "
+                  >
+                    <CabCard cab={cab} />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>

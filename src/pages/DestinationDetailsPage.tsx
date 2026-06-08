@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Star, MapPin, Heart, ArrowLeft, Sun, CheckCircle, ChevronDown, Utensils, HelpCircle } from 'lucide-react';
+import { Star, MapPin, Heart, ArrowLeft, Sun, CheckCircle, ChevronDown, HelpCircle } from 'lucide-react';
 import { mockDestinations } from '../data/mockData';
 
 export const DestinationDetailsPage: React.FC = () => {
@@ -20,134 +20,233 @@ export const DestinationDetailsPage: React.FC = () => {
     <div className="bg-slate-50 min-h-screen text-slate-800 relative overflow-hidden">
 
       {/* 1. CINEMATIC HEADER BANNER */}
-      <div className="relative h-[65vh] w-full overflow-hidden">
+      <div className="relative h-[80vh] overflow-hidden">
+
+        {/* Hero Image */}
         <img
           src={destination.image}
           alt={destination.name}
-          className="w-full h-full object-cover brightness-[0.75]"
+          className="w-full h-full object-cover scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-brand-blue/15 to-brand-light" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent,rgba(253,251,247,0.95))]" />
-
-        {/* Back navigation & Actions */}
-        <div className="absolute top-28 left-0 right-0 z-10">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-            <Link
-              to="/"
-              className="flex items-center gap-2 px-4 py-2 rounded-none bg-white border border-[#E5E0D8] hover:bg-brand-light text-xs font-bold uppercase tracking-wider transition-all shadow-sm text-slate-700"
-            >
-              <ArrowLeft className="w-4 h-4 text-brand-purple" />
-              <span>Back Explore</span>
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
+        {/* Back Button */}
+        <div className="absolute top-28 left-0 right-0 z-20">
+          <div className="max-w-7xl mx-auto px-6 flex justify-between">
+            <Link to="/" className="flex items-center gap-2 bg-white/90 backdrop-blur-md px-5 py-3 rounded-2xl shadow-lg hover:bg-white transition-all">
+              <ArrowLeft className="w-4 h-4 text-blue-700" />
+              <span className="font-medium text-slate-700">Back To Explore</span>
             </Link>
-
-            <button
-              onClick={() => setIsLiked(!isLiked)}
-              className="w-10 h-10 rounded-none bg-white border border-[#E5E0D8] flex items-center justify-center text-slate-500 hover:text-red-500 transition-all shadow-sm"
-            >
-              <Heart className={`w-5 h-5 ${isLiked ? 'fill-red-500 text-red-500 scale-105' : ''}`} />
+            <button onClick={() => setIsLiked(!isLiked)} className="w-14 h-14 rounded-2xl bg-white/90 backdrop-blur-md flex items-center justify-center shadow-lg hover:bg-white transition-all">
+              <Heart className={`w-6 h-6 transition-all ${isLiked ? 'fill-red-500 text-red-500' : 'text-slate-500'}`} />
             </button>
           </div>
         </div>
-
-        {/* Destination Metadata Title */}
-        <div className="absolute bottom-10 left-0 right-0">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left space-y-3">
-            <div className="flex items-center justify-center sm:justify-start gap-1.5 text-brand-purple font-bold font-serif text-xs sm:text-sm uppercase tracking-[0.2em]">
-              <MapPin className="w-4 h-4" />
-              <span>{destination.country}</span>
+        {/* Main Content */}
+        <div className="absolute bottom-0 left-0 right-0 z-10">
+          <div className="max-w-7xl mx-auto px-6 pb-16">
+            {/* Country Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-500/20 backdrop-blur-md border border-orange-300/30">
+              <MapPin className="w-4 h-4 text-orange-300" />
+              <span className="text-orange-100 text-sm font-semibold">{destination.country}</span>
             </div>
 
-            <h1 className="text-4xl sm:text-6xl font-medium font-serif text-brand-blue tracking-tight leading-none">
+            {/* Destination Name */}
+            <h1 className="mt-5 text-5xl md:text-7xl font-bold font-[Poppins] text-white leading-tight">
               {destination.name}
             </h1>
 
-            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 text-xs sm:text-sm pt-2">
-              <span className="flex items-center gap-1 font-bold bg-brand-purple/10 text-brand-purple px-3 py-1 rounded-none border border-brand-purple/20">
-                <Star className="w-4 h-4 fill-yellow-500 text-yellow-500" />
-                {destination.rating} ({destination.reviewsCount} guest ratings)
-              </span>
-              <span className="flex items-center gap-1.5 bg-white border border-[#E5E0D8] px-3 py-1 rounded-none text-slate-600 shadow-sm font-semibold">
-                <Sun className="w-4 h-4 text-brand-soft" />
-                <span>{destination.weather.temp} • {destination.weather.condition}</span>
-              </span>
+            {/* Description */}
+            <p className="mt-5 max-w-3xl text-white/80 text-lg leading-8">
+              {destination.description}
+            </p>
+
+            {/* Stats Cards */}
+            <div className="flex flex-wrap gap-4 mt-8">
+              <div
+                className="bg-white/10 backdrop-blur-md px-5 py-4 rounded-2xl border border-white/10" >
+                <div className="flex items-center gap-2">
+                  <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                  <span className="text-white font-semibold">{destination.rating}
+                  </span>
+                </div>
+                <p className="text-white/70 text-sm mt-1">{destination.reviewsCount} Reviews
+                </p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-md px-5 py-4 rounded-2xl border border-white/10">
+                <div className="flex items-center gap-2">
+                  <Sun className="w-5 h-5 text-yellow-400" />
+                  <span className="text-white font-semibold">
+                    {destination.weather.temp}
+                  </span>
+
+                </div>
+
+                <p className="
+            text-white/70
+            text-sm
+            mt-1
+          ">
+                  {destination.weather.condition}
+                </p>
+
+              </div>
+
+              <div
+                className="
+          bg-white/10
+          backdrop-blur-md
+          px-5
+          py-4
+          rounded-2xl
+          border
+          border-white/10
+          "
+              >
+                <div className="flex items-center gap-2">
+                  <MapPin className="w-5 h-5 text-orange-400" />
+                  <span className="text-white font-semibold">Destination</span>
+                </div>
+                <p className="text-white/70 text-sm mt-1">
+                  Premium Experience
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </div>      {/* 2. PAGE DETAILS CONTENT GRID */}
+      </div>
+      {/* 2. PAGE DETAILS CONTENT GRID */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
 
           {/* Main info panel */}
           <div className="lg:col-span-8 space-y-12">
-
             {/* Highlights overview */}
             <div className="space-y-4">
-              <h2 className="text-sm font-bold uppercase tracking-wider text-brand-blue font-serif">Destination Profile</h2>
-              <p className="text-slate-500 font-normal text-xs sm:text-sm leading-relaxed">
-                {destination.description}
-              </p>
+              <div className="bg-white rounded-[32px] p-8 shadow-sm">
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-12 h-12 rounded-2xl bg-orange-50 flex items-center justify-center">
+                    <MapPin className="w-5 h-5 text-orange-500" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-slate-500">
+                      Destination Overview
+                    </p>
+                    <h2 className="text-3xl font-bold text-blue-700 font-[Poppins]">
+                      About {destination.name}
+                    </h2>
+                  </div>
+                </div>
+                <p className="text-slate-600 leading-8 text-base">
+                  {destination.description}
+                </p>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-8">
 
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 pt-4">
                 {destination.highlights.map((hl, i) => (
-                  <div key={i} className="flex items-center gap-2 bg-white border border-[#E5E0D8] p-3.5 rounded-none shadow-sm">
-                    <CheckCircle className="w-4 h-4 text-brand-purple shrink-0" />
-                    <span className="text-xs font-bold text-slate-700">{hl}</span>
+                  <div
+                    key={i}
+                    className="
+      bg-[#FAF6EF]
+      rounded-3xl
+      p-5
+      flex
+      items-center
+      gap-3
+      shadow-sm
+      hover:shadow-md
+      transition-all
+      "
+                  >
+                    <CheckCircle
+                      className="
+        w-5
+        h-5
+        text-orange-500
+        shrink-0
+      "
+                    />
+
+                    <span className="
+      font-medium
+      text-slate-800
+      ">
+                      {hl}
+                    </span>
+
                   </div>
                 ))}
+
               </div>
             </div>
-
             {/* Content Tabs Navigation */}
             <div className="space-y-6">
-              <div className="flex border-b border-[#E5E0D8] gap-6 overflow-x-auto whitespace-nowrap scrollbar-none pb-px">
+              <div className="bg-white rounded-[28px] p-2 shadow-sm mb-8 flex gap-2 overflow-x-auto">
+
                 {[
-                  { id: 'itinerary', label: 'Bespoke Itinerary' },
-                  { id: 'food', label: 'Local Gastronomy' },
-                  { id: 'info', label: 'Assurance & Faq' }
+                  { id: 'itinerary', label: 'Itinerary' },
+                  { id: 'food', label: 'Gastronomy' },
+                  { id: 'info', label: 'FAQ' }
                 ].map((tab) => (
+
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id as any)}
-                    className={`relative pb-3 text-xs font-bold uppercase tracking-[0.15em] transition-all shrink-0 ${activeTab === tab.id ? 'text-brand-purple font-bold' : 'text-slate-400 hover:text-brand-purple'}`}
+                    className={`
+        flex-1
+        min-w-[140px]
+        h-12
+        rounded-2xl
+        font-semibold
+        text-sm
+        transition-all
+
+        ${activeTab === tab.id
+                        ? 'bg-blue-700 text-white shadow-md'
+                        : 'text-slate-600 hover:bg-slate-100'}
+      `}
                   >
-                    <span>{tab.label}</span>
-                    {activeTab === tab.id && (
-                      <motion.div
-                        layoutId="activeDetailsTab"
-                        className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-brand-purple"
-                      />
-                    )}
+                    {tab.label}
                   </button>
+
                 ))}
               </div>
 
               {/* Tab: Itinerary */}
               {activeTab === 'itinerary' && (
-                <div className="space-y-4">
+
+                <div className="space-y-5">
+
                   {destination.itinerary.map((item) => {
+
                     const isExpanded = expandedDay === item.day;
+
                     return (
+
                       <div
                         key={item.day}
-                        className="glass-card overflow-hidden transition-all duration-300 shadow-sm border border-[#E5E0D8] bg-white rounded-none"
-                      >
+                        className="bg-white rounded-[28px] shadow-sm overflow-hidden">
                         <button
                           onClick={() => toggleDay(item.day)}
-                          className="w-full flex items-center justify-between p-5 text-left hover:bg-brand-light transition-all focus:outline-none"
-                        >
+                          className="w-full flex justify-between items-center p-6">
                           <div className="flex items-center gap-4">
-                            <span className="w-8 h-8 rounded-none bg-brand-purple text-brand-blue font-bold flex items-center justify-center shrink-0 shadow-sm">
+                            <div className="w-12 h-12 rounded-2xl bg-orange-500 text-white font-bold flex items-center justify-center">
                               {item.day}
-                            </span>
-                            <div>
-                              <span className="text-[9px] text-brand-purple font-bold uppercase tracking-widest">Day {item.day} Plan</span>
-                              <h4 className="text-sm font-bold text-slate-800 mt-0.5">{item.title}</h4>
+                            </div>
+                            <div className="text-left">
+                              <p className="text-xs text-orange-500 font-semibold">
+                                Day {item.day}
+                              </p>
+                              <h4 className="text-lg font-bold text-blue-700 font-[Poppins]">
+                                {item.title}
+                              </h4>
                             </div>
                           </div>
-                          <ChevronDown className={`w-5 h-5 text-slate-400 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                          <ChevronDown
+                            className={`w-5 h-5 text-slate-400 transition-all ${isExpanded ? 'rotate-180' : ''}`}
+                          />
                         </button>
-
-                        <AnimatePresence initial={false}>
+                        <AnimatePresence>
                           {isExpanded && (
                             <motion.div
                               initial={{ height: 0 }}
@@ -155,8 +254,8 @@ export const DestinationDetailsPage: React.FC = () => {
                               exit={{ height: 0 }}
                               className="overflow-hidden"
                             >
-                              <div className="p-5 pt-0 border-t border-[#E5E0D8] text-slate-505 text-xs sm:text-sm leading-relaxed space-y-2 bg-brand-light font-normal">
-                                <p>{item.details}</p>
+                              <div className="px-6 pb-6 text-slate-600 leading-8">
+                                {item.details}
                               </div>
                             </motion.div>
                           )}
@@ -166,113 +265,193 @@ export const DestinationDetailsPage: React.FC = () => {
                   })}
                 </div>
               )}
-
               {/* Tab: Gastronomy */}
               {activeTab === 'food' && (
-                <div className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
                   {destination.foodExperiences.map((food, i) => (
-                    <div key={i} className="glass-card overflow-hidden grid grid-cols-1 md:grid-cols-12 gap-6 p-4 bg-white border border-[#E5E0D8] shadow-sm rounded-none">
-                      <div className="md:col-span-4 h-36 rounded-none overflow-hidden relative border border-[#E5E0D8] shadow-sm">
-                        <img src={food.image} alt={food.name} className="w-full h-full object-cover" />
-                      </div>
-                      <div className="md:col-span-8 flex flex-col justify-center space-y-2">
-                        <span className="text-[9px] text-brand-purple font-bold uppercase tracking-widest flex items-center gap-1.5">
-                          <Utensils className="w-3.5 h-3.5" />
-                          <span>Elite Recommendation</span>
+                    <div key={i} className="bg-white rounded-[32px] overflow-hidden shadow-sm hover:shadow-lg transition-all">
+
+                      <img
+                        src={food.image}
+                        alt={food.name}
+                        className="w-full h-56 object-cover"
+                      />
+                      <div className="p-6">
+                        <span className="inline-flex px-3 py-1 rounded-full bg-orange-50 text-orange-500 text-xs font-semibold">
+                          Local Experience
                         </span>
-                        <h4 className="font-serif font-bold text-brand-blue text-sm uppercase tracking-wider">{food.name}</h4>
-                        <p className="text-slate-500 text-xs sm:text-sm leading-relaxed font-normal">{food.description}</p>
+                        <h3 className="mt-4 text-xl font-bold text-blue-700 font-[Poppins]">
+                          {food.name}
+                        </h3>
+                        <p className="mt-3 text-slate-600 leading-7">{food.description}</p>
                       </div>
                     </div>
                   ))}
                 </div>
               )}
-
               {/* Tab: FAQs */}
               {activeTab === 'info' && (
-                <div className="space-y-4">
-                  {destination.faqs.length > 0 ? (
-                    destination.faqs.map((faq, i) => (
-                      <div key={i} className="p-5 rounded-none bg-white border border-[#E5E0D8] shadow-sm space-y-2">
-                        <div className="flex gap-2.5 items-start">
-                          <HelpCircle className="w-5 h-5 text-brand-purple shrink-0 mt-0.5" />
-                          <h4 className="text-brand-blue font-bold text-sm">{faq.question}</h4>
+                <div className="space-y-5">
+                  {destination.faqs.map((faq, i) => (
+                    <div key={i} className="bg-white rounded-[28px] p-6 shadow-sm">
+                      <div className="flex gap-4">
+                        <div className="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center shrink-0">
+                          <HelpCircle className="w-5 h-5 text-orange-500" />
                         </div>
-                        <p className="text-slate-505 text-xs sm:text-sm leading-relaxed pl-7 font-normal">{faq.answer}</p>
+                        <div>
+                          <h4 className="text-lg font-bold text-blue-700 font-[Poppins]">{faq.question}</h4>
+                          <p className="mt-3 text-slate-600 leading-7">{faq.answer}</p>
+                        </div>
                       </div>
-                    ))
-                  ) : (
-                    <div className="text-center p-8 text-slate-400 text-xs font-bold">
-                      Faq data is currently synchronized with the regional tourism board.
                     </div>
-                  )}
+                  ))}
                 </div>
               )}
             </div>
 
             {/* Attractions and Maps */}
-            <div className="space-y-6">
-              <h2 className="text-sm font-bold uppercase tracking-wider text-brand-blue font-serif">Nearby Attractions</h2>
+            <div className="space-y-8">
+
+              <div className="flex items-center justify-between">
+                <div>
+                  <span className="text-orange-500 font-semibold text-sm">
+                    Explore More
+                  </span>
+                  <h2 className="text-3xl font-bold text-blue-700 font-[Poppins] mt-1">
+                    Nearby Attractions
+                  </h2>
+                </div>
+
+                <div className="hidden md:flex items-center gap-2 bg-orange-50 text-orange-600 px-4 py-2 rounded-full text-sm font-medium ">
+                  Popular Destinations
+                </div>
+              </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {destination.nearbyAttractions.map((att, i) => (
-                  <div key={i} className="glass-card p-3.5 flex gap-4 items-center bg-white shadow-sm border border-[#E5E0D8] rounded-none">
-                    <img src={att.image} alt={att.name} className="w-16 h-16 rounded-none object-cover border border-[#E5E0D8]" />
-                    <div>
-                      <h4 className="font-serif font-bold text-slate-800 text-sm">{att.name}</h4>
-                      <span className="text-xs text-slate-400 font-normal">{att.distance}</span>
+
+                  <div
+                    key={i}
+                    className="group bg-white rounded-[32px] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div className="relative overflow-hidden">
+                      <img
+                        src={att.image}
+                        alt={att.name}
+                        className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-105" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+
+                      <div className="absolute bottom-4 left-4">
+                        <span className="bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold text-orange-600">
+                          {att.distance}
+                        </span>
+                      </div>
+
                     </div>
+
+                    <div className="p-6">
+
+                      <h3 className="text-xl font-bold text-blue-700 font-[Poppins]">
+                        {att.name}
+                      </h3>
+
+                      <p className="text-slate-500 mt-2 text-sm leading-6">
+                        Discover one of the most visited attractions near {destination.name}. Perfect for sightseeing, photography and local experiences.
+                      </p>
+
+                      <button
+                        className="mt-5 inline-flex items-center gap-2 text-orange-500 font-semibold hover:text-orange-600 transition-colors">
+                        Explore Attraction
+                        <span>→</span>
+                      </button>
+
+                    </div>
+
                   </div>
+
                 ))}
               </div>
             </div>
-
           </div>
-
           {/* Sticky Checkout/Booking Column */}
           <div className="lg:col-span-4 lg:sticky lg:top-28 space-y-6">
-            <div className="glass-card p-6 md:p-8 space-y-6 border border-[#E5E0D8] shadow-sm bg-white rounded-none">
-              <div>
-                <span className="text-[9px] text-brand-purple font-bold uppercase tracking-widest block">Bespoke Suite Package</span>
-                <h3 className="text-lg font-bold text-brand-blue mt-1 font-serif">Book This Voyage</h3>
-                <p className="text-slate-500 text-xs mt-1 leading-relaxed font-normal">
-                  Secure private seaplanes, luxury suites, gourmet breakfasts, and tour coordinates.
-                </p>
-              </div>
+            <div className="bg-white rounded-[32px] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.08)] border border-slate-100">
+              {/* Price Header */}
+              <div className="bg-blue-700 p-8 text-white">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <span className="inline-flex items-center px-3 py-1 rounded-full bg-white/20 text-xs font-semibold">
+                      Premium Package
+                    </span>
 
-              {/* Price Details */}
-              <div className="border-y border-[#E5E0D8] py-4 space-y-2">
-                <div className="flex justify-between items-center text-xs text-slate-600 font-normal">
-                  <span>5-Star Suite (per night)</span>
-                  <span className="font-bold text-slate-800">$1,250</span>
+                    <h3 className="mt-4 text-3xl font-bold font-[Poppins]">
+                      Book This Journey
+                    </h3>
+
+                  </div>
+
+                  <div className="text-right">
+
+                    <p className="text-blue-200 text-sm">
+                      Starting From
+                    </p>
+                    <h2 className="text-4xl font-bold font-[Poppins]">
+                      ${destination.id === 'dest-1' ? '2,499' : '1,850'}
+                    </h2>
+                    <span className="text-blue-100 text-sm">
+                      per traveler
+                    </span>
+                  </div>
                 </div>
-                <div className="flex justify-between items-center text-xs text-slate-600 font-normal">
-                  <span>Charter Seaplane transfer</span>
-                  <span className="text-emerald-600 font-bold">Free Upgrade</span>
-                </div>
-                <div className="flex justify-between items-center text-xs text-slate-600 font-normal">
-                  <span>VIP Lounge Protection</span>
-                  <span className="text-emerald-600 font-bold">Included</span>
-                </div>
               </div>
-
-              <div className="flex justify-between items-baseline">
-                <span className="text-xs text-slate-400 uppercase font-bold tracking-wider">Starting from</span>
-                <span className="text-xl font-bold text-brand-blue font-sans">${destination.id === 'dest-1' ? '2,499' : '1,850'}<span className="text-xs text-slate-400 font-normal">/person</span></span>
-              </div>
-
-              {/* Book button */}
-              <Link to="/packages" className="btn-gold w-full py-4 text-[10px] uppercase tracking-widest font-bold rounded-none shadow-none">
-                Book This Voyage Now
-              </Link>
-
-              {/* Assurances */}
-              <div className="text-[9px] text-slate-400 text-center flex items-center justify-center gap-1.5 font-bold">
-                <CheckCircle className="w-3.5 h-3.5 text-brand-purple" />
-                <span>Price Match Guarantee & VIP Benefits Enabled.</span>
+              {/* Features */}
+              <div className="p-8">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-orange-500" />
+                    <span className="text-slate-700">
+                      Luxury Accommodation
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-orange-500" />
+                    <span className="text-slate-700">
+                      Airport Transfers Included
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-orange-500" />
+                    <span className="text-slate-700">
+                      Guided Sightseeing
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-orange-500" />
+                    <span className="text-slate-700">
+                      24/7 Concierge Support
+                    </span>
+                  </div>
+                </div>
+                {/* CTA */}
+                <Link
+                  to="/packages"
+                  className="mt-8 w-full flex items-center justify-center h-14 rounded-2xl bg-orange-500 hover:bg-orange-600 text-white font-bold transition-all hover:-translate-y-1 shadow-lg"
+                >
+                  Reserve Your Spot
+                </Link>
+                {/* Trust */}
+                <div className="mt-6 p-4 bg-slate-50 rounded-2xl text-center">
+                  <div className="flex justify-center mb-2">
+                    <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                  </div>
+                  <p className="text-sm font-semibold text-slate-700">
+                    4.9/5 Traveler Satisfaction
+                  </p>
+                  <p className="text-xs text-slate-500 mt-1">
+                    Trusted by 10,000+ travelers
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>

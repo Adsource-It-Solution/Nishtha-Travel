@@ -13,16 +13,18 @@ export const CabCard = ({ cab }: CabCardProps) => {
             whileHover={{ y: -10 }}
             transition={{ duration: 0.35 }}
             className="
-      group
-      bg-white
-      rounded-[32px]
-      overflow-hidden
-      border
-      border-[#E5E0D8]
-      shadow-sm
-      hover:shadow-2xl
-      transition-all
-      duration-500
+       group
+    bg-white
+    rounded-[32px]
+    overflow-hidden
+    border
+    border-[#E5E0D8]
+    shadow-sm
+    hover:shadow-2xl
+    transition-all
+    duration-500
+    max-w-[380px]
+    mx-auto
     "
         >
             <div className="relative overflow-hidden">
@@ -41,7 +43,7 @@ export const CabCard = ({ cab }: CabCardProps) => {
 
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
 
-                <span
+                {/* <span
                     className="
           absolute
           top-4
@@ -57,11 +59,11 @@ export const CabCard = ({ cab }: CabCardProps) => {
         "
                 >
                     {cab.rate}
-                </span>
+                </span> */}
             </div>
 
             <div className="p-7">
-                <span className="text-xs uppercase tracking-[0.2em] font-bold text-brand-purple">
+                <span className="text-xs uppercase tracking-[0.2em] font-bold text-yellow-500">
                     {cab.type}
                 </span>
 

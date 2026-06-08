@@ -173,7 +173,7 @@ export const OfferBanner: React.FC = () => {
                         onClick={() => handleCopyCode(offer.code, offer.id)}
                         className={`px-3 py-1.5 rounded-lg text-[10px] font-extrabold uppercase tracking-wider flex items-center gap-1.5 transition-all ${isCopied
                             ? 'bg-emerald-500 text-white'
-                            : 'bg-brand-blue hover:bg-brand-purple text-white'
+                            : 'bg-brand-blue hover:bg-yellow text-white'
                           }`}
                       >
                         {isCopied ? (
