@@ -116,13 +116,22 @@ export interface Cab {
   id: string;
   name: string;
   type: string;
+  category: string;
   image: string;
-  rate: string;
-  capacity: string;
-  luggage: string;
+
+  rating: number;
+  reviewsCount: number;
+
+  capacity: number;
+  luggage: number;
+
+  pricePerKm: number;
+  basePrice: number;
+
   description: string;
-  featured?: boolean;
+  features: string[];
 }
+
 
 export interface Offer {
   id: string;
