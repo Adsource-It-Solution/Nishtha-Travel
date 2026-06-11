@@ -21,6 +21,11 @@ export interface Destination {
   highlights: string[];
   nearbyAttractions: { name: string; distance: string; image: string }[];
   foodExperiences: { name: string; description: string; image: string }[];
+  inclusions: {
+  title: string;
+  description: string;
+  icon?: string;
+}[];
   faqs: { question: string; answer: string }[];
 }
 
@@ -171,6 +176,32 @@ export const mockDestinations: Destination[] = [
     foodExperiences: [
       { name: "Ithaa Undersea Restaurant", description: "Dine 5 meters below the ocean surface with 180-degree panoramic views of marine life.", image: "https://images.unsplash.com/photo-1554672408-730436b60dde?auto=format&fit=crop&w=300&q=80" }
     ],
+    inclusions: [
+  {
+    title: "Luxury Accommodation",
+    description: "Stay in premium beachfront or overwater villas with world-class amenities and breathtaking ocean views."
+  },
+  {
+    title: "Airport Transfers",
+    description: "Round-trip speedboat or seaplane transfers from Malé International Airport."
+  },
+  {
+    title: "Daily Breakfast & Dinner",
+    description: "Enjoy gourmet meals featuring international and local Maldivian cuisine."
+  },
+  {
+    title: "Snorkeling Excursions",
+    description: "Guided snorkeling experiences to explore vibrant coral reefs and marine life."
+  },
+  {
+    title: "Spa & Wellness Access",
+    description: "Complimentary access to resort wellness facilities and relaxation areas."
+  },
+  {
+    title: "24/7 Concierge Service",
+    description: "Dedicated travel assistance throughout your stay."
+  }
+],
     faqs: [
       { question: "When is the best time to visit the Maldives?", answer: "The best time to visit is during the dry season from November to April, where you will experience clear skies and calm waters." },
       { question: "Are transfers included in the packages?", answer: "Yes, our luxury packages include private speedboat or seaplane transfers directly from Malé Airport." }
@@ -200,6 +231,32 @@ export const mockDestinations: Destination[] = [
     foodExperiences: [
       { name: "Da Adolfo Beach Dining", description: "Secluded beachfront restaurant reachable only by a red-fish boat, serving fresh caught seafood.", image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=300&q=80" }
     ],
+    inclusions: [
+  {
+    title: "Luxury Cliffside Hotel",
+    description: "Accommodation in carefully selected premium hotels with sea views."
+  },
+  {
+    title: "Private Airport Transfers",
+    description: "Comfortable transfers between Naples Airport and your hotel."
+  },
+  {
+    title: "Daily Breakfast",
+    description: "Fresh Italian breakfast featuring local specialties."
+  },
+  {
+    title: "Capri Island Excursion",
+    description: "Guided day trip to Capri including boat transfers."
+  },
+  {
+    title: "Local Culinary Experience",
+    description: "Authentic Italian cooking class and limoncello tasting."
+  },
+  {
+    title: "Professional Tour Guide",
+    description: "Expert local guides for selected sightseeing tours."
+  }
+],
     faqs: [
       { question: "Is the Amalfi Coast suitable for families?", answer: "Yes, though the cliffside steps can be challenging for strollers. We curate family itineraries featuring private minivans and kid-friendly tours." }
     ]
@@ -225,6 +282,32 @@ export const mockDestinations: Destination[] = [
     foodExperiences: [
       { name: "Gion Kaiseki", description: "Artistic, multi-course Japanese seasonal dining served in historical lacquerware.", image: "https://images.unsplash.com/photo-1611143669185-af224c5e3252?auto=format&fit=crop&w=300&q=80" }
     ],
+    inclusions: [
+  {
+    title: "Traditional Ryokan Stay",
+    description: "Accommodation in authentic Japanese ryokans with modern comforts."
+  },
+  {
+    title: "Daily Japanese Breakfast",
+    description: "Fresh traditional breakfast served each morning."
+  },
+  {
+    title: "Temple & Shrine Tours",
+    description: "Guided visits to Kyoto's most iconic cultural landmarks."
+  },
+  {
+    title: "Tea Ceremony Experience",
+    description: "Participate in an authentic Japanese tea ceremony."
+  },
+  {
+    title: "Local Transportation Pass",
+    description: "Convenient travel across Kyoto using public transportation."
+  },
+  {
+    title: "English-Speaking Guide",
+    description: "Professional assistance during selected excursions."
+  }
+],
     faqs: []
   },
   {
@@ -247,7 +330,33 @@ export const mockDestinations: Destination[] = [
     ],
     foodExperiences: [
       { name: "Chesa Veglia Fondue", description: "Historic 1658 farmhouse serving the ultimate artisanal cheese fondue and truffle pizzas.", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=300&q=80" }
-    ],
+    ],inclusions: [
+  {
+    title: "Mountain Resort Accommodation",
+    description: "Stay in premium alpine resorts surrounded by stunning mountain scenery."
+  },
+  {
+    title: "Scenic Rail Journey",
+    description: "Tickets for iconic Swiss panoramic train experiences."
+  },
+  {
+    title: "Daily Breakfast",
+    description: "Enjoy fresh Swiss breakfast options every morning."
+  },
+  {
+    title: "Mountain Excursions",
+    description: "Access to selected cable cars and mountain viewpoints."
+  },
+  {
+    title: "Adventure Activities",
+    description: "Guided outdoor activities depending on season and package."
+  },
+  {
+    title: "Travel Assistance",
+    description: "Dedicated support throughout your Swiss adventure."
+  }
+],
+
     faqs: []
   }
 ];

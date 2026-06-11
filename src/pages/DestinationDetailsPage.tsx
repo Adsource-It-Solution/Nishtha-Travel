@@ -1,19 +1,74 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Star, MapPin, Heart, ArrowLeft, Sun, CheckCircle, ChevronDown, HelpCircle } from 'lucide-react';
-import { mockDestinations } from '../data/mockData';
+import { Star, MapPin, Heart, ArrowLeft, Sun, CheckCircle, ChevronDown, HelpCircle, Check, X, CloudSun } from 'lucide-react';
+import { mockDestinations, type Destination } from '../data/mockData';
 
 export const DestinationDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const [activeTab, setActiveTab] = useState<'itinerary' | 'food' | 'info'>('itinerary');
-  const [expandedDay, setExpandedDay] = useState<number | null>(1);
+
+  const [activeTab, setActiveTab] =
+    useState<'itinerary' | 'inclusions' | 'info'>('itinerary');
+
+  const [expandedDay, setExpandedDay] =
+    useState<number | null>(1);
+
+  const [expandedInclusion, setExpandedInclusion] =
+    useState<number | null>(1);
+
   const [isLiked, setIsLiked] = useState(false);
 
-  const destination = mockDestinations.find((d) => d.id === id) || mockDestinations[0];
+  const [showBookingModal, setShowBookingModal] =
+    useState(false);
+
+  const [bookingDes, setBookingDes] = useState<Destination | null>(null);
+  const [bookingConfirmed, setBookingConfirmed] =
+    useState(false);
+
+  const [travelerName, setTravelerName] = useState("");
+  const [travelerEmail, setTravelerEmail] = useState("");
+  const [travelerPhone, setTravelerPhone] = useState("");
+  const [travelers, setTravelers] = useState("2");
+  const [travelDate, setTravelDate] = useState("");
+  const [specialRequest, setSpecialRequest] = useState("");
+
+
+  const destination =
+    mockDestinations.find((d) => d.id === id) ||
+    mockDestinations[0];
+
+  const handleBookDestination = () => {
+    setBookingDes(destination);
+    setShowBookingModal(true);
+  };
+
+  const closeBookingModal = () => {
+    if (!bookingConfirmed) {
+      setShowBookingModal(false);
+      setBookingDes(null);
+    }
+  };
+
+  const confirmBooking = () => {
+    setBookingConfirmed(true);
+
+    setTimeout(() => {
+      setBookingConfirmed(false);
+      setBookingDes(null);
+      setShowBookingModal(false);
+    }, 3000);
+  };
 
   const toggleDay = (day: number) => {
-    setExpandedDay(expandedDay === day ? null : day);
+    setExpandedDay(
+      expandedDay === day ? null : day
+    );
+  };
+
+  const toggleInclusion = (index: number) => {
+    setExpandedInclusion(
+      expandedInclusion === index ? null : index
+    );
   };
 
   return (
@@ -31,11 +86,11 @@ export const DestinationDetailsPage: React.FC = () => {
         {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
         {/* Back Button */}
-        <div className="absolute top-28 left-0 right-0 z-20">
+        <div className="absolute top-10 left-0 right-0 z-20">
           <div className="max-w-7xl mx-auto px-6 flex justify-between">
-            <Link to="/" className="flex items-center gap-2 bg-white/90 backdrop-blur-md px-5 py-3 rounded-2xl shadow-lg hover:bg-white transition-all">
+            <Link to="/" className="flex items-center gap-2 bg-white/90 backdrop-blur-md px-2 py-1 mb-2 sm:mb-2 sm:px-5 sm:py-3 rounded-2xl shadow-lg hover:bg-white transition-all">
               <ArrowLeft className="w-4 h-4 text-blue-700" />
-              <span className="font-medium text-slate-700">Back To Explore</span>
+              <span className="font-sm sm:font-medium text-slate-700">Back To Explore</span>
             </Link>
             <button onClick={() => setIsLiked(!isLiked)} className="w-14 h-14 rounded-2xl bg-white/90 backdrop-blur-md flex items-center justify-center shadow-lg hover:bg-white transition-all">
               <Heart className={`w-6 h-6 transition-all ${isLiked ? 'fill-red-500 text-red-500' : 'text-slate-500'}`} />
@@ -46,15 +101,15 @@ export const DestinationDetailsPage: React.FC = () => {
         <div className="absolute bottom-0 left-0 right-0 z-10">
           <div className="max-w-7xl mx-auto px-6 pb-16">
             {/* Country Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-500/20 backdrop-blur-md border border-orange-300/30">
-              <MapPin className="w-4 h-4 text-orange-300" />
-              <span className="text-orange-100 text-sm font-semibold">{destination.country}</span>
-            </div>
 
             {/* Destination Name */}
             <h1 className="mt-5 text-5xl md:text-7xl font-bold font-[Poppins] text-white leading-tight">
               {destination.name}
             </h1>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-500/20 backdrop-blur-md border border-orange-300/30">
+              <MapPin className="w-4 h-4 text-orange-300" />
+              <span className="text-orange-100 text-sm font-semibold">{destination.country}</span>
+            </div>
 
             {/* Description */}
             <p className="mt-5 max-w-3xl text-white/80 text-lg leading-8">
@@ -91,7 +146,6 @@ export const DestinationDetailsPage: React.FC = () => {
                 </p>
 
               </div>
-
               <div
                 className="
           bg-white/10
@@ -180,12 +234,12 @@ export const DestinationDetailsPage: React.FC = () => {
               </div>
             </div>
             {/* Content Tabs Navigation */}
-            <div className="space-y-6">
+            <div className="space-y-4">
               <div className="bg-white rounded-[28px] p-2 shadow-sm mb-8 flex gap-2 overflow-x-auto">
 
                 {[
                   { id: 'itinerary', label: 'Itinerary' },
-                  { id: 'food', label: 'Gastronomy' },
+                  { id: 'inclusions', label: 'Inclusion' },
                   { id: 'info', label: 'FAQ' }
                 ].map((tab) => (
 
@@ -214,15 +268,10 @@ export const DestinationDetailsPage: React.FC = () => {
 
               {/* Tab: Itinerary */}
               {activeTab === 'itinerary' && (
-
                 <div className="space-y-5">
-
                   {destination.itinerary.map((item) => {
-
                     const isExpanded = expandedDay === item.day;
-
                     return (
-
                       <div
                         key={item.day}
                         className="bg-white rounded-[28px] shadow-sm overflow-hidden">
@@ -265,28 +314,102 @@ export const DestinationDetailsPage: React.FC = () => {
                   })}
                 </div>
               )}
-              {/* Tab: Gastronomy */}
-              {activeTab === 'food' && (
-                <div className="grid md:grid-cols-2 gap-6">
-                  {destination.foodExperiences.map((food, i) => (
-                    <div key={i} className="bg-white rounded-[32px] overflow-hidden shadow-sm hover:shadow-lg transition-all">
 
-                      <img
-                        src={food.image}
-                        alt={food.name}
-                        className="w-full h-56 object-cover"
-                      />
-                      <div className="p-6">
-                        <span className="inline-flex px-3 py-1 rounded-full bg-orange-50 text-orange-500 text-xs font-semibold">
-                          Local Experience
-                        </span>
-                        <h3 className="mt-4 text-xl font-bold text-blue-700 font-[Poppins]">
-                          {food.name}
-                        </h3>
-                        <p className="mt-3 text-slate-600 leading-7">{food.description}</p>
+              {/* Tab: Inclusion */}
+              {activeTab === 'inclusions' && (
+                <div className="space-y-5">
+                  {destination.inclusions.map((item, index) => {
+                    const isExpanded = expandedInclusion === index;
+
+                    return (
+                      <div
+                        key={index}
+                        className="
+            bg-white
+            rounded-[28px]
+            shadow-sm
+            overflow-hidden
+            hover:shadow-md
+            transition-all
+          "
+                      >
+                        <button
+                          onClick={() => toggleInclusion(index)}
+                          className="w-full flex justify-between items-center p-6"
+                        >
+                          <div className="flex items-center gap-4">
+                            <div
+                              className="
+    w-12
+    h-12
+    rounded-2xl
+    bg-gradient-to-br
+    from-orange-400
+    to-orange-500
+    text-white
+    flex
+    items-center
+    justify-center
+  "
+                            >
+                              <Check className="w-6 h-6" />
+                            </div>
+
+                            <div className="text-left">
+                              <p className="text-xs text-orange-500 font-semibold uppercase tracking-wider">
+                                Included
+                              </p>
+
+                              <h4
+                                className="
+                    text-lg
+                    font-bold
+                    text-blue-700
+                    font-[Poppins]
+                  "
+                              >
+                                {item.title}
+                              </h4>
+                            </div>
+                          </div>
+
+                          <ChevronDown
+                            className={`
+                w-5
+                h-5
+                text-slate-400
+                transition-all
+                duration-300
+                ${isExpanded ? 'rotate-180' : ''}
+              `}
+                          />
+                        </button>
+
+                        <AnimatePresence>
+                          {isExpanded && (
+                            <motion.div
+                              initial={{ height: 0 }}
+                              animate={{ height: 'auto' }}
+                              exit={{ height: 0 }}
+                              transition={{ duration: 0.3 }}
+                              className="overflow-hidden"
+                            >
+                              <div
+                                className="
+                    px-6
+                    pb-6
+                    text-slate-600
+                    leading-8
+                  "
+                              >
+                                {item.description}
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
               {/* Tab: FAQs */}
@@ -310,8 +433,7 @@ export const DestinationDetailsPage: React.FC = () => {
             </div>
 
             {/* Attractions and Maps */}
-            <div className="space-y-8">
-
+            {/* <div className="space-y-8">
               <div className="flex items-center justify-between">
                 <div>
                   <span className="text-orange-500 font-semibold text-sm">
@@ -328,7 +450,6 @@ export const DestinationDetailsPage: React.FC = () => {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {destination.nearbyAttractions.map((att, i) => (
-
                   <div
                     key={i}
                     className="group bg-white rounded-[32px] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
@@ -338,21 +459,16 @@ export const DestinationDetailsPage: React.FC = () => {
                         alt={att.name}
                         className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-105" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
-
                       <div className="absolute bottom-4 left-4">
                         <span className="bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold text-orange-600">
                           {att.distance}
                         </span>
                       </div>
-
                     </div>
-
                     <div className="p-6">
-
                       <h3 className="text-xl font-bold text-blue-700 font-[Poppins]">
                         {att.name}
                       </h3>
-
                       <p className="text-slate-500 mt-2 text-sm leading-6">
                         Discover one of the most visited attractions near {destination.name}. Perfect for sightseeing, photography and local experiences.
                       </p>
@@ -369,7 +485,7 @@ export const DestinationDetailsPage: React.FC = () => {
 
                 ))}
               </div>
-            </div>
+            </div> */}
           </div>
           {/* Sticky Checkout/Booking Column */}
           <div className="lg:col-span-4 lg:sticky lg:top-28 space-y-6">
@@ -394,7 +510,7 @@ export const DestinationDetailsPage: React.FC = () => {
                       Starting From
                     </p>
                     <h2 className="text-4xl font-bold font-[Poppins]">
-                      ${destination.id === 'dest-1' ? '2,499' : '1,850'}
+                      ₹{destination.id === 'dest-1' ? '2,499' : '1,850'}
                     </h2>
                     <span className="text-blue-100 text-sm">
                       per traveler
@@ -431,12 +547,27 @@ export const DestinationDetailsPage: React.FC = () => {
                   </div>
                 </div>
                 {/* CTA */}
-                <Link
-                  to="/packages"
-                  className="mt-8 w-full flex items-center justify-center h-14 rounded-2xl bg-orange-500 hover:bg-orange-600 text-white font-bold transition-all hover:-translate-y-1 shadow-lg"
+                <button
+                  onClick={handleBookDestination}
+                  className="
+    mt-8
+    w-full
+    flex
+    items-center
+    justify-center
+    h-14
+    rounded-2xl
+    bg-orange-500
+    hover:bg-orange-600
+    text-white
+    font-bold
+    transition-all
+    hover:-translate-y-1
+    shadow-lg
+  "
                 >
                   Reserve Your Spot
-                </Link>
+                </button>
                 {/* Trust */}
                 <div className="mt-6 p-4 bg-slate-50 rounded-2xl text-center">
                   <div className="flex justify-center mb-2">
@@ -454,6 +585,219 @@ export const DestinationDetailsPage: React.FC = () => {
           </div>
         </div>
       </div>
+      <AnimatePresence>
+        {showBookingModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => {
+                if (!bookingConfirmed) setShowBookingModal(false);
+              }}
+              className="absolute inset-0 bg-[#09131F]/50 backdrop-blur-sm"
+            />
+
+            {/* Modal */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96, y: 20 }}
+              className="
+relative z-10
+bg-white
+w-full
+max-w-7xl
+h-90vh
+rounded-3xl
+shadow-2xl
+"
+            >
+              {!bookingConfirmed ? (
+                <>
+                  <div className="grid lg:grid-cols-2 h-[90vh]">
+
+                    {/* Image */}
+                    <div className="relative h-90vh">
+                      <img
+                        src={bookingDes?.image}
+                        alt={bookingDes?.name}
+                        className="w-full h-[90vh] object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#09131F] via-[#09131F]/50 to-transparent" />
+                      <div className="absolute top-5 right-5">
+                        <button
+                          onClick={() => setShowBookingModal(false)}
+                          className="bg-white/90 p-2 rounded-full"
+                        >
+                          <X className="w-5 h-5" />
+                        </button>
+                      </div>
+
+                      <div className="absolute bottom-0 left-0 right-0 p-10 text-white">
+                        <span className="text-xs uppercase tracking-[0.25em] text-yellow-300">
+                          Destination Booking
+                        </span>
+
+                        <h2 className="text-5xl font-serif mt-2">
+                          {bookingDes?.name}
+                        </h2>
+
+                        <p className="text-white/80 mt-2">
+                          {bookingDes?.country}
+                        </p>
+
+                        <div className="flex items-center gap-2 mt-4">
+                          <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                          <span>{bookingDes?.rating}</span>
+                          <span className="text-white/70">
+                            ({bookingDes?.reviewsCount} Reviews)
+                          </span>
+                        </div>
+
+                        <div className="mt-6 flex flex-wrap gap-3">
+                          {bookingDes?.highlights.slice(0, 3).map((item, index) => (
+                            <div
+                              key={index}
+                              className="bg-white/10 backdrop-blur-md px-4 py-2 rounded-full text-sm"
+                            >
+                              {item}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className=" p-2 lg:p-14">
+
+                      <div>
+                        <span className="text-xs uppercase tracking-[0.2em] text-brand-purple font-bold">
+                          Reservation Request
+                        </span>
+
+                        <h3 className="text-4xl font-serif text-brand-blue mt-2">
+                          Plan Your Journey
+                        </h3>
+
+                        <p className="text-slate-500 mt-3">
+                          Submit your details and our travel concierge
+                          will prepare a personalized itinerary.
+                        </p>
+                      </div>
+
+                      <div className="space-y-5 mt-10">
+
+                        <input
+                          type="text"
+                          placeholder="Full Name"
+                          value={travelerName}
+                          onChange={(e) => setTravelerName(e.target.value)}
+                          className="w-full border border-[#E5E0D8] px-5 py-4 rounded-xl"
+                        />
+
+                        <input
+                          type="email"
+                          placeholder="Email Address"
+                          value={travelerEmail}
+                          onChange={(e) => setTravelerEmail(e.target.value)}
+                          className="w-full border border-[#E5E0D8] px-5 py-4 rounded-xl"
+                        />
+
+                        <input
+                          type="tel"
+                          placeholder="Phone Number"
+                          value={travelerPhone}
+                          onChange={(e) => setTravelerPhone(e.target.value)}
+                          className="w-full border border-[#E5E0D8] px-5 py-4 rounded-xl"
+                        />
+
+                        <div className="grid md:grid-cols-2 gap-4">
+
+                          <select
+                            value={travelers}
+                            onChange={(e) => setTravelers(e.target.value)}
+                            className="border border-[#E5E0D8] px-5 py-4 rounded-xl"
+                          >
+                            <option value="1">1 Traveler</option>
+                            <option value="2">2 Travelers</option>
+                            <option value="3">3 Travelers</option>
+                            <option value="4">4 Travelers</option>
+                            <option value="5">5+ Travelers</option>
+                          </select>
+
+                          <input
+                            type="date"
+                            value={travelDate}
+                            onChange={(e) => setTravelDate(e.target.value)}
+                            className="border border-[#E5E0D8] px-5 py-4 rounded-xl"
+                          />
+                        </div>
+
+                        <textarea
+                          rows={5}
+                          value={specialRequest}
+                          onChange={(e) => setSpecialRequest(e.target.value)}
+                          placeholder="Special requirements, honeymoon plans, family trip, hotel preferences..."
+                          className="w-full border border-[#E5E0D8] px-5 py-4 rounded-xl resize-none"
+                        />
+
+                        <div className="bg-brand-light border border-[#E5E0D8] p-5 rounded-xl">
+                          <div className="flex items-center gap-3">
+                            <CloudSun className="w-5 h-5 text-brand-purple" />
+                            <span>
+                              Current Weather: {bookingDes?.weather.temp}
+                              {" • "}
+                              {bookingDes?.weather.condition}
+                            </span>
+                          </div>
+                        </div>
+
+                        <button
+                          onClick={confirmBooking}
+                          className="
+      w-full
+      h-14
+      rounded-xl
+      bg-orange-500
+      hover:bg-orange-600
+      text-white
+      font-bold
+      transition-all
+    "
+                        >
+                          Submit Reservation Request
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="p-12 text-center"
+                >
+                  <div className="w-20 h-20 mx-auto bg-brand-light border border-[#E5E0D8] flex items-center justify-center">
+                    <Check className="w-10 h-10 text-brand-purple" />
+                  </div>
+
+                  <h3 className="text-3xl font-serif text-brand-blue mt-6">
+                    Journey Reserved
+                  </h3>
+
+                  <p className="text-slate-500 text-sm mt-3 max-w-sm mx-auto leading-relaxed">
+                    Your destination inquiry has been successfully submitted.
+                    Our luxury travel concierge will contact you shortly with
+                    a tailored itinerary and exclusive pricing options.
+                  </p>
+                </motion.div>
+              )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

@@ -142,9 +142,8 @@ export const Footer: React.FC = () => {
                 Contact
               </h4>
 
-              <div className="space-y-6 text-slate-400 ">
-
-                <div className="flex gap-3">
+              <div className="space-y-6 text-slate-400 break-words">
+                <div className="flex gap-3 min-w-0 items-start pr-10 sm:pr-0">
                   <MapPin className="w-5 h-5 text-yellow-400 shrink-0" />
                   <div className="flex flex-col">
                     <span>
@@ -174,7 +173,7 @@ export const Footer: React.FC = () => {
 
                 <form
                   onSubmit={handleSubscribe}
-                  className="flex gap-2"
+                  className="flex flex-col sm:flex-row gap-3"
                 >
                   <input
                     type="email"
@@ -197,20 +196,36 @@ export const Footer: React.FC = () => {
                       focus:outline-none
                     "
                   />
-
-                  <button
-                    type="submit"
-                    className="
-                      bg-yellow-400
-                      text-black
-                      rounded-full
-                      px-5
-                      py-3
-                      font-bold
-                    "
-                  >
-                    <Send size={18} />
-                  </button>
+                  <div>
+                    <button
+                      type="submit"
+                      className="
+      inline-flex
+      items-center
+      justify-center
+      gap-2
+      bg-gradient-to-r
+      from-yellow-400
+      to-yellow-500
+      hover:from-yellow-500
+      hover:to-yellow-600
+      text-black
+      rounded-full
+      px-6
+      py-3
+      font-semibold
+      shadow-lg
+      hover:shadow-xl
+      transition-all
+      duration-300
+      hover:-translate-y-0.5
+      whitespace-nowrap
+    "
+                    >
+                      <Send size={16} />
+                      <span>Send</span>
+                    </button>
+                  </div>
                 </form>
 
                 {subscribed && (
@@ -219,13 +234,11 @@ export const Footer: React.FC = () => {
                   </p>
                 )}
               </div>
-
             </div>
-
           </div>
 
           {/* Bottom */}
-          <div className="border-t border-white/10 mt-16 pt-8 flex flex-col lg:flex-row justify-between items-center gap-4">
+          <div className="border-t border-white/10 mt-4 pt-8 mb-4 flex flex-col lg:flex-row justify-between items-center gap-4">
 
             <p className="text-slate-500 text-sm">
               © {new Date().getFullYear()} Nishtha Travel Concierge.

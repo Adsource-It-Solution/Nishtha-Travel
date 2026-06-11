@@ -13,9 +13,9 @@ export const CabCard = ({ cab }: CabCardProps) => {
             whileHover={{ y: -10 }}
             transition={{ duration: 0.35 }}
             className="
-       group
+    group
     bg-white
-    rounded-[32px]
+    rounded-[24px] sm:rounded-[32px]
     overflow-hidden
     border
     border-[#E5E0D8]
@@ -23,23 +23,23 @@ export const CabCard = ({ cab }: CabCardProps) => {
     hover:shadow-2xl
     transition-all
     duration-500
-    max-w-[380px]
+    max-w-[320px] sm:max-w-[380px]
     mx-auto
-    "
+  "
         >
             <div className="relative overflow-hidden">
-                <img
-                    src={cab.image}
-                    alt={cab.name}
-                    className="
-          h-72
-          w-full
-          object-cover
-          group-hover:scale-110
-          transition-transform
-          duration-700
-        "
-                />
+               <img
+  src={cab.image}
+  alt={cab.name}
+  className="
+    h-56 sm:h-72
+    w-full
+    object-cover
+    group-hover:scale-110
+    transition-transform
+    duration-700
+  "
+/>
 
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
 
@@ -62,7 +62,7 @@ export const CabCard = ({ cab }: CabCardProps) => {
                 </span> */}
             </div>
 
-            <div className="p-7">
+            <div className="px-5 sm:px-7 pb-2">
                 <span className="text-xs uppercase tracking-[0.2em] font-bold text-yellow-500">
                     {cab.type}
                 </span>

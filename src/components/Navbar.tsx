@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, User, PhoneCall, Search } from 'lucide-react';
+import { Menu, X, PhoneCall, Search, MessageCircle, ArrowRight, User2 } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -181,35 +181,57 @@ export const Navbar: React.FC = () => {
             </div>
 
             {/* Mobile Layout (Logo & Menu Button) */}
-            <div className="flex lg:hidden items-center justify-between w-full">
-              {/* Mobile Logo */}
-              <Link to="/" className="flex items-center gap-2 group">
-                <div className="relative flex items-center justify-center w-12 h-10 transition-all">
+            <div className="lg:hidden flex items-center justify-between w-full">
+
+              {/* Logo */}
+              <Link
+                to="/"
+                className="flex items-center gap-3"
+              >
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#2563EB]/10 to-[#F97316]/10 flex items-center justify-center border border-[#2563EB]/10">
                   <img
                     src="/logo.png"
-                    alt="Nishtha Travel Logo"
-                    className="w-16 h-10 object-contain"
+                    alt="Nishtha Travel"
+                    className="w-8 h-8 object-contain"
                   />
                 </div>
+
                 <div>
                   <img
                     src="/favicon.png"
-                    alt="Nishtha Travel Logo"
-                    className="w-40 h-20 object-contain"
+                    alt="Nishtha Travel"
+                    className="w-36 h-auto object-contain"
                   />
-                  {/* <span className="text-[9px] block font-bold tracking-[0.1em] uppercase text-purple-600 -mt-0.5 leading-none">
-                    Concierge PVT. LTD.
-                  </span> */}
                 </div>
               </Link>
 
-              {/* Toggle Button */}
+              {/* Menu Button */}
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="text-slate-600 hover:text-brand-purple p-2 focus:outline-none transition-colors"
+                className="
+      w-11
+      h-11
+      rounded-2xl
+      bg-white
+      border
+      border-slate-200
+      shadow-sm
+      flex
+      items-center
+      justify-center
+      text-[#2563EB]
+      hover:bg-[#2563EB]
+      hover:text-white
+      transition-all
+    "
               >
-                {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                {isOpen ? (
+                  <X className="w-5 h-5" />
+                ) : (
+                  <Menu className="w-5 h-5" />
+                )}
               </button>
+
             </div>
           </div>
         </div>
@@ -218,55 +240,126 @@ export const Navbar: React.FC = () => {
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-              className="lg:hidden bg-white border-b border-[#E5E0D8] overflow-hidden shadow-sm"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.25 }}
+              className="
+        lg:hidden
+        bg-white
+        rounded-b-[32px]
+        border-b
+        border-slate-200
+        shadow-2xl
+        overflow-hidden
+      "
             >
-              <div className="px-4 pt-2 pb-6 space-y-2">
-                {navLinks.map((link) => {
-                  const isActive = location.pathname === link.path;
-                  return (
-                    <Link
-                      key={link.path}
-                      to={link.path}
+              <div className="p-5">
+
+                {/* Links */}
+                <div className="space-y-2">
+                  {navLinks.map((link) => {
+                    const isActive = location.pathname === link.path;
+
+                    return (
+                      <Link
+                        key={link.path}
+                        to={link.path}
+                        onClick={() => setIsOpen(false)}
+                        className={`
+                  flex
+                  items-center
+                  justify-between
+                  px-5
+                  py-4
+                  rounded-2xl
+                  transition-all
+
+                  ${isActive
+                            ? "bg-[#2563EB] text-white shadow-lg"
+                            : "bg-[#F8FAFC] hover:bg-[#EFF6FF] text-slate-700"
+                          }
+                `}
+                      >
+                        <span className="font-medium">
+                          {link.name}
+                        </span>
+
+                        <ArrowRight className="w-4 h-4" />
+                      </Link>
+                    );
+                  })}
+                </div>
+
+                {/* Quick Actions */}
+                <div className="mt-6 border-t pt-6">
+                  <div className="grid grid-cols-2 gap-3">
+                    {/* <Link
+                      to="/dashboard"
                       onClick={() => setIsOpen(false)}
-                      className={`block px-4 py-2.5 text-xs font-extrabold tracking-wider uppercase transition-all rounded-none ${isActive
-                        ? 'bg-[#FDFBF7] text-brand-purple border-l-2 border-brand-purple pl-3'
-                        : 'text-slate-600 hover:bg-slate-50 hover:text-brand-blue'
-                        }`}
+                      className="
+                bg-white
+                border
+                border-slate-200
+                rounded-2xl
+                p-4
+                flex
+                flex-col
+                items-center
+                gap-2
+                hover:border-[#2563EB]
+                transition-all
+              "
                     >
-                      {link.name}
-                    </Link>
-                  );
-                })}
-                <div className="pt-4 border-t border-[#E5E0D8] flex flex-col gap-2.5 px-4">
-                  <Link
-                    to="/dashboard"
-                    onClick={() => setIsOpen(false)}
-                    className="flex items-center gap-3 py-1.5 text-xs font-bold text-slate-600 hover:text-brand-blue transition-colors"
-                  >
-                    <User className="w-4 h-4 text-brand-purple" />
-                    <span>Lounge Member Hub</span>
-                  </Link>
-                  <a
-                    href="https://wa.me/9999999999"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => setIsOpen(false)}
-                    className="flex items-center gap-3 py-1.5 text-xs font-bold text-slate-600 hover:text-brand-blue transition-colors"
-                  >
-                    <PhoneCall className="w-4 h-4 text-brand-purple" />
-                    <span>WhatsApp</span>
-                  </a>
-                  <Link
+                      <User className="w-5 h-5 text-[#2563EB]" />
+                      <span className="text-xs font-medium">
+                        Dashboard
+                      </span>
+                    </Link> */}
+                    <a
+                      href="https://wa.me/919718216528"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="
+                bg-white
+                border
+                border-slate-200
+                rounded-2xl
+                p-4
+                flex
+                flex-col
+                items-center
+                gap-2
+                hover:border-[#25D366]
+                transition-all
+              "
+                    >
+                      <MessageCircle className="w-5 h-5 text-[#25D366]" />
+                      <span className="text-xs font-medium">
+                        WhatsApp
+                      </span>
+                    </a>
+                                      <Link
                     to="/contact"
                     onClick={() => setIsOpen(false)}
-                    className="btn-gold w-full mt-2 !py-2.5 !text-[10px] text-center font-bold tracking-wider rounded-none"
+                    className="
+              bg-white
+                border
+                border-slate-200
+                rounded-2xl
+                p-4
+                flex
+                flex-col
+                items-center
+                gap-2
+                hover:border-[#25D366]
+                transition-all
+            "
                   >
-                    Book Journey
+                    <User2 className='text-orange-500 w-5 h-5'/>
+                    <span className="text-xs font-medium">Book Your Journey</span>
                   </Link>
+                  </div>
                 </div>
               </div>
             </motion.div>

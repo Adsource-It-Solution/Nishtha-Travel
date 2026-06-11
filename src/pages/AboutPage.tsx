@@ -69,38 +69,25 @@ export const AboutPage: React.FC = () => {
       </section>
 
       {/* ABOUT SECTION */}
-      <section className="py-24">
+      <section className="py-16">
         <div className="max-w-7xl mx-auto px-6">
 
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-
             <div>
               <h2 className="text-5xl font-bold text-slate-900 font-poppins">
                 Why We're Best Agency
               </h2>
 
               <p className="mt-8 text-slate-600 leading-8 text-justify">
-                Both the founders after working for years in multiple areas realised their strength is in managing the people mobility business and that is how Nishtha Travel Concierge Private Limited was born.
-
-                We plan to bring to doorstep of every Indian (Aam Aadmi) the mobility, travel, Air and train ticketing with local transportation needs. Our AI engine is designed to understand your preference and provide best travel solutions and holiday packages.
+                At Nishtha Travel Concierce PVT. LTD. , we believe that every journey should be comfortable, reliable, and memorable. Whether you're traveling for business, leisure, or a special occasion, we are committed to providing exceptional transportation and travel services tailored to your needs.
               </p>
 
               <p className="mt-4 text-slate-600 leading-8 text-justify">
-                With over a decade of experience in managing fleet and employee transportation, both have the vision of making Nishtha Travel Concierge Pvt Ltd the preferred and trusted partner of every company in India for their employee transportation and all mobility needs.
+               With a focus on quality, safety, and customer satisfaction, our experienced team works tirelessly to ensure a seamless travel experience. From premium cab services to carefully curated travel solutions, we strive to exceed expectations at every step.
               </p>
               <p className="mt-4 text-slate-600 leading-8 text-justify">
-                We plan to bring to doorstep of every Indian (Aam Aadmi) the mobility, travel, Air and train ticketing with local transportation needs. Our AI engine is designed to understand your preference and provide best travel solutions and holiday packages.
+                Our mission is to connect people with destinations through dependable service, modern vehicles, and personalized support. We take pride in building lasting relationships with our clients and helping them travel with confidence wherever their journey takes them.
               </p>
-
-              <div className="mt-10">
-                <h4 className="font-bold text-slate-900">
-                  Mr Ramji Patel & Mrs Radha Patel
-                </h4>
-
-                <span className="text-sm text-slate-500">
-                  Founder & Director
-                </span>
-              </div>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
@@ -128,6 +115,35 @@ export const AboutPage: React.FC = () => {
 
           </div>
         </div>
+      </section>
+
+      <section className=" px-4 pb-6">
+        <h2 className="text-5xl font-bold text-slate-900 font-poppins">
+                Meet Our Founders
+              </h2>
+
+         <p className="mt-8 text-slate-600 leading-8 text-justify">
+                Both the founders after working for years in multiple areas realised their strength is in managing the people mobility business and that is how Nishtha Travel Concierge Private Limited was born.
+
+                We plan to bring to doorstep of every Indian (Aam Aadmi) the mobility, travel, Air and train ticketing with local transportation needs. Our AI engine is designed to understand your preference and provide best travel solutions and holiday packages.
+              </p>
+
+              <p className="mt-4 text-slate-600 leading-8 text-justify">
+                With over a decade of experience in managing fleet and employee transportation, both have the vision of making Nishtha Travel Concierge Pvt Ltd the preferred and trusted partner of every company in India for their employee transportation and all mobility needs.
+              </p>
+              <p className="mt-4 text-slate-600 leading-8 text-justify">
+                We plan to bring to doorstep of every Indian (Aam Aadmi) the mobility, travel, Air and train ticketing with local transportation needs. Our AI engine is designed to understand your preference and provide best travel solutions and holiday packages.
+              </p>
+
+              <div className="mt-10">
+                <h4 className="font-bold text-slate-900">
+                  Mr Ramji Patel & Mrs Radha Patel
+                </h4>
+
+                <span className="text-sm text-slate-500">
+                  Founder & Director
+                </span>
+              </div>
       </section>
 
       {/* SERVICES */}

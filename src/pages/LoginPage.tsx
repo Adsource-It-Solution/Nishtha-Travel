@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate, } from 'react-router-dom';
-import { Navbar } from '../components/Navbar';
 import { motion, } from 'framer-motion';
 import { auth, googleProvider } from '../firebase';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, } from 'firebase/auth';
-import { Mail, Lock, Phone, ShieldCheck, Chrome, UserPlus, LogIn, ArrowRight } from 'lucide-react';
+import { Mail, Lock, Phone, ShieldCheck, Chrome, UserPlus, LogIn } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -41,7 +40,7 @@ export const LoginPage: React.FC = () => {
       setTimeout(() => navigate('/dashboard'), 1500);
     } catch (err: any) {
       console.warn('Firebase error, falling back to mock mode:', err.message);
-      
+
       // Fallback Mock authentication for development
       if (email && password.length >= 6) {
         setSuccessMsg(`[Mock Active] Authenticated as ${email}! Redirecting...`);
@@ -96,49 +95,85 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-brand-light flex items-center justify-center pt-24 pb-12 px-6 relative">
-      <Navbar />
+<div className="flex items-center  justify-center p-8 pt-4 lg:p-8">
 
-      {/* Decorative Blurs */}
-      <div className="absolute top-10 left-10 w-96 h-96 bg-brand-purple/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-10 right-10 w-96 h-96 bg-brand-blue/5 rounded-full blur-3xl" />
-
-      <motion.div
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-md bg-white border border-[#E5E0D8] rounded-[28px] p-8 relative z-10 shadow-luxury"
-      >
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    className="
+      w-full
+      max-w-xl
+      bg-white
+      rounded-[36px]
+      border
+      border-[#E6CFB7]/30
+      shadow-[0_25px_60px_rgba(37,99,235,0.08)]
+      p-10
+      bg-yellow-500/20
+    "
+  >
         {/* Header logo/tag */}
-        <div className="text-center mb-8">
-          <span className="text-[10px] text-brand-purple font-bold uppercase tracking-[0.2em] block mb-2">Club Nishtha Lounge</span>
-          <h2 className="text-3xl font-serif text-brand-blue font-bold">
-            {isSignUp ? 'Create Membership' : 'Member Sign In'}
+        <div className="text-center mb-10">
+          <div className="inline-flex items-center gap-2 px-4 py-2 flex flex-row mb-4">
+             <img
+                      src="/logo.png"
+                      alt="Nishtha Travel Logo"
+                      className="w-24 h-16 object-contain"
+                    />
+            <img
+                      src="/favicon.png"
+                      alt="Nishtha Travel Logo"
+                      className="w-56 h-16 object-contain"
+                    />
+          </div>
+
+          <h2 className="text-4xl font-bold font-poppins text-slate-900">
+            {isSignUp ? "Create Your Account" : "Welcome Back"}
           </h2>
-          <p className="text-xs text-slate-500 mt-1.5 font-light">Access your curated itineraries and loyalty balance.</p>
+
+          <p className="mt-3 text-slate-600 font-roboto">
+            {isSignUp
+              ? "Join Nishtha Travel to manage bookings, itineraries and travel rewards."
+              : "Sign in to access your bookings and upcoming journeys."}
+          </p>
         </div>
 
         {/* Auth Method Selector */}
-        <div className="grid grid-cols-2 gap-2 mb-6">
+        <div className="grid grid-cols-2 gap-3 mb-8">
           <button
-            onClick={() => setAuthMethod('email')}
-            className={`py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border ${
-              authMethod === 'email'
-                ? 'bg-brand-purple/5 text-brand-purple border-brand-purple/20'
-                : 'bg-white border-[#E5E0D8] text-slate-500 hover:text-brand-purple'
-            }`}
+            onClick={() => setAuthMethod("email")}
+            className={`
+      h-12
+      rounded-2xl
+      font-medium
+      transition-all
+
+      ${authMethod === "email"
+                ? "bg-[#2563EB] text-white"
+                : "bg-[#F8FAFC] border border-slate-200"
+              }
+    `}
           >
-            Email Address
+            Email
           </button>
+
           <button
-            onClick={() => setAuthMethod('phone')}
-            className={`py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border ${
-              authMethod === 'phone'
-                ? 'bg-brand-purple/5 text-brand-purple border-brand-purple/20'
-                : 'bg-white border-[#E5E0D8] text-slate-500 hover:text-brand-purple'
-            }`}
+            onClick={() => setAuthMethod("phone")}
+            className={`
+      h-12
+      rounded-2xl
+      font-medium
+      transition-all
+
+      ${authMethod === "phone"
+                ? "bg-[#2563EB] text-white"
+                : "bg-[#F8FAFC] border border-slate-200"
+              }
+    `}
           >
-            Phone SMS OTP
+            OTP Login
           </button>
+
         </div>
 
         {/* Notices */}
@@ -165,8 +200,21 @@ export const LoginPage: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="alex.mercer@gmail.com"
-                className="glass-input pl-10 pt-7 pb-2 w-full text-xs font-semibold focus:border-brand-purple focus:outline-none"
-              />
+                className="
+w-full
+h-14
+pl-12
+pr-4
+rounded-2xl
+border
+border-slate-200
+bg-white
+focus:outline-none
+focus:border-[#2563EB]
+focus:ring-4
+focus:ring-[#2563EB]/10
+transition-all
+"/>
             </div>
 
             <div className="relative">
@@ -178,23 +226,49 @@ export const LoginPage: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="glass-input pl-10 pt-7 pb-2 w-full text-xs font-semibold focus:border-brand-purple focus:outline-none"
-              />
+                className="
+w-full
+h-14
+pl-12
+pr-4
+rounded-2xl
+border
+border-slate-200
+bg-white
+focus:outline-none
+focus:border-[#2563EB]
+focus:ring-4
+focus:ring-[#2563EB]/10
+transition-all
+"/>
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full btn-gold py-4 text-xs font-bold uppercase tracking-wider rounded-xl flex items-center justify-center gap-1.5"
-            >
+              className="
+  w-full
+  h-14
+  rounded-2xl
+  bg-[#F97316]
+  hover:bg-orange-600
+  text-white
+  font-semibold
+  flex
+  items-center
+  justify-center
+  gap-2
+  transition-all
+  shadow-lg
+">
               {loading ? 'Authenticating...' : isSignUp ? (
                 <>
-                  <UserPlus className="w-4 h-4" />
-                  <span>Join Elite Lounge</span>
+                  <UserPlus className="w-5 h-5" />
+                  <span>Sign Up</span>
                 </>
               ) : (
                 <>
-                  <LogIn className="w-4 h-4" />
+                  <LogIn className="w-5 h-5" />
                   <span>Sign In</span>
                 </>
               )}
@@ -213,8 +287,21 @@ export const LoginPage: React.FC = () => {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="+91 99999 88888"
-                className="glass-input pl-10 pt-7 pb-2 w-full text-xs font-semibold focus:border-brand-purple focus:outline-none"
-              />
+                className="
+w-full
+h-14
+pl-12
+pr-4
+rounded-2xl
+border
+border-slate-200
+bg-white
+focus:outline-none
+focus:border-[#2563EB]
+focus:ring-4
+focus:ring-[#2563EB]/10
+transition-all
+"/>
             </div>
 
             {otpSent && (
@@ -227,16 +314,38 @@ export const LoginPage: React.FC = () => {
                   value={otp}
                   onChange={(e) => setOtp(e.target.value)}
                   placeholder="Enter 6-digit code"
-                  className="glass-input pl-10 pt-7 pb-2 w-full text-xs font-semibold focus:border-brand-purple focus:outline-none text-center tracking-widest font-mono"
-                />
+                  className="
+w-full
+h-14
+pl-12
+pr-4
+rounded-2xl
+border
+border-slate-200
+bg-white
+focus:outline-none
+focus:border-[#2563EB]
+focus:ring-4
+focus:ring-[#2563EB]/10
+transition-all
+"/>
               </div>
             )}
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full btn-gold py-4 text-xs font-bold uppercase tracking-wider rounded-xl flex items-center justify-center gap-1.5"
-            >
+              className="
+w-full
+h-14
+rounded-2xl
+bg-[#F97316]
+hover:bg-orange-600
+text-white
+font-semibold
+transition-all
+shadow-lg
+" >
               {loading ? 'Sending...' : otpSent ? 'Verify & Sign In' : 'Request OTP Code'}
             </button>
           </form>
@@ -251,26 +360,50 @@ export const LoginPage: React.FC = () => {
         <button
           onClick={handleGoogleLogin}
           disabled={loading}
-          className="w-full bg-[#EA4335]/5 hover:bg-[#EA4335]/10 text-red-650 border border-[#EA4335]/15 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 mb-8"
-        >
+          className="
+w-full
+h-14
+rounded-2xl
+border
+border-slate-500
+hover:bg-slate-50
+flex
+items-center
+justify-center
+gap-3
+font-medium
+">
           <Chrome className="w-4 h-4" />
           <span>Authenticate with Google</span>
         </button>
 
         {/* Toggle sign in / sign up */}
-        <div className="text-center pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-semibold font-sans">
-          <span>{isSignUp ? 'Already a lounge member?' : 'New traveler?'}</span>
+        <div className="mt-8 pt-6 border-t text-center">
+
+          <p className="text-slate-500">
+            {isSignUp
+              ? "Already have an account?"
+              : "Don't have an account?"}
+          </p>
+
           <button
             onClick={() => {
               setIsSignUp(!isSignUp);
-              setErrorMsg('');
-              setSuccessMsg('');
+              setErrorMsg("");
+              setSuccessMsg("");
             }}
-            className="text-brand-purple hover:underline font-bold flex items-center gap-1"
+            className="
+      mt-2
+      text-[#2563EB]
+      font-semibold
+      hover:underline
+    "
           >
-            <span>{isSignUp ? 'Login Session' : 'Request Membership'}</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            {isSignUp
+              ? "Sign In"
+              : "Create Account"}
           </button>
+
         </div>
       </motion.div>
     </div>

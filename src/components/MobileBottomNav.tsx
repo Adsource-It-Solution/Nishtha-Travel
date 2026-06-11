@@ -1,17 +1,18 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Compass, Plane, Hotel, Luggage, User } from 'lucide-react';
+import { HomeIcon, Plane, Hotel, Luggage } from 'lucide-react';
 import { motion } from 'framer-motion';
+import TrainIcon from '@mui/icons-material/Train';
 
 export const MobileBottomNav: React.FC = () => {
   const location = useLocation();
 
   const navItems = [
-    { name: 'Explore', path: '/', icon: Compass },
+    { name: 'Home', path: '/', icon: HomeIcon },
     { name: 'Flights', path: '/flights', icon: Plane },
+    {name: 'Train', path: '/trains', icon: TrainIcon},
     { name: 'Hotels', path: '/hotels', icon: Hotel },
     { name: 'Packages', path: '/packages', icon: Luggage },
-    { name: 'Club', path: '/dashboard', icon: User },
   ];
 
   return (

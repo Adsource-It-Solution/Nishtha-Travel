@@ -5,12 +5,7 @@ import {
   ArrowRight,
   CheckCircle2,
   Send,
-  ArrowLeft,
-  MapPin,
-  Calendar,
 } from 'lucide-react';
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import { SearchTabs } from '../components/SearchTabs';
@@ -18,8 +13,7 @@ import { DestinationCard } from '../components/DestinationCard';
 import { PackageCard } from '../components/PackageCard';
 import { Testimonials } from '../components/Testimonials';
 import { AnimatedCounters } from '../components/AnimatedCounters';
-import { OfferBanner } from '../components/OfferBanner';
-import { mockDestinations, mockPackages, mockBlogs, mockCabs, type Cab } from '../data/mockData';
+import { mockDestinations, mockPackages, mockCabs, type Cab } from '../data/mockData';
 import { Navbar } from '../components/Navbar';
 import { lazy } from "react";
 import { CabCard } from '../components/CabCards';
@@ -114,7 +108,7 @@ export const LandingPage: React.FC = () => {
           </div>
 
           {/* Hero Content */}
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col space-y-10">
+          <div className="max-w-[1600px] mx-auto px-6 lg:px-10 relative z-10 flex flex-col space-y-10">
 
             {/* Text Section */}
             <div className="space-y-4 max-w-4xl">
@@ -157,7 +151,7 @@ export const LandingPage: React.FC = () => {
 
         {/* 3. POPULAR DESTINATIONS */}
         <section className="py-24 bg-slate-50 relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-[1600px] mx-auto px-6 lg:px-10">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
               <div className="space-y-2">
                 {/* <span className="text-xs text-yellow-500 font-bold uppercase tracking-widest block">Global Curation</span> */}
@@ -200,7 +194,7 @@ export const LandingPage: React.FC = () => {
 
         {/* 4. Cab Booking Sections */}
         <section className="py-24 bg-slate-50 relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-[1600px] mx-auto px-6 lg:px-10">
             <div className="flex flex-col lg:flex-row justify-between items-end gap-8 mb-16">
               <div className="max-w-2xl">
                 <h2 className="mt-4 text-5xl font-bold text-brand-blue">
@@ -252,8 +246,8 @@ export const LandingPage: React.FC = () => {
         </section>
 
         {/* 5. TRENDING HOLIDAY PACKAGES */}
-        <section className="py-18 bg-white relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-18 bg-white relative mb-4">
+          <div className="max-w-[1600px] mx-auto px-6 lg:px-10">
             <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
               {/* <span className="text-xs text-brand-purple font-bold uppercase tracking-widest block">Featured Itineraries</span> */}
               <h2 className="text-3xl md:text-5xl font-extrabold text-brand-blue">Trending Travel Packages</h2>
@@ -270,24 +264,6 @@ export const LandingPage: React.FC = () => {
           </div>
         </section>
 
-        {/* 6. SEASONAL PROMO OFFERS & DEALS */}
-        <section className="py-24 bg-slate-50 relative border-t border-soft-border">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-              {/* <span className="text-xs text-yellow-600 font-bold uppercase tracking-widest flex items-center justify-center gap-1.5">
-                <Flame className="w-4 h-4 text-yelllow-600" />
-                <span>Seasonal Offers</span> */}
-              {/* </span> */}
-              <h2 className="text-3xl md:text-5xl font-extrabold text-brand-blue">Exclusive Member Promos</h2>
-              <p className="text-slate-500 text-xs sm:text-sm font-semibold leading-relaxed">
-                Unlock private flight anomalies, luxury lodge suite vouchers, and corporate holiday price adjustments.
-              </p>
-            </div>
-
-            <OfferBanner />
-          </div>
-        </section>
-
         {/* 8. WHY CHOOSE NISHTHA CONCIERGE */}
         <Suspense fallback={<div className="h-[800px]" />}>
           <TravelSignatureSection />
@@ -295,7 +271,7 @@ export const LandingPage: React.FC = () => {
 
         {/* 2. STATS & WHY CHOOSE US */}
         <section className="py-12 bg-white relative z-10 border-b border-soft-border shadow-sm">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-[1600px] mx-auto px-6 lg:px-10">
             <AnimatedCounters />
           </div>
         </section>
@@ -343,91 +319,6 @@ export const LandingPage: React.FC = () => {
             </div>
             <div className="mt-20">
               <Testimonials />
-            </div>
-          </div>
-        </section>
-
-        {/* 10. TRAVEL INSPIRATION / BLOGS */}
-
-        <section className="py-24 bg-slate-50">
-          <div className="max-w-7xl mx-auto px-4">
-            {/* Header */}
-            <div className="text-center mb-16">
-              <h2 className="text-5xl font-black text-brand-blue">
-                Travel Inspirations
-              </h2>
-              <p className="text-slate-500 text-xl max-w-2xl mx-auto mt-6">
-                A curated list of inspiration, tours and travel
-                stories from destinations around the world.
-              </p>
-            </div>
-            <div className="relative">
-              {/* Navigation */}
-              <button className="travel-prev absolute -left-8 top-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-full bg-white shadow-lg flex items-center justify-center">
-                <ArrowLeft />
-              </button>
-              <button className="travel-next absolute -right-8 top-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-full bg-white shadow-lg flex items-center justify-center">
-                <ArrowRight />
-              </button>
-              <Swiper
-                modules={[Navigation]}
-                spaceBetween={30}
-                slidesPerView={2}
-                navigation={{
-                  prevEl: ".travel-prev",
-                  nextEl: ".travel-next",
-                }}
-                breakpoints={{
-                  0: {
-                    slidesPerView: 1,
-                  },
-                  1024: {
-                    slidesPerView: 2,
-                  },
-                }}
-              >
-                {mockBlogs.map((blog) => (
-                  <SwiperSlide key={blog.id}>
-                    <div className="bg-white rounded-[32px] overflow-hidden border border-slate-200">
-                      <div className="grid md:grid-cols-[320px_1fr]">
-                        {/* Image */}
-                        <div className="h-[420px]">
-                          <img
-                            src={blog.image}
-                            alt={blog.title}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        {/* Content */}
-                        <div className="p-10 flex flex-col">
-                          <div className="flex items-center gap-2 text-[14px] font-bold text-brand-blue">
-                            <MapPin size={18} />
-                            {blog.author}
-                          </div>
-                          <h3 className="text-[20px] font-black text-brand-blue leading-tight mt-8">
-                            {blog.title}
-                          </h3>
-                          <div className="flex items-center gap-2 mt-8 text-slate-500 font-semibold">
-                            <Calendar size={18} />
-                            {blog.date}
-                          </div>
-                          <div className="border-t my-2" />
-                          <div className='flex justify-between'>
-                            <p className="text-slate-500 text-xl leading-relaxed">
-                              {blog.readTime}
-                            </p>
-                            <span className="text-black group-hover:text-brand-blue flex items-center gap-1 cursor-pointer transition-colors border-2 rounded-full border-blue-800 px-4">
-                              <span>Read</span>
-                              <ArrowRight className="w-3.5 h-3.5" />
-                            </span>
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
             </div>
           </div>
         </section>

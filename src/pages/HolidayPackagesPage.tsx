@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PackageCard } from '../components/PackageCard';
-import { OfferBanner } from '../components/OfferBanner';
 import { mockPackages } from '../data/mockData';
 import type { Package } from '../data/mockData';
 import { Luggage, Check, X } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export const HolidayPackagesPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -13,6 +14,7 @@ export const HolidayPackagesPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [bookingPkg, setBookingPkg] = useState<Package | null>(null);
   const [bookingConfirmed, setBookingConfirmed] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -145,9 +147,23 @@ export const HolidayPackagesPage: React.FC = () => {
                 />
 
                 {/* Travel Date */}
-                <input
-                  type="date"
-                  className="border rounded-xl px-4 py-3"
+                <DatePicker
+                  selected={selectedDate}
+                  onChange={(date: any) => setSelectedDate(date)}
+                  placeholderText="MM/DD/YYYY"
+                  dateFormat="MM/dd/yyyy"
+                  minDate={new Date()}
+                  className="
+          w-full
+          border
+          border-gray-300
+          rounded-xl
+          px-4
+          py-3
+          focus:outline-none
+          focus:ring-2
+          focus:ring-blue-500
+        "
                 />
 
                 {/* Duration */}
@@ -268,33 +284,19 @@ export const HolidayPackagesPage: React.FC = () => {
           </div>
         </section>
 
-        {/* Offers / Deals Section */}
-        <div className="mb-14 mt-10">
-          <div className="mb-6 space-y-1">
-            {/* <span className="text-xs font-semibold font-['Poppins'] text-indigo-600 uppercase tracking-[0.25em] block mb-2">
-              Club Benefits
-            </span> */}
-
-            <h3 className="text-2xl font-semibold font-['Poppins'] text-slate-900 leading-tight">
-              Active Private Curation Deals
-            </h3>
-          </div>
-          <OfferBanner />
-        </div>
-
         {/* Categories Tab Selector */}
-        <div className="mb-12">
+        <div className="mb-12 mt-6">
           <div
             className="
       flex
       overflow-x-auto
       whitespace-nowrap
       scrollbar-none
-      gap-4
-      sm:gap-6
+      gap-1
+      sm:gap-4
       px-4
-      sm:px-6
-      lg:px-14
+      sm:px-2
+      lg:px-4
       py-2
       bg-white
       rounded-[24px]
