@@ -28,7 +28,7 @@ export default function TravelSignatureSection() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-align">
+      <div className="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-8 text-align">
 
         <div className="max-w-3xl">
           <motion.h2

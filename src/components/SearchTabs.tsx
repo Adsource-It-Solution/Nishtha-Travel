@@ -257,7 +257,7 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
 
               {/* Submit Button */}
               <div className="lg:col-span-2">
-                <button type="submit" className="btn-gold w-full py-4 h-full font-extrabold text-sm uppercase tracking-wider flex items-center justify-center gap-1.5">
+                <button type="submit" className="hover:bg-brand-blue bg-blue-500 text-white rounded-lg w-full py-4 h-full font-extrabold text-sm uppercase tracking-wider flex items-center justify-center gap-1.5">
                   <Search className="w-4 h-4" />
                   <span>Search</span>
                 </button>
@@ -295,7 +295,7 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
               {/* From Train */}
-              <div className="lg:col-span-4 relative">
+              <div className="lg:col-span-3 relative">
                 <label className="absolute top-2 left-4 text-[12px] font-bold text-slate-600 uppercase tracking-wider">From Station</label>
                 <div className="flex items-center">
                   <MapPin className="w-4 h-4 text-slate-400 absolute left-4 top-7 pointer-events-none" />
@@ -321,7 +321,7 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
               </div>
 
               {/* To Train */}
-              <div className="lg:col-span-4 relative">
+              <div className="lg:col-span-3 relative">
                 <label className="absolute top-2 left-4 text-[12px] font-bold text-slate-600 uppercase tracking-wider">To Station</label>
                 <div className="flex items-center">
                   <MapPin className="w-4 h-4 text-slate-400 absolute left-4 top-7 pointer-events-none" />
@@ -336,7 +336,7 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
               </div>
 
               {/* Date */}
-              <div className="lg:col-span-2 relative">
+              <div className="lg:col-span-3 relative">
                 <label className="absolute top-2 left-4 text-[12px] font-bold text-slate-600 uppercase tracking-wider">Travel Date</label>
                 <div className="flex items-center">
                   <Calendar className="w-4 h-4 text-slate-400 absolute left-4 top-7 pointer-events-none" />
@@ -350,8 +350,8 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
               </div>
 
               {/* Submit */}
-              <div className="lg:col-span-1">
-                <button type="submit" className="btn-gold w-full py-4 h-full font-extrabold text-sm uppercase tracking-wider flex items-center justify-center">
+              <div className="lg:col-span-2">
+                <button type="submit" className="hover:bg-brand-blue bg-blue-500 text-white rounded-lg w-full py-4 px-4 h-full font-extrabold text-sm uppercase tracking-wider flex items-center justify-center">
                   <Search className="w-4 h-4" />
                   <span>Search</span>
                 </button>
@@ -472,7 +472,7 @@ export const SearchTabs: React.FC<SearchTabsProps> = ({ initialTab = 'flights', 
 
               {/* Submit */}
               <div className="lg:col-span-3">
-                <button type="submit" className="btn-gold w-full py-4 h-full font-extrabold text-sm uppercase tracking-wider flex items-center justify-center gap-1.5">
+                <button type="submit" className="hover:bg-brand-blue bg-blue-500 text-white rounded-lg w-full py-4 h-full font-extrabold text-sm uppercase tracking-wider flex items-center justify-center gap-1.5">
                   <Search className="w-4 h-4" />
                   <span>Search</span>
                 </button>

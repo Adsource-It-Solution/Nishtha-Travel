@@ -7,6 +7,7 @@ import {
   Headphones,
 } from "lucide-react";
 import { Navbar } from "../components/Navbar";
+import Divider from "@mui/material/Divider";
 
 export const AboutPage: React.FC = () => {
   const timeline = [
@@ -46,7 +47,6 @@ export const AboutPage: React.FC = () => {
     <div className="bg-white">
       <Navbar />
 
-      {/* HERO SECTION */}
       <section className="relative h-[350px] mt-32 overflow-hidden">
         <img
           src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
@@ -68,9 +68,8 @@ export const AboutPage: React.FC = () => {
         </div>
       </section>
 
-      {/* ABOUT SECTION */}
       <section className="py-16">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-[1423px] mx-auto px-6">
 
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
@@ -83,7 +82,7 @@ export const AboutPage: React.FC = () => {
               </p>
 
               <p className="mt-4 text-slate-600 leading-8 text-justify">
-               With a focus on quality, safety, and customer satisfaction, our experienced team works tirelessly to ensure a seamless travel experience. From premium cab services to carefully curated travel solutions, we strive to exceed expectations at every step.
+                With a focus on quality, safety, and customer satisfaction, our experienced team works tirelessly to ensure a seamless travel experience. From premium cab services to carefully curated travel solutions, we strive to exceed expectations at every step.
               </p>
               <p className="mt-4 text-slate-600 leading-8 text-justify">
                 Our mission is to connect people with destinations through dependable service, modern vehicles, and personalized support. We take pride in building lasting relationships with our clients and helping them travel with confidence wherever their journey takes them.
@@ -117,36 +116,127 @@ export const AboutPage: React.FC = () => {
         </div>
       </section>
 
-      <section className=" px-4 pb-6">
+      <section className="mx-10 px-4 pb-6">
         <h2 className="text-5xl font-bold text-slate-900 font-poppins">
-                Meet Our Founders
-              </h2>
+          Meet Our Founders
+        </h2>
 
-         <p className="mt-8 text-slate-600 leading-8 text-justify">
-                Both the founders after working for years in multiple areas realised their strength is in managing the people mobility business and that is how Nishtha Travel Concierge Private Limited was born.
+        <div className="grid md:grid-cols-3 gap-6 mt-10">
 
-                We plan to bring to doorstep of every Indian (Aam Aadmi) the mobility, travel, Air and train ticketing with local transportation needs. Our AI engine is designed to understand your preference and provide best travel solutions and holiday packages.
-              </p>
+          <div className="
+    bg-white
+    rounded-[28px]
+    p-8
+    border
+    border-[#E5E0D8]
+    shadow-sm
+    hover:shadow-lg
+    transition-all
+  ">
+            <div className="
+      w-12 h-12
+      rounded-2xl
+      bg-orange-50
+      flex
+      items-center
+      justify-center
+      mb-5
+    ">
+              <span className="text-orange-500 font-bold">01</span>
+            </div>
 
-              <p className="mt-4 text-slate-600 leading-8 text-justify">
-                With over a decade of experience in managing fleet and employee transportation, both have the vision of making Nishtha Travel Concierge Pvt Ltd the preferred and trusted partner of every company in India for their employee transportation and all mobility needs.
-              </p>
-              <p className="mt-4 text-slate-600 leading-8 text-justify">
-                We plan to bring to doorstep of every Indian (Aam Aadmi) the mobility, travel, Air and train ticketing with local transportation needs. Our AI engine is designed to understand your preference and provide best travel solutions and holiday packages.
-              </p>
+            <h3 className="text-xl font-bold text-brand-blue mb-4">
+              Our Beginning
+            </h3>
 
-              <div className="mt-10">
-                <h4 className="font-bold text-slate-900">
-                  Mr Ramji Patel & Mrs Radha Patel
-                </h4>
+            <p className="text-slate-600 leading-8 text-justify">
+              Both the founders after working for years in multiple areas realised their strength is in managing the people mobility business and that is how Nishtha Travel Concierge Private Limited was born.
 
-                <span className="text-sm text-slate-500">
-                  Founder & Director
-                </span>
-              </div>
+              We plan to bring to doorstep of every Indian (Aam Aadmi) the mobility, travel, Air and train ticketing with local transportation needs. Our AI engine is designed to understand your preference and provide best travel solutions and holiday packages.
+            </p>
+          </div>
+
+          <div className="
+    bg-white
+    rounded-[28px]
+    p-8
+    border
+    border-[#E5E0D8]
+    shadow-sm
+    hover:shadow-lg
+    transition-all
+  ">
+            <div className="
+      w-12 h-12
+      rounded-2xl
+      bg-blue-50
+      flex
+      items-center
+      justify-center
+      mb-5
+    ">
+              <span className="text-blue-500 font-bold">02</span>
+            </div>
+
+            <h3 className="text-xl font-bold text-brand-blue mb-4">
+              Our Vision
+            </h3>
+
+            <p className="text-slate-600 leading-8 text-justify">
+              With over a decade of experience in managing fleet and employee transportation, both have the vision of making Nishtha Travel Concierge Pvt Ltd the preferred and trusted partner of every company in India for their employee transportation and all mobility needs.
+            </p>
+          </div>
+
+          <div className="
+    bg-white
+    rounded-[28px]
+    p-8
+    border
+    border-[#E5E0D8]
+    shadow-sm
+    hover:shadow-lg
+    transition-all
+  ">
+            <div className="
+      w-12 h-12
+      rounded-2xl
+      bg-green-50
+      flex
+      items-center
+      justify-center
+      mb-5
+    ">
+              <span className="text-green-500 font-bold">03</span>
+            </div>
+
+            <h3 className="text-xl font-bold text-brand-blue mb-4">
+              Our Mission
+            </h3>
+
+            <p className="text-slate-600 leading-8 text-justify">
+              We plan to bring to doorstep of every Indian (Aam Aadmi) the mobility, travel, Air and train ticketing with local transportation needs. Our AI engine is designed to understand your preference and provide best travel solutions and holiday packages.
+            </p>
+          </div>
+
+        </div>
+        <div className="mt-10 bg-white">
+          <h4 className="font-bold text-slate-900 text-3xl">
+            Mr Ramji Patel & Mrs Radha Patel
+          </h4>
+
+          <span className="text-slate-500 text-xl">
+            Founder & Director
+          </span>
+        </div>
+<Divider
+  sx={{
+    width: 350,
+    borderColor: "orange",
+    borderBottomWidth: 4,
+  }}
+/>
       </section>
 
-      {/* SERVICES */}
       <section className="pb-24">
         <div className="max-w-7xl mx-auto px-6">
 
@@ -187,7 +277,6 @@ export const AboutPage: React.FC = () => {
         </div>
       </section>
 
-      {/* TIMELINE */}
       <section className="py-24 bg-slate-50">
 
         <div className="max-w-7xl mx-auto px-6">
@@ -225,7 +314,6 @@ export const AboutPage: React.FC = () => {
 
       </section>
 
-      {/* WHY CHOOSE US */}
       <section className="py-24">
 
         <div className="max-w-7xl mx-auto px-6">

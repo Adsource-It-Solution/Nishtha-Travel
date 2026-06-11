@@ -86,9 +86,9 @@ export const LandingPage: React.FC = () => {
     <div>
       <Navbar />
       <div className="relative bg-slate-50">
-        {/* 1. CINEMATIC HERO SECTION */}
+
         <section className="relative flex items-center justify-center pt-16 lg:pt-48 overflow-hidden border-b border-soft-border">
-          {/* Background Image / Overlay */}
+
           <div className="absolute inset-0">
             <picture>
               <source
@@ -102,16 +102,12 @@ export const LandingPage: React.FC = () => {
                 className="w-full h-full object-cover object-center brightness-[0.7]"
               />
             </picture>
-            {/* Brand Color Gradient Overlay */}
             <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-brand-blue/15 to-slate-50" />
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.1),rgba(245,247,250,0.9))]" />
           </div>
 
-          {/* Hero Content */}
-          <div className="max-w-[1600px] mx-auto px-6 lg:px-10 relative z-10 flex flex-col space-y-10">
-
-            {/* Text Section */}
-            <div className="space-y-4 max-w-4xl">
+          <div className="max-w-[1423px] mx-auto px-6 lg:px-10 relative z-10 flex flex-col space-y-10">
+            <div className="space-y-4 max-w-4xl lg:-ml-20">
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -136,7 +132,6 @@ export const LandingPage: React.FC = () => {
               </motion.p>
             </div>
 
-            {/* Search Bar */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -149,16 +144,14 @@ export const LandingPage: React.FC = () => {
           </div>
         </section>
 
-        {/* 3. POPULAR DESTINATIONS */}
         <section className="py-24 bg-slate-50 relative">
-          <div className="max-w-[1600px] mx-auto px-6 lg:px-10">
+          <div className="max-w-[1423px] mx-auto px-6 lg:px-10">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
               <div className="space-y-2">
                 {/* <span className="text-xs text-yellow-500 font-bold uppercase tracking-widest block">Global Curation</span> */}
                 <h2 className="text-3xl md:text-5xl font-extrabold text-brand-blue">Popular Destinations</h2>
               </div>
 
-              {/* Filter buttons */}
               <div className="flex flex-wrap gap-1.5">
                 {[
                   { id: 'all', label: 'All Destinations' },
@@ -192,9 +185,25 @@ export const LandingPage: React.FC = () => {
           </div>
         </section>
 
-        {/* 4. Cab Booking Sections */}
-        <section className="py-24 bg-slate-50 relative">
-          <div className="max-w-[1600px] mx-auto px-6 lg:px-10">
+        <section className="py-18 bg-white relative mb-4">
+          <div className="max-w-[1423px] mx-auto px-6 lg:px-10">
+            <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
+              {/* <span className="text-xs text-brand-purple font-bold uppercase tracking-widest block">Featured Itineraries</span> */}
+              <h2 className="text-3xl md:text-5xl font-extrabold text-brand-blue">Trending Travel Packages</h2>
+              <p className="text-slate-500 text-xs sm:text-sm font-semibold leading-relaxed">
+                Curated packages combining luxury lodges, custom local tours, private charters, and elite wellness spa treatments.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {mockPackages.slice(0, 3).map((pkg) => (
+                <PackageCard key={pkg.id} pkg={pkg} />
+              ))}
+            </div>
+          </div>
+        </section>
+                <section className="py-24 bg-slate-50 relative">
+          <div className="max-w-[1423px] mx-auto px-6 lg:px-10">
             <div className="flex flex-col lg:flex-row justify-between items-end gap-8 mb-16">
               <div className="max-w-2xl">
                 <h2 className="mt-4 text-5xl font-bold text-brand-blue">
@@ -245,39 +254,18 @@ export const LandingPage: React.FC = () => {
           </div>
         </section>
 
-        {/* 5. TRENDING HOLIDAY PACKAGES */}
-        <section className="py-18 bg-white relative mb-4">
-          <div className="max-w-[1600px] mx-auto px-6 lg:px-10">
-            <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-              {/* <span className="text-xs text-brand-purple font-bold uppercase tracking-widest block">Featured Itineraries</span> */}
-              <h2 className="text-3xl md:text-5xl font-extrabold text-brand-blue">Trending Travel Packages</h2>
-              <p className="text-slate-500 text-xs sm:text-sm font-semibold leading-relaxed">
-                Curated packages combining luxury lodges, custom local tours, private charters, and elite wellness spa treatments.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {mockPackages.slice(0, 3).map((pkg) => (
-                <PackageCard key={pkg.id} pkg={pkg} />
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* 8. WHY CHOOSE NISHTHA CONCIERGE */}
         <Suspense fallback={<div className="h-[800px]" />}>
           <TravelSignatureSection />
         </Suspense>
 
         {/* 2. STATS & WHY CHOOSE US */}
         <section className="py-12 bg-white relative z-10 border-b border-soft-border shadow-sm">
-          <div className="max-w-[1600px] mx-auto px-6 lg:px-10">
+          <div className="max-w-[1423px] mx-auto px-6 lg:px-10">
             <AnimatedCounters />
           </div>
         </section>
 
         <section className="relative py-32 overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white">
-          {/* Background Decoration */}
           <div className="absolute top-0 left-0 w-96 h-96 bg-brand-purple/5 rounded-full blur-3xl" />
           <div className="absolute bottom-0 right-0 w-96 h-96 bg-brand-blue/5 rounded-full blur-3xl" />
           <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -323,7 +311,6 @@ export const LandingPage: React.FC = () => {
           </div>
         </section>
 
-        {/* 11. NEWSLETTER & SUBSCRIBING */}
         <section className="relative py-32 overflow-hidden">
           {/* Background */}
           <div className="absolute inset-0">
@@ -336,18 +323,17 @@ export const LandingPage: React.FC = () => {
 
             <div className="absolute inset-0 bg-gradient-to-r from-brand-blue/95 via-brand-blue/85 to-brand-purple/90" />
           </div>
-          {/* Decorative Blurs */}
+
           <div className="absolute top-0 left-0 w-96 h-96 bg-brand-purple/20 rounded-full blur-3xl" />
           <div className="absolute bottom-0 right-0 w-96 h-96 bg-yellow-500/20 rounded-full blur-3xl" />
           <div className="relative z-10 max-w-6xl mx-auto px-6">
             <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-[40px] p-10 md:p-20 shadow-2xl">
-              {/* Badge */}
               <div className="flex justify-center">
                 <span className="px-5 py-2 rounded-full bg-yellow-400 text-black font-bold text-xs uppercase tracking-[3px]">
                   Weekly Luxury Dispatch
                 </span>
               </div>
-              {/* Heading */}
+
               <div className="text-center mt-8 max-w-4xl mx-auto">
                 <h2 className="text-white font-black text-4xl md:text-6xl leading-tight">
                   Unlock Elite Travel
@@ -361,7 +347,7 @@ export const LandingPage: React.FC = () => {
                   private tour opportunities and concierge travel inspiration.
                 </p>
               </div>
-              {/* Statistics */}
+
               <div className="grid grid-cols-3 gap-8 max-w-3xl mx-auto mt-14">
                 <div className="text-center">
                   <div className="text-white font-black text-3xl">
@@ -388,7 +374,7 @@ export const LandingPage: React.FC = () => {
                   </div>
                 </div>
               </div>
-              {/* Form */}
+
               <div className="max-w-2xl mx-auto mt-14">
                 <AnimatePresence mode="wait">
                   {subscribed ? (
@@ -457,7 +443,7 @@ export const LandingPage: React.FC = () => {
                   )}
                 </AnimatePresence>
               </div>
-              {/* Trust Text */}
+
               <p className="text-center text-white/60 text-sm mt-8">
                 No spam. Unsubscribe anytime. Premium travel insights only.
               </p>

@@ -43,7 +43,7 @@ export const Navbar: React.FC = () => {
           : 'bg-brand-light/90 backdrop-blur-sm py-2 lg:py-4 border-b border-transparent'
           }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
 
             {/* Desktop Layout */}

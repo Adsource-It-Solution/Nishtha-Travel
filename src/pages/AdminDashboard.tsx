@@ -185,7 +185,6 @@ export const AdminDashboard: React.FC = () => {
     <div className="min-h-screen bg-[#F8FAFC] pb-24">
       <Navbar />
 
-      {/* Admin Title Banner */}
       <section className="relative h-[260px] bg-slate-900 overflow-hidden flex items-center justify-center pt-12">
         <div className="absolute inset-0 bg-gradient-to-r from-brand-blue/95 to-brand-purple/95" />
         <div className="relative z-10 text-center px-6 space-y-2 max-w-xl">
@@ -195,7 +194,6 @@ export const AdminDashboard: React.FC = () => {
         </div>
       </section>
 
-      {/* Admin Tab Navigation */}
       <div className="max-w-6xl mx-auto px-6 mt-8 flex justify-between items-center flex-wrap gap-4 border-b border-slate-200 pb-2">
         <div className="flex gap-4">
           <button
@@ -228,10 +226,8 @@ export const AdminDashboard: React.FC = () => {
         </button>
       </div>
 
-      {/* Main Tab Panels Content */}
       <section className="max-w-6xl mx-auto px-6 mt-8">
 
-        {/* Tab 1: Requirements Review */}
         {activeTab === 'requirements' && (
           <div className="space-y-6">
             <div className="flex justify-between items-center">
@@ -273,14 +269,12 @@ export const AdminDashboard: React.FC = () => {
                           <span className="text-[10px] text-slate-400">• Submitted: {new Date(enq.submittedAt).toLocaleDateString()}</span>
                         </div>
 
-                        {/* Title */}
                         <div>
                           <h3 className="text-lg font-bold text-slate-900 font-serif">
                             {isCab ? `Cab Fleet Reservation: ${enq.cabName}` : isPackage ? `Bespoke Voyage: ${enq.packageName}` : 'General Inquiry'}
                           </h3>
                         </div>
 
-                        {/* Specs */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 border-y border-slate-100 py-3.5 text-xs text-slate-650">
                           <div className="space-y-1">
                             <span className="text-[9px] text-slate-400 uppercase tracking-widest font-bold block">Client Coordinates</span>
@@ -332,7 +326,6 @@ export const AdminDashboard: React.FC = () => {
                         </div>
                       </div>
 
-                      {/* Status and Action */}
                       <div className="md:border-l border-slate-100 md:pl-6 min-w-[150px] flex flex-col justify-center items-start md:items-end gap-3">
                         <div>
                           <span className="text-[9px] text-slate-400 uppercase tracking-widest block mb-1">Status</span>
@@ -362,12 +355,10 @@ export const AdminDashboard: React.FC = () => {
           </div>
         )}
 
-        {/* Tab 2: Holiday Package Publisher */}
         {activeTab === 'publish' && (
           <div className="max-w-4xl mx-auto">
             <form onSubmit={handlePublishPackage} className="space-y-8">
 
-              {/* Success/Error Alerts */}
               {successMsg && (
                 <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 p-5 rounded-2xl flex items-center gap-3 font-bold text-sm">
                   <CheckCircle className="w-5 h-5 text-emerald-500 shrink-0" />
@@ -381,7 +372,6 @@ export const AdminDashboard: React.FC = () => {
                 </div>
               )}
 
-              {/* Specs */}
               <div className="bg-white border border-[#E5E0D8] rounded-[24px] p-6 sm:p-8 space-y-6 shadow-sm">
                 <h3 className="text-lg font-bold text-slate-900 border-b border-slate-100 pb-3 font-serif">Package Specifications</h3>
 
@@ -481,7 +471,6 @@ export const AdminDashboard: React.FC = () => {
                 </div>
               </div>
 
-              {/* Inclusions */}
               <div className="bg-white border border-[#E5E0D8] rounded-[24px] p-6 sm:p-8 space-y-6 shadow-sm">
                 <h3 className="text-lg font-bold text-slate-900 border-b border-slate-100 pb-3 font-serif">Inclusions & Highlights</h3>
 

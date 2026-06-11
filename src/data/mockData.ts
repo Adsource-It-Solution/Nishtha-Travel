@@ -43,6 +43,7 @@ export interface Hotel {
   discountTag?: string;
   latitude: number;
   longitude: number;
+  description: string;
 }
 
 export interface Flight {
@@ -148,6 +149,223 @@ export interface Offer {
   image: string;
   category: 'flights' | 'hotels' | 'packages' | 'all';
 }
+
+export interface Train {
+  id: string;
+  trainNumber: string;
+  trainName: string;
+  departureCity: string;
+  departureCode: string;
+  departureTime: string;
+  arrivalCity: string;
+  arrivalCode: string;
+  arrivalTime: string;
+  duration: string;
+  class: string;
+  coachType: string;
+  price: number;
+  rating: number;
+  availableSeats: number;
+  stops: number;
+  operator: string;
+  image: string;
+}
+
+
+export const mockTrains: Train[] = [
+  {
+    id: "train-1",
+    trainNumber: "12951",
+    trainName: "Mumbai Rajdhani Express",
+
+    departureCity: "Mumbai",
+    departureCode: "MMCT",
+    departureTime: "16:35",
+
+    arrivalCity: "New Delhi",
+    arrivalCode: "NDLS",
+    arrivalTime: "08:35",
+
+    duration: "16h 00m",
+
+    class: "1A",
+    coachType: "First AC",
+
+    price: 6850,
+
+    rating: 4.8,
+
+    availableSeats: 12,
+
+    stops: 4,
+
+    operator: "Indian Railways",
+
+    image:
+      "https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=1200&q=80"
+  },
+
+  {
+    id: "train-2",
+    trainNumber: "12002",
+    trainName: "New Delhi Shatabdi",
+
+    departureCity: "New Delhi",
+    departureCode: "NDLS",
+    departureTime: "06:05",
+
+    arrivalCity: "Bhopal",
+    arrivalCode: "BPL",
+    arrivalTime: "14:25",
+
+    duration: "08h 20m",
+
+    class: "CC",
+    coachType: "Executive Chair Car",
+
+    price: 2450,
+
+    rating: 4.6,
+
+    availableSeats: 28,
+
+    stops: 3,
+
+    operator: "Indian Railways",
+
+    image:
+      "https://images.unsplash.com/photo-1514565131-fce0801e5785?w=1200&q=80"
+  },
+
+  {
+    id: "train-3",
+    trainNumber: "12953",
+    trainName: "August Kranti Rajdhani",
+
+    departureCity: "Mumbai",
+    departureCode: "MMCT",
+    departureTime: "17:10",
+
+    arrivalCity: "New Delhi",
+    arrivalCode: "NZM",
+    arrivalTime: "09:45",
+
+    duration: "16h 35m",
+
+    class: "2A",
+    coachType: "Second AC",
+
+    price: 4250,
+
+    rating: 4.7,
+
+    availableSeats: 18,
+
+    stops: 5,
+
+    operator: "Indian Railways",
+
+    image:
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=1200&q=80"
+  },
+
+  {
+    id: "train-4",
+    trainNumber: "12259",
+    trainName: "Duronto Express",
+
+    departureCity: "Sealdah",
+    departureCode: "SDAH",
+    departureTime: "20:00",
+
+    arrivalCity: "New Delhi",
+    arrivalCode: "NDLS",
+    arrivalTime: "13:35",
+
+    duration: "17h 35m",
+
+    class: "3A",
+    coachType: "Third AC",
+
+    price: 2950,
+
+    rating: 4.5,
+
+    availableSeats: 42,
+
+    stops: 2,
+
+    operator: "Indian Railways",
+
+    image:
+      "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200&q=80"
+  },
+
+  {
+    id: "train-5",
+    trainNumber: "22439",
+    trainName: "Vande Bharat Express",
+
+    departureCity: "New Delhi",
+    departureCode: "NDLS",
+    departureTime: "06:00",
+
+    arrivalCity: "Varanasi",
+    arrivalCode: "BSB",
+    arrivalTime: "14:00",
+
+    duration: "08h 00m",
+
+    class: "EC",
+    coachType: "Executive Class",
+
+    price: 3650,
+
+    rating: 4.9,
+
+    availableSeats: 8,
+
+    stops: 1,
+
+    operator: "Vande Bharat",
+
+    image:
+      "https://images.unsplash.com/photo-1489515217757-5fd1be406fef?w=1200&q=80"
+  },
+
+  {
+    id: "train-6",
+    trainNumber: "12627",
+    trainName: "Karnataka Express",
+
+    departureCity: "Bengaluru",
+    departureCode: "SBC",
+    departureTime: "19:20",
+
+    arrivalCity: "New Delhi",
+    arrivalCode: "NZM",
+    arrivalTime: "10:30",
+
+    duration: "39h 10m",
+
+    class: "2A",
+    coachType: "Second AC",
+
+    price: 3950,
+
+    rating: 4.4,
+
+    availableSeats: 35,
+
+    stops: 12,
+
+    operator: "Indian Railways",
+
+    image:
+      "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=1200&q=80"
+  }
+];
+
 
 // High quality luxury travel images from Unsplash
 export const mockDestinations: Destination[] = [
@@ -365,6 +583,7 @@ export const mockHotels: Hotel[] = [
   {
     id: "hotel-1",
     name: "One&Only Reethi Rah",
+    description: "",
     location: "Maldives",
     pricePerNight: 1250,
     originalPricePerNight: 1500,
@@ -384,6 +603,7 @@ export const mockHotels: Hotel[] = [
   {
     id: "hotel-2",
     name: "Le Sirenuse",
+    description: "",
     location: "Positano, Amalfi Coast",
     pricePerNight: 950,
     rating: 4.8,
@@ -400,6 +620,7 @@ export const mockHotels: Hotel[] = [
   {
     id: "hotel-3",
     name: "Aman Tokyo",
+    description: "",
     location: "Otemachi, Tokyo, Japan",
     pricePerNight: 1100,
     rating: 4.95,
@@ -416,6 +637,7 @@ export const mockHotels: Hotel[] = [
   {
     id: "hotel-4",
     name: "The Chedi Andermatt",
+    description: "",
     location: "Andermatt, Swiss Alps",
     pricePerNight: 820,
     originalPricePerNight: 980,

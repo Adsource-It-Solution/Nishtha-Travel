@@ -4,7 +4,7 @@ import { SearchTabs } from '../components/SearchTabs';
 import { HotelCard } from '../components/HotelCard';
 import { mockHotels } from '../data/mockData';
 import type { Hotel } from '../data/mockData';
-import { ShieldCheck, MapPin, X, Check } from 'lucide-react';
+import { ShieldCheck, MapPin, X } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 
 export const HotelBookingPage: React.FC = () => {
@@ -13,9 +13,13 @@ export const HotelBookingPage: React.FC = () => {
   const [selectedAmenity, setSelectedAmenity] = useState<string>('all');
   const [minRating, setMinRating] = useState<number | null>(null);
   const [hoveredHotelPin, setHoveredHotelPin] = useState<string | null>(null);
-  const [bookingHotel, setBookingHotel] = useState<Hotel | null>(null);
-  const [bookingConfirmed, setBookingConfirmed] = useState(false);
+  const [bookingConfirmed,] = useState(false);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const [selectedHotel, setSelectedHotel] = useState<Hotel | null>(null);
+  const [showBookingModal, setShowBookingModal] = useState(false);
+  const [enquiryName, setEnquiryName] = useState('');
+  const [enquiryPhone, setEnquiryPhone] = useState('');
+  const [enquiryDate, setEnquiryDate] = useState('');
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -32,17 +36,6 @@ export const HotelBookingPage: React.FC = () => {
     return true;
   });
 
-  const handleBookHotel = (hotel: Hotel) => {
-    setBookingHotel(hotel);
-  };
-
-  const confirmBooking = () => {
-    setBookingConfirmed(true);
-    setTimeout(() => {
-      setBookingConfirmed(false);
-      setBookingHotel(null);
-    }, 3000);
-  };
 
   return (
     <div className="pt-28 pb-20 min-h-screen bg-brand-light relative">
@@ -122,11 +115,10 @@ export const HotelBookingPage: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
           {/* 1. FILTER SIDEBAR (Desktop) */}
-          <div className={`lg:col-span-3 space-y-6 lg:sticky lg:top-24 font-['Poppins'] ${
-            showMobileFilters 
-              ? 'fixed inset-0 z-50 bg-[#09131F]/45 backdrop-blur-[2px] p-4 flex items-center justify-center'
-              : 'hidden lg:block'
-          }`}>
+          <div className={`lg:col-span-3 space-y-6 lg:sticky lg:top-24 font-['Poppins'] ${showMobileFilters
+            ? 'fixed inset-0 z-50 bg-[#09131F]/45 backdrop-blur-[2px] p-4 flex items-center justify-center'
+            : 'hidden lg:block'
+            }`}>
 
             {/* FILTER CARD */}
             <div
@@ -144,7 +136,7 @@ export const HotelBookingPage: React.FC = () => {
     "
             >
               {/* Close Button for mobile */}
-              <button 
+              <button
                 onClick={() => setShowMobileFilters(false)}
                 className="lg:hidden absolute top-4 right-4 p-1 text-slate-400 hover:text-slate-650"
               >
@@ -384,7 +376,13 @@ export const HotelBookingPage: React.FC = () => {
                       onMouseEnter={() => setHoveredHotelPin(hotel.id)}
                       onMouseLeave={() => setHoveredHotelPin(null)}
                     >
-                      <HotelCard hotel={hotel} onBook={handleBookHotel} />
+                      <HotelCard
+                        hotel={hotel}
+                        onBook={(hotel) => {
+                          setSelectedHotel(hotel);
+                          setShowBookingModal(true);
+                        }}
+                      />
                     </div>
                   ))
                 ) : (
@@ -601,113 +599,257 @@ export const HotelBookingPage: React.FC = () => {
         </div>
       </div>
 
-      {/* 3. BOOKING MODAL PANEL */}
+
       <AnimatePresence>
-        {bookingHotel && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => {
-                if (!bookingConfirmed) setBookingHotel(null);
-              }}
-              className="absolute inset-0 bg-[#09131F]/40 backdrop-blur-[2px]"
-            />
+  {showBookingModal && selectedHotel && (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
 
-            {/* Modal Card */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.98, y: 10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.98, y: 10 }}
-              className="bg-white border border-[#E5E0D8] p-8 md:p-10 max-w-md w-full relative z-10 space-y-6 rounded-none shadow-none"
-            >
-              {!bookingConfirmed ? (
-                <>
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <span className="text-[9px] text-brand-purple font-bold uppercase tracking-[0.15em] block">Suite Selection</span>
-                      <h3 className="text-xl font-serif text-brand-blue mt-1">Confirm Reservation</h3>
-                    </div>
-                    <button
-                      onClick={() => setBookingHotel(null)}
-                      className="text-slate-400 hover:text-slate-600 p-1 transition-colors"
-                    >
-                      <X className="w-5 h-5" />
-                    </button>
-                  </div>
+      {/* Backdrop */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={() => {
+          if (!bookingConfirmed) {
+            setShowBookingModal(false);
+          }
+        }}
+        className="absolute inset-0 bg-black/50"
+      />
 
-                  {/* Summary Box */}
-                  <div className="p-5 rounded-none bg-brand-light border border-[#E5E0D8] space-y-4">
-                    <div>
-                      <span className="text-[9px] text-slate-500 uppercase tracking-widest block">Curated Property</span>
-                      <h4 className="font-serif text-brand-blue text-lg leading-tight mt-1">{bookingHotel.name}</h4>
-                      <span className="text-xs text-slate-500 mt-0.5 block">{bookingHotel.location}</span>
-                    </div>
+      {/* Modal */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.98, y: 12 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.98, y: 12 }}
+        className="
+          bg-white
+          border
+          border-[#E5E0D8]
+          p-8
+          md:p-7
+          max-w-5xl
+          w-full
+          relative
+          z-10
+        "
+      >
+        {!bookingConfirmed ? (
+          <>
+            {/* Header */}
+            <div className="flex justify-between items-start pb-2">
 
-                    <div className="border-t border-[#E5E0D8] pt-3 mt-3 flex justify-between items-center text-xs text-slate-600 font-light">
-                      <span>Rate per night</span>
-                      <span className="font-bold text-slate-800">${bookingHotel.pricePerNight}</span>
-                    </div>
-                    <div className="flex justify-between items-center text-xs text-slate-600 font-light">
-                      <span>Privilege Member Access</span>
-                      <span className="text-emerald-700 font-semibold tracking-wider">COMPLIMENTARY</span>
-                    </div>
-                    <div className="border-t border-[#E5E0D8] pt-3 flex justify-between items-center text-xs">
-                      <span className="text-slate-500 font-light uppercase tracking-wider">Est. Cost Per Night</span>
-                      <span className="text-xl font-serif text-brand-blue">${bookingHotel.pricePerNight}</span>
-                    </div>
-                  </div>
+              <div>
+                <span className="text-[10px] font-semibold uppercase tracking-[0.25em] text-yellow-500 block">
+                  Luxury Hotel Reservation
+                </span>
 
-                  {/* Inclusions checklist */}
-                  <div className="space-y-2 text-[11px] text-slate-600 font-light">
-                    <div className="flex gap-2">
-                      <Check className="w-4 h-4 text-brand-purple shrink-0" />
-                      <span>Daily gourmet breakfast served in private club lounge.</span>
-                    </div>
-                    <div className="flex gap-2">
-                      <Check className="w-4 h-4 text-brand-purple shrink-0" />
-                      <span>Complimentary water luxury transfers included.</span>
-                    </div>
-                  </div>
+                <h3 className="text-3xl font-[Playfair_Display] text-brand-blue leading-tight">
+                  Reserve Your Stay
+                </h3>
 
-                  {/* Actions */}
-                  <div className="grid grid-cols-2 gap-3 pt-2">
-                    <button
-                      onClick={() => setBookingHotel(null)}
-                      className="btn-navy rounded-none"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      onClick={confirmBooking}
-                      className="btn-gold rounded-none"
-                    >
-                      Confirm Suite
-                    </button>
-                  </div>
-                </>
-              ) : (
-                // SUCCESS STATE
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="text-center py-8 space-y-4"
-                >
-                  <div className="w-16 h-16 rounded-none bg-brand-light border border-[#E5E0D8] flex items-center justify-center mx-auto text-brand-purple animate-pulse">
-                    <Check className="w-8 h-8 text-brand-purple" />
-                  </div>
-                  <h3 className="text-2xl font-serif text-brand-blue">Suite Reserved</h3>
-                  <p className="text-slate-500 text-xs font-light max-w-xs mx-auto leading-relaxed">
-                    Your luxury lodging has been reserved. You can view reservation vouchers inside your Nishtha Member Profile.
+                <p className="text-sm text-slate-500">
+                  Complete your details to confirm your luxury accommodation.
+                </p>
+              </div>
+
+              <button
+                onClick={() => setShowBookingModal(false)}
+                className="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-brand-blue"
+              >
+                ✕
+              </button>
+
+            </div>
+
+            {/* Layout */}
+            <div className="grid md:grid-cols-2 gap-8 mt-6">
+
+              {/* LEFT */}
+              <div className="space-y-6">
+
+                <div className="overflow-hidden rounded-lg">
+
+                  <img
+                    src={selectedHotel.images[0]}
+                    alt={selectedHotel.name}
+                    className="w-full h-64 object-cover"
+                  />
+
+                </div>
+
+                <div className="bg-blue-500 p-6 rounded-lg">
+
+                  <span className="text-[10px] uppercase tracking-[0.2em] text-white block">
+                    Selected Hotel
+                  </span>
+
+                  <h4 className="text-2xl font-[Playfair_Display] text-white mt-2">
+                    {selectedHotel.name}
+                  </h4>
+
+                  <p className="text-sm text-white/90 mt-2">
+                    {selectedHotel.location}
                   </p>
-                </motion.div>
-              )}
-            </motion.div>
-          </div>
+
+                  <div className="border-t border-white/20 pt-4 mt-5 space-y-3">
+
+                    <div className="flex justify-between text-sm">
+                      <span className="text-white/80">
+                        Hotel Rating
+                      </span>
+
+                      <span className="font-semibold text-white">
+                        ⭐ {selectedHotel.rating}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between text-sm">
+                      <span className="text-white/80">
+                        Reviews
+                      </span>
+
+                      <span className="font-semibold text-white">
+                        {selectedHotel.reviewsCount}
+                      </span>
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div className="space-y-6">
+                
+                <div className="bg-brand-light border border-[#E5E0D8] rounded-lg p-6">
+
+                  <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500 block">
+                    Starting Price
+                  </span>
+
+                  <h3 className="text-4xl font-[Playfair_Display] text-brand-blue mt-2">
+                    ₹{selectedHotel.pricePerNight}
+                  </h3>
+
+                  <p className="text-sm text-slate-500 mt-2">
+                    Per night including premium hotel support.
+                  </p>
+
+                </div>
+
+                <label className="text-[10px] font-semibold uppercase tracking-[0.25em] text-yellow-500 block">
+                  Guest Information
+                </label>
+
+                <input
+                  type="text"
+                  placeholder="Guest Name"
+                  value={enquiryName}
+                  onChange={(e) => setEnquiryName(e.target.value)}
+                  className="
+                    w-full
+                    border
+                    border-[#E5E0D8]
+                    px-4
+                    py-3
+                    rounded-lg
+                    focus:border-yellow-500
+                    focus:outline-none
+                  "
+                />
+
+                <input
+                  type="text"
+                  placeholder="Mobile Number"
+                  value={enquiryPhone}
+                  onChange={(e) => setEnquiryPhone(e.target.value)}
+                  className="
+                    w-full
+                    border
+                    border-[#E5E0D8]
+                    px-4
+                    py-3
+                    rounded-lg
+                    focus:border-yellow-500
+                    focus:outline-none
+                  "
+                />
+
+                <input
+                  type="date"
+                  value={enquiryDate}
+                  onChange={(e) => setEnquiryDate(e.target.value)}
+                  className="
+                    w-full
+                    border
+                    border-[#E5E0D8]
+                    px-4
+                    py-3
+                    rounded-lg
+                    focus:border-yellow-500
+                    focus:outline-none
+                  "
+                />
+
+                <div className="grid grid-cols-2 gap-3">
+
+                  <button
+                    onClick={() => setShowBookingModal(false)}
+                    className="
+                      h-14
+                      border
+                      border-[#E5E0D8]
+                      rounded-lg
+                      text-slate-600
+                    "
+                  >
+                    Cancel
+                  </button>
+
+                  <button
+                    className="
+                      h-14
+                      bg-blue-500
+                      text-white
+                      rounded-lg
+                      font-semibold
+                    "
+                  >
+                    Confirm Stay
+                  </button>
+
+                </div>
+
+                <p className="text-xs text-slate-500 text-center">
+                  Our hospitality concierge will contact you within 2 hours to
+                  finalize your reservation.
+                </p>
+
+              </div>
+
+            </div>
+          </>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-12"
+          >
+            <h3 className="text-3xl font-[Playfair_Display] text-brand-blue">
+              Reservation Confirmed
+            </h3>
+
+            <p className="text-slate-500 mt-4">
+              Your luxury hotel stay request has been received successfully.
+            </p>
+          </motion.div>
         )}
-      </AnimatePresence>
+      </motion.div>
+
+    </div>
+  )}
+</AnimatePresence>
     </div>
   );
 };
