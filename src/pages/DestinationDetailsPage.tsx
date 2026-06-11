@@ -431,61 +431,6 @@ export const DestinationDetailsPage: React.FC = () => {
                 </div>
               )}
             </div>
-
-            {/* Attractions and Maps */}
-            {/* <div className="space-y-8">
-              <div className="flex items-center justify-between">
-                <div>
-                  <span className="text-orange-500 font-semibold text-sm">
-                    Explore More
-                  </span>
-                  <h2 className="text-3xl font-bold text-blue-700 font-[Poppins] mt-1">
-                    Nearby Attractions
-                  </h2>
-                </div>
-
-                <div className="hidden md:flex items-center gap-2 bg-orange-50 text-orange-600 px-4 py-2 rounded-full text-sm font-medium ">
-                  Popular Destinations
-                </div>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {destination.nearbyAttractions.map((att, i) => (
-                  <div
-                    key={i}
-                    className="group bg-white rounded-[32px] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                    <div className="relative overflow-hidden">
-                      <img
-                        src={att.image}
-                        alt={att.name}
-                        className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-105" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
-                      <div className="absolute bottom-4 left-4">
-                        <span className="bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold text-orange-600">
-                          {att.distance}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="p-6">
-                      <h3 className="text-xl font-bold text-blue-700 font-[Poppins]">
-                        {att.name}
-                      </h3>
-                      <p className="text-slate-500 mt-2 text-sm leading-6">
-                        Discover one of the most visited attractions near {destination.name}. Perfect for sightseeing, photography and local experiences.
-                      </p>
-
-                      <button
-                        className="mt-5 inline-flex items-center gap-2 text-orange-500 font-semibold hover:text-orange-600 transition-colors">
-                        Explore Attraction
-                        <span>→</span>
-                      </button>
-
-                    </div>
-
-                  </div>
-
-                ))}
-              </div>
-            </div> */}
           </div>
           {/* Sticky Checkout/Booking Column */}
           <div className="lg:col-span-4 lg:sticky lg:top-28 space-y-6">
@@ -619,13 +564,12 @@ grid-cols-1
               {!bookingConfirmed ? (
                 <>
                   <div className="grid lg:grid-cols-2">
-
                     {/* Image */}
                     <div className="relative h-full">
                       <img
                         src={bookingDes?.image}
                         alt={bookingDes?.name}
-                        className="w-full h-full object-cover"
+                        className="w-full h-[95vh] object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#09131F] via-[#09131F]/50 to-transparent" />
                       <div className="absolute top-5 right-5">
@@ -672,24 +616,24 @@ grid-cols-1
                     </div>
 
                     {/* Content */}
-                    <div className=" p-2 lg:p-14">
+                    <div className="h-full overflow-y-auto p-6 lg:p-6">
 
                       <div>
                         <span className="text-xs uppercase tracking-[0.2em] text-brand-purple font-bold">
                           Reservation Request
                         </span>
 
-                        <h3 className="text-4xl font-serif text-brand-blue mt-2">
+                        <h3 className="text-4xl font-serif text-brand-blue">
                           Plan Your Journey
                         </h3>
 
-                        <p className="text-slate-500 mt-3">
+                        <p className="text-slate-500">
                           Submit your details and our travel concierge
                           will prepare a personalized itinerary.
                         </p>
                       </div>
 
-                      <div className="space-y-5 mt-10">
+                      <div className="space-y-4">
 
                         <input
                           type="text"
@@ -738,7 +682,7 @@ grid-cols-1
                         </div>
 
                         <textarea
-                          rows={5}
+                          rows={2}
                           value={specialRequest}
                           onChange={(e) => setSpecialRequest(e.target.value)}
                           placeholder="Special requirements, honeymoon plans, family trip, hotel preferences..."
