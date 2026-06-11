@@ -42,12 +42,12 @@ export const DestinationDetailsPage: React.FC = () => {
     setShowBookingModal(true);
   };
 
-  const closeBookingModal = () => {
-    if (!bookingConfirmed) {
-      setShowBookingModal(false);
-      setBookingDes(null);
-    }
-  };
+  // const closeBookingModal = () => {
+  //   if (!bookingConfirmed) {
+  //     setShowBookingModal(false);
+  //     setBookingDes(null);
+  //   }
+  // };
 
   const confirmBooking = () => {
     setBookingConfirmed(true);
@@ -587,7 +587,7 @@ export const DestinationDetailsPage: React.FC = () => {
       </div>
       <AnimatePresence>
         {showBookingModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-50 flex items-center justify-center">
             {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
@@ -609,21 +609,23 @@ relative z-10
 bg-white
 w-full
 max-w-7xl
-h-90vh
+h-[95vh]
 rounded-3xl
 shadow-2xl
+grid
+grid-cols-1
 "
             >
               {!bookingConfirmed ? (
                 <>
-                  <div className="grid lg:grid-cols-2 h-[90vh]">
+                  <div className="grid lg:grid-cols-2">
 
                     {/* Image */}
-                    <div className="relative h-90vh">
+                    <div className="relative h-full">
                       <img
                         src={bookingDes?.image}
                         alt={bookingDes?.name}
-                        className="w-full h-[90vh] object-cover"
+                        className="w-full h-full object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#09131F] via-[#09131F]/50 to-transparent" />
                       <div className="absolute top-5 right-5">
