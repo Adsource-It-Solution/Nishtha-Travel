@@ -528,7 +528,19 @@ export const FlightBookingPage: React.FC = () => {
               initial={{ opacity: 0, scale: 0.98, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.98, y: 10 }}
-              className="bg-white border border-[#E5E0D8] p-8 md:p-10 max-w-6xl w-full relative z-10 space-y-6 rounded-none shadow-none"
+              className="
+    bg-white
+    border
+    border-[#E5E0D8]
+    p-4 md:p-10
+    max-w-6xl
+    w-full
+    max-h-[90vh]
+    overflow-y-auto
+    relative
+    z-10
+    rounded-xl
+  "
             >
               {!bookingConfirmed ? (
                 <>

@@ -601,153 +601,155 @@ export const HotelBookingPage: React.FC = () => {
 
 
       <AnimatePresence>
-  {showBookingModal && selectedHotel && (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        {showBookingModal && selectedHotel && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
 
-      {/* Backdrop */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        onClick={() => {
-          if (!bookingConfirmed) {
-            setShowBookingModal(false);
-          }
-        }}
-        className="absolute inset-0 bg-black/50"
-      />
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => {
+                if (!bookingConfirmed) {
+                  setShowBookingModal(false);
+                }
+              }}
+              className="absolute inset-0 bg-black/50"
+            />
 
-      {/* Modal */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.98, y: 12 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.98, y: 12 }}
-        className="
-          bg-white
-          border
-          border-[#E5E0D8]
-          p-8
-          md:p-7
-          max-w-5xl
-          w-full
-          relative
-          z-10
+            {/* Modal */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.98, y: 12 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.98, y: 12 }}
+              className="
+              bg-white
+    border
+    border-[#E5E0D8]
+    p-4 md:p-10
+    max-w-6xl
+    w-full
+    max-h-[90vh]
+    overflow-y-auto
+    relative
+    z-10
+    rounded-xl
         "
-      >
-        {!bookingConfirmed ? (
-          <>
-            {/* Header */}
-            <div className="flex justify-between items-start pb-2">
+            >
+              {!bookingConfirmed ? (
+                <>
+                  {/* Header */}
+                  <div className="flex justify-between items-start pb-2">
 
-              <div>
-                <span className="text-[10px] font-semibold uppercase tracking-[0.25em] text-yellow-500 block">
-                  Luxury Hotel Reservation
-                </span>
-
-                <h3 className="text-3xl font-[Playfair_Display] text-brand-blue leading-tight">
-                  Reserve Your Stay
-                </h3>
-
-                <p className="text-sm text-slate-500">
-                  Complete your details to confirm your luxury accommodation.
-                </p>
-              </div>
-
-              <button
-                onClick={() => setShowBookingModal(false)}
-                className="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-brand-blue"
-              >
-                ✕
-              </button>
-
-            </div>
-
-            {/* Layout */}
-            <div className="grid md:grid-cols-2 gap-8 mt-6">
-
-              {/* LEFT */}
-              <div className="space-y-6">
-
-                <div className="overflow-hidden rounded-lg">
-
-                  <img
-                    src={selectedHotel.images[0]}
-                    alt={selectedHotel.name}
-                    className="w-full h-64 object-cover"
-                  />
-
-                </div>
-
-                <div className="bg-blue-500 p-6 rounded-lg">
-
-                  <span className="text-[10px] uppercase tracking-[0.2em] text-white block">
-                    Selected Hotel
-                  </span>
-
-                  <h4 className="text-2xl font-[Playfair_Display] text-white mt-2">
-                    {selectedHotel.name}
-                  </h4>
-
-                  <p className="text-sm text-white/90 mt-2">
-                    {selectedHotel.location}
-                  </p>
-
-                  <div className="border-t border-white/20 pt-4 mt-5 space-y-3">
-
-                    <div className="flex justify-between text-sm">
-                      <span className="text-white/80">
-                        Hotel Rating
+                    <div>
+                      <span className="text-[10px] font-semibold uppercase tracking-[0.25em] text-yellow-500 block">
+                        Luxury Hotel Reservation
                       </span>
 
-                      <span className="font-semibold text-white">
-                        ⭐ {selectedHotel.rating}
-                      </span>
+                      <h3 className="text-3xl font-[Playfair_Display] text-brand-blue leading-tight">
+                        Reserve Your Stay
+                      </h3>
+
+                      <p className="text-sm text-slate-500">
+                        Complete your details to confirm your luxury accommodation.
+                      </p>
                     </div>
 
-                    <div className="flex justify-between text-sm">
-                      <span className="text-white/80">
-                        Reviews
-                      </span>
-
-                      <span className="font-semibold text-white">
-                        {selectedHotel.reviewsCount}
-                      </span>
-                    </div>
+                    <button
+                      onClick={() => setShowBookingModal(false)}
+                      className="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-brand-blue"
+                    >
+                      ✕
+                    </button>
 
                   </div>
 
-                </div>
+                  {/* Layout */}
+                  <div className="grid md:grid-cols-2 gap-8 mt-6">
 
-              </div>
+                    {/* LEFT */}
+                    <div className="space-y-6">
 
-              <div className="space-y-6">
-                
-                <div className="bg-brand-light border border-[#E5E0D8] rounded-lg p-6">
+                      <div className="overflow-hidden rounded-lg">
 
-                  <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500 block">
-                    Starting Price
-                  </span>
+                        <img
+                          src={selectedHotel.images[0]}
+                          alt={selectedHotel.name}
+                          className="w-full h-64 object-cover"
+                        />
 
-                  <h3 className="text-4xl font-[Playfair_Display] text-brand-blue mt-2">
-                    ₹{selectedHotel.pricePerNight}
-                  </h3>
+                      </div>
 
-                  <p className="text-sm text-slate-500 mt-2">
-                    Per night including premium hotel support.
-                  </p>
+                      <div className="bg-blue-500 p-6 rounded-lg">
 
-                </div>
+                        <span className="text-[10px] uppercase tracking-[0.2em] text-white block">
+                          Selected Hotel
+                        </span>
 
-                <label className="text-[10px] font-semibold uppercase tracking-[0.25em] text-yellow-500 block">
-                  Guest Information
-                </label>
+                        <h4 className="text-2xl font-[Playfair_Display] text-white mt-2">
+                          {selectedHotel.name}
+                        </h4>
 
-                <input
-                  type="text"
-                  placeholder="Guest Name"
-                  value={enquiryName}
-                  onChange={(e) => setEnquiryName(e.target.value)}
-                  className="
+                        <p className="text-sm text-white/90 mt-2">
+                          {selectedHotel.location}
+                        </p>
+
+                        <div className="border-t border-white/20 pt-4 mt-5 space-y-3">
+
+                          <div className="flex justify-between text-sm">
+                            <span className="text-white/80">
+                              Hotel Rating
+                            </span>
+
+                            <span className="font-semibold text-white">
+                              ⭐ {selectedHotel.rating}
+                            </span>
+                          </div>
+
+                          <div className="flex justify-between text-sm">
+                            <span className="text-white/80">
+                              Reviews
+                            </span>
+
+                            <span className="font-semibold text-white">
+                              {selectedHotel.reviewsCount}
+                            </span>
+                          </div>
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                    <div className="space-y-6">
+
+                      <div className="bg-brand-light border border-[#E5E0D8] rounded-lg p-6">
+
+                        <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500 block">
+                          Starting Price
+                        </span>
+
+                        <h3 className="text-4xl font-[Playfair_Display] text-brand-blue mt-2">
+                          ₹{selectedHotel.pricePerNight}
+                        </h3>
+
+                        <p className="text-sm text-slate-500 mt-2">
+                          Per night including premium hotel support.
+                        </p>
+
+                      </div>
+
+                      <label className="text-[10px] font-semibold uppercase tracking-[0.25em] text-yellow-500 block">
+                        Guest Information
+                      </label>
+
+                      <input
+                        type="text"
+                        placeholder="Guest Name"
+                        value={enquiryName}
+                        onChange={(e) => setEnquiryName(e.target.value)}
+                        className="
                     w-full
                     border
                     border-[#E5E0D8]
@@ -757,14 +759,14 @@ export const HotelBookingPage: React.FC = () => {
                     focus:border-yellow-500
                     focus:outline-none
                   "
-                />
+                      />
 
-                <input
-                  type="text"
-                  placeholder="Mobile Number"
-                  value={enquiryPhone}
-                  onChange={(e) => setEnquiryPhone(e.target.value)}
-                  className="
+                      <input
+                        type="text"
+                        placeholder="Mobile Number"
+                        value={enquiryPhone}
+                        onChange={(e) => setEnquiryPhone(e.target.value)}
+                        className="
                     w-full
                     border
                     border-[#E5E0D8]
@@ -774,13 +776,13 @@ export const HotelBookingPage: React.FC = () => {
                     focus:border-yellow-500
                     focus:outline-none
                   "
-                />
+                      />
 
-                <input
-                  type="date"
-                  value={enquiryDate}
-                  onChange={(e) => setEnquiryDate(e.target.value)}
-                  className="
+                      <input
+                        type="date"
+                        value={enquiryDate}
+                        onChange={(e) => setEnquiryDate(e.target.value)}
+                        className="
                     w-full
                     border
                     border-[#E5E0D8]
@@ -790,66 +792,66 @@ export const HotelBookingPage: React.FC = () => {
                     focus:border-yellow-500
                     focus:outline-none
                   "
-                />
+                      />
 
-                <div className="grid grid-cols-2 gap-3">
+                      <div className="grid grid-cols-2 gap-3">
 
-                  <button
-                    onClick={() => setShowBookingModal(false)}
-                    className="
+                        <button
+                          onClick={() => setShowBookingModal(false)}
+                          className="
                       h-14
                       border
                       border-[#E5E0D8]
                       rounded-lg
                       text-slate-600
                     "
-                  >
-                    Cancel
-                  </button>
+                        >
+                          Cancel
+                        </button>
 
-                  <button
-                    className="
+                        <button
+                          className="
                       h-14
                       bg-blue-500
                       text-white
                       rounded-lg
                       font-semibold
                     "
-                  >
-                    Confirm Stay
-                  </button>
+                        >
+                          Confirm Stay
+                        </button>
 
-                </div>
+                      </div>
 
-                <p className="text-xs text-slate-500 text-center">
-                  Our hospitality concierge will contact you within 2 hours to
-                  finalize your reservation.
-                </p>
+                      <p className="text-xs text-slate-500 text-center">
+                        Our hospitality concierge will contact you within 2 hours to
+                        finalize your reservation.
+                      </p>
 
-              </div>
+                    </div>
 
-            </div>
-          </>
-        ) : (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-12"
-          >
-            <h3 className="text-3xl font-[Playfair_Display] text-brand-blue">
-              Reservation Confirmed
-            </h3>
+                  </div>
+                </>
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="text-center py-12"
+                >
+                  <h3 className="text-3xl font-[Playfair_Display] text-brand-blue">
+                    Reservation Confirmed
+                  </h3>
 
-            <p className="text-slate-500 mt-4">
-              Your luxury hotel stay request has been received successfully.
-            </p>
-          </motion.div>
+                  <p className="text-slate-500 mt-4">
+                    Your luxury hotel stay request has been received successfully.
+                  </p>
+                </motion.div>
+              )}
+            </motion.div>
+
+          </div>
         )}
-      </motion.div>
-
-    </div>
-  )}
-</AnimatePresence>
+      </AnimatePresence>
     </div>
   );
 };

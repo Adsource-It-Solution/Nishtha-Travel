@@ -550,15 +550,17 @@ export const DestinationDetailsPage: React.FC = () => {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: 20 }}
               className="
-relative z-10
-bg-white
-w-full
-max-w-7xl
-h-[95vh]
-rounded-3xl
-shadow-2xl
-grid
-grid-cols-1
+    bg-white
+    border
+    border-[#E5E0D8]
+    p-4 md:p-10
+    max-w-6xl
+    w-full
+    max-h-[90vh]
+    overflow-y-auto
+    relative
+    z-10
+    rounded-xl
 "
             >
               {!bookingConfirmed ? (
@@ -569,10 +571,10 @@ grid-cols-1
                       <img
                         src={bookingDes?.image}
                         alt={bookingDes?.name}
-                        className="w-full h-[95vh] object-cover"
+                        className="w-full h-[45vh] md:h-[95vh] object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#09131F] via-[#09131F]/50 to-transparent" />
-                      <div className="absolute top-5 right-5">
+                      <div className="absolute top-5 right-5 z-50">
                         <button
                           onClick={() => setShowBookingModal(false)}
                           className="bg-white/90 p-2 rounded-full"
