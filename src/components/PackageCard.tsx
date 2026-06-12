@@ -156,7 +156,7 @@ export const PackageCard: React.FC<PackageCardProps> = ({
         {/* Price Row */}
         <div className="flex items-end justify-between mb-3">
           <Link
-            to={`/holiday-itinerary/${pkg.id}`}
+            to={`/package/${pkg.id}`}
             className="
             bg-[#2F80ED]
             hover:bg-blue-700
