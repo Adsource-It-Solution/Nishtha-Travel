@@ -9,6 +9,7 @@ export const RootLayout: React.FC = () => {
 
   const hideFooter =
     location.pathname === "/login";
+  
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-50 text-slate-800">

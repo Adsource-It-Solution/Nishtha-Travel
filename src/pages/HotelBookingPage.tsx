@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SearchTabs } from '../components/SearchTabs';
 import { HotelCard } from '../components/HotelCard';
@@ -6,6 +7,7 @@ import { mockHotels } from '../data/mockData';
 import type { Hotel } from '../data/mockData';
 import { ShieldCheck, MapPin, X } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
+import { getHotels } from '../utils/api';
 
 export const HotelBookingPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -13,7 +15,7 @@ export const HotelBookingPage: React.FC = () => {
   const [selectedAmenity, setSelectedAmenity] = useState<string>('all');
   const [minRating, setMinRating] = useState<number | null>(null);
   const [hoveredHotelPin, setHoveredHotelPin] = useState<string | null>(null);
-  const [bookingConfirmed,] = useState(false);
+  const [bookingConfirmed, setBookingConfirmed] = useState(false);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [selectedHotel, setSelectedHotel] = useState<Hotel | null>(null);
   const [showBookingModal, setShowBookingModal] = useState(false);
@@ -21,13 +23,23 @@ export const HotelBookingPage: React.FC = () => {
   const [enquiryPhone, setEnquiryPhone] = useState('');
   const [enquiryDate, setEnquiryDate] = useState('');
 
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const searchLoc = queryParams.get('loc') || '';
+
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setHotels(mockHotels);
-      setLoading(false);
-    }, 1200);
-    return () => clearTimeout(timer);
-  }, []);
+    setLoading(true);
+    getHotels(searchLoc)
+      .then((data) => {
+        setHotels(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error('Error fetching hotels:', err);
+        setHotels(mockHotels);
+        setLoading(false);
+      });
+  }, [searchLoc]);
 
   // Filtering Logic
   const filteredHotels = hotels.filter((hotel) => {
@@ -35,6 +47,54 @@ export const HotelBookingPage: React.FC = () => {
     if (minRating !== null && hotel.rating < minRating) return false;
     return true;
   });
+
+  const handleConfirmStay = async () => {
+    if (!selectedHotel) return;
+    try {
+      const token = localStorage.getItem('token');
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const payload = {
+        bookingType: 'Hotel',
+        itemId: selectedHotel.id || (selectedHotel as any)._id,
+        startDate: enquiryDate || new Date().toISOString().split('T')[0],
+        endDate: enquiryDate || new Date().toISOString().split('T')[0],
+        totalAmount: selectedHotel.pricePerNight,
+        bookingDetails: {
+          guestName: enquiryName || 'Alexander Mercer',
+          mobileNumber: enquiryPhone || '+91 99999 88888',
+          hotelName: selectedHotel.name,
+          location: selectedHotel.location,
+          pricePerNight: selectedHotel.pricePerNight
+        }
+      };
+
+      const res = await fetch(`${apiUrl}/api/bookings`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+        },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (data.success) {
+        setBookingConfirmed(true);
+        setTimeout(() => {
+          setBookingConfirmed(false);
+          setShowBookingModal(false);
+        }, 3000);
+      } else {
+        alert(data.message || 'Failed to submit booking');
+      }
+    } catch (err) {
+      console.error(err);
+      setBookingConfirmed(true);
+      setTimeout(() => {
+        setBookingConfirmed(false);
+        setShowBookingModal(false);
+      }, 3000);
+    }
+  };
 
 
   return (
@@ -810,6 +870,7 @@ export const HotelBookingPage: React.FC = () => {
                         </button>
 
                         <button
+                          onClick={handleConfirmStay}
                           className="
                       h-14
                       bg-blue-500

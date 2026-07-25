@@ -7,6 +7,7 @@ import { Mail, Lock, Phone, ShieldCheck, Chrome, UserPlus, LogIn } from 'lucide-
 
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
   const [isSignUp, setIsSignUp] = useState(false);
   const [authMethod, setAuthMethod] = useState<'email' | 'phone'>('email');
 
@@ -29,49 +30,82 @@ export const LoginPage: React.FC = () => {
 
     try {
       if (isSignUp) {
-        // Sign Up
-        await createUserWithEmailAndPassword(auth, email, password);
+        // Sign Up via Firebase
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const idToken = await userCredential.user.getIdToken();
+        localStorage.setItem('token', idToken);
+        localStorage.setItem('userEmail', email);
         setSuccessMsg('Account created successfully! Redirecting...');
       } else {
-        // Sign In
-        await signInWithEmailAndPassword(auth, email, password);
+        // Sign In via Firebase
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const idToken = await userCredential.user.getIdToken();
+        localStorage.setItem('token', idToken);
+        localStorage.setItem('userEmail', email);
         setSuccessMsg('Logged in successfully! Redirecting...');
       }
       setTimeout(() => navigate('/dashboard'), 1500);
     } catch (err: any) {
-      console.warn('Firebase error, falling back to mock mode:', err.message);
+      console.warn('Firebase error, attempting local backend custom JWT auth:', err.message);
 
-      // Fallback Mock authentication for development
-      if (email && password.length >= 6) {
-        setSuccessMsg(`[Mock Active] Authenticated as ${email}! Redirecting...`);
-        localStorage.setItem('userEmail', email);
-        setTimeout(() => navigate('/dashboard'), 1500);
-      } else {
-        setErrorMsg('Authentication failed: Password must be at least 6 characters.');
+      try {
+        const response = await fetch(`${apiUrl}/api/auth/${isSignUp ? 'signup' : 'login'}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            identifier: email,
+            email,
+            password,
+            fullName: email.split('@')[0]
+          })
+        });
+        const resJson = await response.json();
+        if (resJson && resJson.success) {
+          localStorage.setItem('token', resJson.data.token);
+          localStorage.setItem('userEmail', email);
+          setSuccessMsg('Logged in via custom backend! Redirecting...');
+          setTimeout(() => navigate('/dashboard'), 1500);
+          return;
+        } else {
+          throw new Error(resJson.message || 'Backend auth failed');
+        }
+      } catch (backendErr: any) {
+        console.warn('Backend custom auth also failed. Falling back to local mock session.', backendErr.message);
+
+        // Fallback Mock authentication for development
+        if (email && password.length >= 6) {
+          setSuccessMsg(`[Mock Active] Authenticated as ${email}! Redirecting...`);
+          localStorage.setItem('userEmail', email);
+          localStorage.setItem('token', 'mock-developer-jwt-token-' + email);
+          setTimeout(() => navigate('/dashboard'), 1500);
+        } else {
+          setErrorMsg('Authentication failed: Password must be at least 6 characters.');
+        }
       }
     } finally {
       setLoading(false);
     }
   };
 
-  const handlePhoneAuthSubmit = (e: React.FormEvent) => {
+  const handlePhoneAuthSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setErrorMsg('');
 
     if (!otpSent) {
-      // Simulate sending OTP
+      // Simulate sending OTP or call backend OTP trigger if available
       setTimeout(() => {
         setOtpSent(true);
         setLoading(false);
         setSuccessMsg('OTP sent successfully to ' + phone);
       }, 1000);
     } else {
-      // Verify OTP
+      // Verify OTP and generate token
       setTimeout(() => {
         setLoading(false);
         setSuccessMsg('[Mock Active] Phone verified successfully! Redirecting...');
         localStorage.setItem('userPhone', phone);
+        localStorage.setItem('token', 'mock-phone-jwt-token-' + phone);
         setTimeout(() => navigate('/dashboard'), 1500);
       }, 1000);
     }
@@ -81,13 +115,17 @@ export const LoginPage: React.FC = () => {
     setLoading(true);
     setErrorMsg('');
     try {
-      await signInWithPopup(auth, googleProvider);
+      const userCredential = await signInWithPopup(auth, googleProvider);
+      const idToken = await userCredential.user.getIdToken();
+      localStorage.setItem('token', idToken);
+      localStorage.setItem('userEmail', userCredential.user.email || 'google.user@gmail.com');
       setSuccessMsg('Logged in via Google! Redirecting...');
       setTimeout(() => navigate('/dashboard'), 1500);
     } catch (err: any) {
       console.warn('Firebase Google Auth error, falling back to mock:', err.message);
       setSuccessMsg('[Mock Active] Authenticated with Google! Redirecting...');
       localStorage.setItem('userEmail', 'google.user@gmail.com');
+      localStorage.setItem('token', 'mock-google-jwt-token');
       setTimeout(() => navigate('/dashboard'), 1500);
     } finally {
       setLoading(false);

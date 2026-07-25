@@ -1,13 +1,139 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, PhoneCall, Search, MessageCircle, ArrowRight, User2 } from 'lucide-react';
+import { mockHotels, mockPackages, mockCabs } from '../data/mockData';
 
 export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const [searchQuery, setSearchQuery] = useState('');
+  const [suggestions, setSuggestions] = useState<any[]>([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!searchQuery.trim()) {
+      setSuggestions([]);
+      return;
+    }
+
+    const query = searchQuery.toLowerCase();
+    const tempSuggestions: any[] = [];
+
+    // Filter Hotels
+    mockHotels.forEach(h => {
+      if (h.location.toLowerCase().includes(query) || h.name.toLowerCase().includes(query)) {
+        tempSuggestions.push({
+          title: h.name,
+          subtitle: `Hotel in ${h.location} • ₹${h.pricePerNight}/night`,
+          type: 'hotel',
+          path: `/hotel/${h.id}`
+        });
+      }
+    });
+
+    // Filter Packages
+    mockPackages.forEach(p => {
+      if (p.destination.toLowerCase().includes(query) || p.title.toLowerCase().includes(query)) {
+        tempSuggestions.push({
+          title: p.title,
+          subtitle: `Package to ${p.destination} • ${p.duration} • $${p.price}`,
+          type: 'package',
+          path: `/package/${p.id}`
+        });
+      }
+    });
+
+    // Filter Cabs
+    mockCabs.forEach(c => {
+      if (c.name.toLowerCase().includes(query) || c.type.toLowerCase().includes(query)) {
+        tempSuggestions.push({
+          title: c.name,
+          subtitle: `Cab Ride • ${c.category} • ₹${c.basePrice} base`,
+          type: 'cab',
+          path: `/cab/${c.id}`
+        });
+      }
+    });
+
+    // Filter special page keywords
+    if ('flight'.includes(query) || 'plane'.includes(query) || 'aviation'.includes(query)) {
+      tempSuggestions.push({
+        title: 'Flight Bookings',
+        subtitle: 'Search & reserve premium flights',
+        type: 'page',
+        path: '/flights'
+      });
+    }
+    if ('train'.includes(query) || 'rail'.includes(query) || 'irctc'.includes(query)) {
+      tempSuggestions.push({
+        title: 'Train Tickets',
+        subtitle: 'Search routes & check PNR availability',
+        type: 'page',
+        path: '/trains'
+      });
+    }
+    if ('profile'.includes(query) || 'dashboard'.includes(query) || 'booking'.includes(query) || 'history'.includes(query)) {
+      tempSuggestions.push({
+        title: 'User Dashboard',
+        subtitle: 'Manage your itineraries & profile settings',
+        type: 'page',
+        path: '/dashboard'
+      });
+    }
+
+    setSuggestions(tempSuggestions.slice(0, 8));
+  }, [searchQuery]);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!searchQuery.trim()) return;
+
+    const query = searchQuery.toLowerCase().trim();
+
+    if (query.includes('train') || query.includes('rail') || query.includes('irctc')) {
+      navigate('/trains');
+      setSearchQuery('');
+      setSuggestions([]);
+      return;
+    }
+    if (query.includes('flight') || query.includes('plane') || query.includes('aviation')) {
+      navigate('/flights');
+      setSearchQuery('');
+      setSuggestions([]);
+      return;
+    }
+    if (query.includes('profile') || query.includes('dashboard') || query.includes('wallet') || query.includes('booking') || query.includes('history')) {
+      navigate('/dashboard');
+      setSearchQuery('');
+      setSuggestions([]);
+      return;
+    }
+    if (query.includes('cab') || query.includes('taxi') || query.includes('car')) {
+      navigate('/cabs');
+      setSearchQuery('');
+      setSuggestions([]);
+      return;
+    }
+    if (query.includes('hotel') || query.includes('resort') || query.includes('stay')) {
+      navigate('/hotels');
+      setSearchQuery('');
+      setSuggestions([]);
+      return;
+    }
+    if (query.includes('package') || query.includes('tour') || query.includes('holiday')) {
+      navigate('/packages');
+      setSearchQuery('');
+      setSuggestions([]);
+      return;
+    }
+
+    navigate(`/packages?search=${encodeURIComponent(searchQuery)}`);
+    setSearchQuery('');
+    setSuggestions([]);
+  };
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -70,9 +196,9 @@ export const Navbar: React.FC = () => {
                 </Link>
 
                 {/* Search */}
-                <div className="flex-1 max-w-3xl">
-                  <div className="relative">
-                    <Search className="absolute left-5 top-1/2 -translate-y-1/2 w- h-5 text-gray-500" />
+                <div className="flex-1 max-w-3xl relative">
+                  <form onSubmit={handleSearchSubmit} className="relative">
+                    <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
 
                     <input
                       type="text"
@@ -93,7 +219,45 @@ export const Navbar: React.FC = () => {
             focus:border-brand-purple
           "
                     />
-                  </div>
+                  </form>
+
+                  {/* Suggestions Popover */}
+                  <AnimatePresence>
+                    {suggestions.length > 0 && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 10 }}
+                        className="absolute top-16 left-0 right-0 bg-white border border-slate-200 rounded-[24px] shadow-2xl z-50 max-h-96 overflow-y-auto overflow-x-hidden p-2"
+                      >
+                        {suggestions.map((item, index) => (
+                          <Link
+                            key={index}
+                            to={item.path}
+                            onClick={() => {
+                              setSearchQuery('');
+                              setSuggestions([]);
+                            }}
+                            className="flex items-center justify-between px-5 py-3.5 hover:bg-slate-50 rounded-xl transition-all duration-200"
+                          >
+                            <div className="flex-1 min-w-0 pr-4">
+                              <span className="text-slate-800 font-bold block text-sm truncate font-poppins">{item.title}</span>
+                              <span className="text-slate-500 text-xs mt-0.5 block truncate font-roboto font-light">{item.subtitle}</span>
+                            </div>
+                            <span className={`text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shrink-0
+                              ${item.type === 'page' ? 'bg-blue-50 text-blue-600' :
+                                item.type === 'hotel' ? 'bg-purple-50 text-purple-600' :
+                                item.type === 'package' ? 'bg-yellow-50 text-yellow-600' :
+                                'bg-emerald-50 text-emerald-600'
+                              }
+                            `}>
+                              {item.type}
+                            </span>
+                          </Link>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
 
                 {/* Right Side */}
@@ -339,10 +503,10 @@ export const Navbar: React.FC = () => {
                         WhatsApp
                       </span>
                     </a>
-                                      <Link
-                    to="/contact"
-                    onClick={() => setIsOpen(false)}
-                    className="
+                    <Link
+                      to="/contact"
+                      onClick={() => setIsOpen(false)}
+                      className="
               bg-white
                 border
                 border-slate-200
@@ -355,10 +519,10 @@ export const Navbar: React.FC = () => {
                 hover:border-[#25D366]
                 transition-all
             "
-                  >
-                    <User2 className='text-orange-500 w-5 h-5'/>
-                    <span className="text-xs font-medium">Book Your Journey</span>
-                  </Link>
+                    >
+                      <User2 className='text-orange-500 w-5 h-5' />
+                      <span className="text-xs font-medium">Book Your Journey</span>
+                    </Link>
                   </div>
                 </div>
               </div>

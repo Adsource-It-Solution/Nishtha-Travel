@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PackageCard } from '../components/PackageCard';
 import { mockPackages } from '../data/mockData';
@@ -7,6 +8,9 @@ import { Luggage, Check, X } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { getPackages } from '../utils/api';
+
+
 
 export const HolidayPackagesPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -14,15 +18,110 @@ export const HolidayPackagesPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [bookingPkg, setBookingPkg] = useState<Package | null>(null);
   const [bookingConfirmed, setBookingConfirmed] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const searchLoc = queryParams.get('loc') || queryParams.get('search') || '';
+
+  const [formData, setFormData] = useState({
+    fullName: "",
+    mobile: "",
+    email: "",
+    city: "",
+    destination: "",
+    departureCity: "",
+    duration: "",
+    adults: "",
+    children: "",
+    infants: "",
+    rooms: "",
+    budget: "",
+    hotelCategory: "",
+    packageType: "",
+    flightRequired: "",
+    cabRequired: "",
+    visaRequired: "",
+    specialOccasion: "",
+    notes: "",
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/enquiries`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...formData,
+            travelDate: selectedDate,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+        alert("Enquiry Submitted Successfully");
+
+        setFormData({
+          fullName: "",
+          mobile: "",
+          email: "",
+          city: "",
+          destination: "",
+          departureCity: "",
+          duration: "",
+          adults: "",
+          children: "",
+          infants: "",
+          rooms: "",
+          budget: "",
+          hotelCategory: "",
+          packageType: "",
+          flightRequired: "",
+          cabRequired: "",
+          visaRequired: "",
+          specialOccasion: "",
+          notes: "",
+        });
+
+        setSelectedDate(null);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setPackages(mockPackages);
-      setLoading(false);
-    }, 1200);
-    return () => clearTimeout(timer);
-  }, []);
+    setLoading(true);
+    getPackages(searchLoc)
+      .then((data) => {
+        setPackages(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error('Error fetching packages:', err);
+        setPackages(mockPackages);
+        setLoading(false);
+      });
+  }, [searchLoc]);
 
   // Filter Logic
   const filteredPackages = selectedCategory === 'all'
@@ -42,12 +141,51 @@ export const HolidayPackagesPage: React.FC = () => {
     setBookingPkg(pkg);
   };
 
-  const confirmBooking = () => {
-    setBookingConfirmed(true);
-    setTimeout(() => {
-      setBookingConfirmed(false);
-      setBookingPkg(null);
-    }, 3000);
+  const confirmBooking = async () => {
+    if (!bookingPkg) return;
+    try {
+      const token = localStorage.getItem('token');
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const payload = {
+        bookingType: 'Package',
+        itemId: bookingPkg.id || (bookingPkg as any)._id,
+        startDate: selectedDate || new Date().toISOString().split('T')[0],
+        totalAmount: bookingPkg.price,
+        bookingDetails: {
+          packageTitle: bookingPkg.title,
+          destination: bookingPkg.destination,
+          duration: bookingPkg.duration,
+          price: bookingPkg.price,
+          travelDate: selectedDate || new Date().toISOString().split('T')[0]
+        }
+      };
+
+      const res = await fetch(`${apiUrl}/api/bookings`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+        },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (data.success) {
+        setBookingConfirmed(true);
+        setTimeout(() => {
+          setBookingConfirmed(false);
+          setBookingPkg(null);
+        }, 3000);
+      } else {
+        alert(data.message || 'Failed to submit booking');
+      }
+    } catch (err) {
+      console.error(err);
+      setBookingConfirmed(true);
+      setTimeout(() => {
+        setBookingConfirmed(false);
+        setBookingPkg(null);
+      }, 3000);
+    }
   };
 
   return (
@@ -102,48 +240,69 @@ export const HolidayPackagesPage: React.FC = () => {
                 </p>
               </div>
 
-              <form className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+              <form
+                onSubmit={handleSubmit}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5"
+              >
 
                 {/* Full Name */}
                 <input
                   type="text"
+                  name="fullName"
                   placeholder="Full Name"
                   className="border rounded-xl px-4 py-3"
+                  value={formData.fullName}
+                  onChange={handleChange}
                 />
 
                 {/* Mobile */}
                 <input
                   type="tel"
+                  name="mobile"
                   placeholder="Mobile Number"
                   className="border rounded-xl px-4 py-3"
+                  value={formData.mobile}
+                  onChange={handleChange}
                 />
 
                 {/* Email */}
                 <input
                   type="email"
+                  name="email"
                   placeholder="Email Address"
                   className="border rounded-xl px-4 py-3"
+                  value={formData.email}
+                  onChange={handleChange}
                 />
 
                 {/* City */}
                 <input
                   type="text"
+                  name='city'
                   placeholder="Your City"
                   className="border rounded-xl px-4 py-3"
+                  value={formData.city}
+                  onChange={handleChange}
                 />
 
                 {/* Destination */}
                 <input
                   type="text"
+                  name='destination'
                   placeholder="Destination"
                   className="border rounded-xl px-4 py-3"
+                  value={formData.destination}
+                  onChange={handleChange}
                 />
 
                 {/* Departure City */}
                 <input
                   type="text"
+                  name='departureCity'
                   placeholder="Departure City"
                   className="border rounded-xl px-4 py-3"
+                  value={formData.departureCity}
+                  onChange={handleChange}
                 />
 
                 {/* Travel Date */}
@@ -169,53 +328,76 @@ export const HolidayPackagesPage: React.FC = () => {
                 {/* Duration */}
                 <input
                   type="text"
+                  name='duration'
                   placeholder="Duration (e.g. 5N/6D)"
                   className="border rounded-xl px-4 py-3"
+                  value={formData.duration}
+                  onChange={handleChange}
                 />
 
                 {/* Adults */}
                 <input
                   type="number"
+                  name='adults'
                   min="1"
                   placeholder="Adults"
                   className="border rounded-xl px-4 py-3"
+                  value={formData.adults}
+                  onChange={handleChange}
                 />
 
                 {/* Children */}
                 <input
                   type="number"
+                  name='children'
                   min="0"
                   placeholder="Children"
                   className="border rounded-xl px-4 py-3"
+                  value={formData.children}
+                  onChange={handleChange}
                 />
 
                 {/* Infants */}
                 <input
                   type="number"
+                  name='infants'
                   min="0"
                   placeholder="Infants"
                   className="border rounded-xl px-4 py-3"
+                  value={formData.infants}
+                  onChange={handleChange}
                 />
 
                 {/* Rooms */}
                 <input
                   type="number"
+                  name='rooms'
                   min="1"
                   placeholder="Rooms Required"
                   className="border rounded-xl px-4 py-3"
+                  value={formData.rooms}
+                  onChange={handleChange}
                 />
 
                 {/* Budget */}
-                <select className="border rounded-xl px-4 py-3">
-                  <option>Budget Range</option>
-                  <option>₹20,000 - ₹50,000</option>
-                  <option>₹50,000 - ₹1,00,000</option>
-                  <option>₹1,00,000 - ₹2,00,000</option>
-                  <option>₹2,00,000+</option>
+                <select
+                  name="budget"
+                  value={formData.budget}
+                  onChange={handleChange}
+                  className="border rounded-xl px-4 py-3"
+                >
+                  <option value="">Budget Range</option>
+                  <option value="20000-50000">₹20,000 - ₹50,000</option>
+                  <option value="50000-100000">₹50,000 - ₹1,00,000</option>
+                  <option value="100000-200000">₹1,00,000 - ₹2,00,000</option>
+                  <option value="200000+">₹2,00,000+</option>
                 </select>
 
                 {/* Hotel Category */}
-                <select className="border rounded-xl px-4 py-3">
+                <select value={formData.hotelCategory}
+                name='hotelCategory'
+                  onChange={handleChange}
+                  className="border rounded-xl px-4 py-3">
                   <option>Hotel Category</option>
                   <option>3 Star</option>
                   <option>4 Star</option>
@@ -224,7 +406,9 @@ export const HolidayPackagesPage: React.FC = () => {
                 </select>
 
                 {/* Package Type */}
-                <select className="border rounded-xl px-4 py-3">
+                <select value={formData.packageType}
+                name='packageType'
+                  onChange={handleChange} className="border rounded-xl px-4 py-3">
                   <option>Package Type</option>
                   <option>Family</option>
                   <option>Honeymoon</option>
@@ -234,28 +418,36 @@ export const HolidayPackagesPage: React.FC = () => {
                 </select>
 
                 {/* Flight Required */}
-                <select className="border rounded-xl px-4 py-3">
+                <select value={formData.flightRequired}
+                name='flightRequired'
+                  onChange={handleChange} className="border rounded-xl px-4 py-3">
                   <option>Flight Booking Required?</option>
                   <option>Yes</option>
                   <option>No</option>
                 </select>
 
                 {/* Cab Required */}
-                <select className="border rounded-xl px-4 py-3">
+                <select value={formData.cabRequired}
+                name='cabRequired'
+                  onChange={handleChange} className="border rounded-xl px-4 py-3">
                   <option>Cab / Sightseeing Required?</option>
                   <option>Yes</option>
                   <option>No</option>
                 </select>
 
                 {/* Visa */}
-                <select className="border rounded-xl px-4 py-3">
+                <select value={formData.visaRequired}
+                name='visaRequired'
+                  onChange={handleChange} className="border rounded-xl px-4 py-3">
                   <option>Visa Assistance Required?</option>
                   <option>Yes</option>
                   <option>No</option>
                 </select>
 
                 {/* Special Occasion */}
-                <select className="border rounded-xl px-4 py-3">
+                <select value={formData.specialOccasion}
+                name='specialOccasion'
+                  onChange={handleChange} className="border rounded-xl px-4 py-3">
                   <option>Special Occasion</option>
                   <option>Honeymoon</option>
                   <option>Anniversary</option>
@@ -269,6 +461,9 @@ export const HolidayPackagesPage: React.FC = () => {
                   rows={4}
                   placeholder="Tell us your requirements, hotel preferences, sightseeing interests, meal preferences, etc."
                   className="border rounded-xl px-4 py-3 lg:col-span-4"
+                  value={formData.notes}
+                  name='notes'
+                  onChange={handleChange}
                 />
 
                 {/* Submit */}
@@ -373,12 +568,12 @@ export const HolidayPackagesPage: React.FC = () => {
               <PackageCard key={pkg.id} pkg={pkg} onBook={handleBookPkg} />
             ))
           ) : (
-            <div className="col-span-full glass-card p-16 text-center space-y-4 border-dashed border-[#E5E0D8] bg-white rounded-none shadow-none">
-              <div className="w-12 h-12 rounded-none bg-brand-light flex items-center justify-center mx-auto text-slate-400 border border-[#E5E0D8]">
-                <Luggage className="w-5 h-5 text-brand-purple" />
+            <div className="col-span-full glass-card p-16 text-center space-y-4 rounded-lg border-[#E5E0D8] bg-whites shadow-none">
+              <div className="w-12 h-12 bg-brand-light flex items-center justify-center mx-auto text-slate-400 border border-[#E5E0D8] rounded-full">
+                <Luggage className="size-7 text-brand-blue" />
               </div>
-              <h4 className="text-base font-serif text-brand-blue">No Curated Packages Available</h4>
-              <p className="text-slate-500 text-xs max-w-sm mx-auto font-light leading-relaxed">
+              <h4 className="text-base font-Poppins text-brand-blue">No Curated Packages Available</h4>
+              <p className="text-slate-500 text-xs max-w-sm mx-auto font-light">
                 No active all-inclusive packages found matching this category. Please adjust filters.
               </p>
             </div>

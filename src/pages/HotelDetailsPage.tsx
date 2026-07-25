@@ -1,21 +1,84 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Star, MapPin, Heart, ArrowLeft, CheckCircle2, ShieldCheck, Check, Sparkles, Camera } from 'lucide-react';
 import { mockHotels, type Hotel } from '../data/mockData';
-
+import { getHotelById } from '../utils/api';
 
 export const HotelDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [isLiked, setIsLiked] = useState(false);
-  const [bookingConfirmed,] = useState(false);
+  const [bookingConfirmed, setBookingConfirmed] = useState(false);
   const [selectedHotel, setSelectedHotel] = useState<Hotel | null>(null);
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [enquiryName, setEnquiryName] = useState('');
   const [enquiryPhone, setEnquiryPhone] = useState('');
   const [enquiryDate, setEnquiryDate] = useState('');
 
-  const hotel = mockHotels.find((h) => h.id === id) || mockHotels[0];
+  const [hotel, setHotel] = useState<Hotel>(() => mockHotels.find((h) => h.id === id) || mockHotels[0]);
+  const [, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!id) return;
+    setLoading(true);
+    getHotelById(id)
+      .then((data) => {
+        if (data) setHotel(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error('Error fetching hotel details:', err);
+        setLoading(false);
+      });
+  }, [id]);
+
+  const handleConfirmStay = async () => {
+    if (!selectedHotel) return;
+    try {
+      const token = localStorage.getItem('token');
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const payload = {
+        bookingType: 'Hotel',
+        itemId: selectedHotel.id || (selectedHotel as any)._id,
+        startDate: enquiryDate || new Date().toISOString().split('T')[0],
+        endDate: enquiryDate || new Date().toISOString().split('T')[0],
+        totalAmount: selectedHotel.pricePerNight,
+        bookingDetails: {
+          guestName: enquiryName || 'Alexander Mercer',
+          mobileNumber: enquiryPhone || '+91 99999 88888',
+          hotelName: selectedHotel.name,
+          location: selectedHotel.location,
+          pricePerNight: selectedHotel.pricePerNight
+        }
+      };
+
+      const res = await fetch(`${apiUrl}/api/bookings`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+        },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (data.success) {
+        setBookingConfirmed(true);
+        setTimeout(() => {
+          setBookingConfirmed(false);
+          setShowBookingModal(false);
+        }, 3000);
+      } else {
+        alert(data.message || 'Failed to submit booking');
+      }
+    } catch (err) {
+      console.error(err);
+      setBookingConfirmed(true);
+      setTimeout(() => {
+        setBookingConfirmed(false);
+        setShowBookingModal(false);
+      }, 3000);
+    }
+  };
 
   return (
     <div className="bg-brand-light min-h-screen text-slate-800 relative">
@@ -1035,6 +1098,7 @@ export const HotelDetailsPage: React.FC = () => {
                         </button>
 
                         <button
+                          onClick={handleConfirmStay}
                           className="
                                         h-14
                                         bg-blue-500

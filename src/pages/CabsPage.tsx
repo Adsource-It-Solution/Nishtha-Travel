@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Navbar } from '../components/Navbar';
 import { Car, ShieldCheck, HelpCircle } from 'lucide-react';
-import { mockCabs } from "../data/mockData";
+import axios from 'axios';
 
 interface Cab {
   id: string;
@@ -25,44 +25,84 @@ export const CabsPage: React.FC = () => {
   const [cabs, setCabs] = useState<Cab[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedFilter, setSelectedFilter] = useState<'all' | 'luxury' | 'suv' | 'coach'>('all');
-  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  const apiUrl = import.meta.env.VITE_API_URL;
 
-  // useEffect(() => {
-  //   fetch(`${apiUrl}/api/cabs`)
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       setCabs(data);
-  //       setLoading(false);
-  //     })
-  //     .catch(err => {
-  //       console.error('Error fetching cabs:', err);
-  //       setLoading(false);
-  //     });
-  // }, [apiUrl]);
+  const [cabForm, setCabForm] = useState({
+    pickupLocation: "",
+    dropLocation: "",
+    pickupDate: "",
+    pickupTime: "",
+    returnDate: "",
+    tripType: "One Way",
+    cabType: "Sedan",
+    passengers: 1,
+    luggage: 0,
+    fullName: "",
+    phone: "",
+    email: "",
+    alternatePhone: "",
+    flightNumber: "",
+    hotelName: "",
+    specialInstructions: "",
+  });
+
+  const handleCabChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    setCabForm((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
   useEffect(() => {
     fetch(`${apiUrl}/api/cabs`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.length > 0) {
-          setCabs(data);
-        } else {
-          setCabs(mockCabs);
-        }
-
+      .then(res => res.json())
+      .then(data => {
+        setCabs(data);
         setLoading(false);
       })
-      .catch((err) => {
-        console.error("Error fetching cabs:", err);
-
-        // fallback to mock data
-        setCabs(mockCabs);
+      .catch(err => {
+        console.error('Error fetching cabs:', err);
         setLoading(false);
       });
   }, [apiUrl]);
+  // useEffect(() => {
+  //   fetch(`${apiUrl}/api/cabs`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       const cabList = data.success ? data.data : data;
+  //       if (cabList && cabList.length > 0) {
+  //         setCabs(cabList);
+  //       } else {
+  //         setCabs(mockCabs);
+  //       }
+
+  //       setLoading(false);
+  //     })
+  //     .catch((err) => {
+  //       console.error("Error fetching cabs:", err);
+
+  //       // fallback to mock data
+  //       setCabs(mockCabs);
+  //       setLoading(false);
+  //     });
+  // }, [apiUrl]);
 
   const filteredCabs = selectedFilter === 'all'
     ? cabs
     : cabs.filter(c => c.category === selectedFilter);
+
+  const handleCabSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    await axios.post(
+      `${apiUrl}/api/cabBookings`,
+      cabForm
+    );
+  };
 
   return (
     <div className="min-h-screen bg-brand-light pb-24">
@@ -106,125 +146,213 @@ export const CabsPage: React.FC = () => {
               </p>
             </div>
 
-            <form className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-
-              {/* Pickup Location */}
+            <form
+              onSubmit={handleCabSubmit}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
+            >
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Pickup Location
-                </label>
+                <label>Pickup Location</label>
                 <input
                   type="text"
-                  placeholder="Enter pickup location"
-                  className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  name="pickupLocation"
+                  value={cabForm.pickupLocation}
+                  onChange={handleCabChange}
+                  placeholder="Pickup Location"
+                  className="w-full border rounded-xl px-4 py-3"
+                  required
                 />
               </div>
 
-              {/* Drop Location */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Drop Location
-                </label>
+                <label>Drop Location</label>
                 <input
                   type="text"
-                  placeholder="Enter destination"
-                  className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  name="dropLocation"
+                  value={cabForm.dropLocation}
+                  onChange={handleCabChange}
+                  placeholder="Drop Location"
+                  className="w-full border rounded-xl px-4 py-3"
+                  required
                 />
               </div>
 
-              {/* Pickup Date */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Pickup Date
-                </label>
+                <label>Pickup Date</label>
                 <input
                   type="date"
-                  className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  name="pickupDate"
+                  value={cabForm.pickupDate}
+                  onChange={handleCabChange}
+                  className="w-full border rounded-xl px-4 py-3"
+                  required
                 />
               </div>
 
-              {/* Pickup Time */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Pickup Time
-                </label>
+                <label>Pickup Time</label>
                 <input
                   type="time"
-                  className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  name="pickupTime"
+                  value={cabForm.pickupTime}
+                  onChange={handleCabChange}
+                  className="w-full border rounded-xl px-4 py-3"
+                  required
                 />
               </div>
 
-              {/* Trip Type */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Trip Type
-                </label>
-                <select className="w-full border border-gray-300 rounded-xl px-4 py-3">
-                  <option>One Way</option>
-                  <option>Round Trip</option>
+                <label>Trip Type</label>
+                <select
+                  name="tripType"
+                  value={cabForm.tripType}
+                  onChange={handleCabChange}
+                  className="w-full border rounded-xl px-4 py-3"
+                >
+                  <option value="One Way">One Way</option>
+                  <option value="Round Trip">Round Trip</option>
                 </select>
               </div>
 
-              {/* Cab Type */}
+              {cabForm.tripType === "Round Trip" && (
+                <div>
+                  <label>Return Date</label>
+                  <input
+                    type="date"
+                    name="returnDate"
+                    value={cabForm.returnDate}
+                    onChange={handleCabChange}
+                    className="w-full border rounded-xl px-4 py-3"
+                  />
+                </div>
+              )}
+
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Cab Type
-                </label>
-                <select className="w-full border border-gray-300 rounded-xl px-4 py-3">
-                  <option>Sedan</option>
-                  <option>SUV</option>
-                  <option>Innova</option>
-                  <option>Tempo Traveller</option>
+                <label>Cab Type</label>
+                <select
+                  name="cabType"
+                  value={cabForm.cabType}
+                  onChange={handleCabChange}
+                  className="w-full border rounded-xl px-4 py-3"
+                >
+                  <option value="Sedan">Sedan</option>
+                  <option value="SUV">SUV</option>
+                  <option value="Innova">Innova</option>
+                  <option value="Tempo Traveller">Tempo Traveller</option>
                 </select>
               </div>
 
-              {/* Passenger Count */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Passengers
-                </label>
+                <label>Passengers</label>
                 <input
                   type="number"
                   min="1"
-                  placeholder="No. of passengers"
-                  className="w-full border border-gray-300 rounded-xl px-4 py-3"
+                  name="passengers"
+                  value={cabForm.passengers}
+                  onChange={handleCabChange}
+                  className="w-full border rounded-xl px-4 py-3"
                 />
               </div>
 
-              {/* Name */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Full Name
-                </label>
+                <label>Luggage</label>
+                <input
+                  type="number"
+                  min="0"
+                  name="luggage"
+                  value={cabForm.luggage}
+                  onChange={handleCabChange}
+                  className="w-full border rounded-xl px-4 py-3"
+                />
+              </div>
+
+              <div>
+                <label>Full Name</label>
                 <input
                   type="text"
-                  placeholder="Your name"
-                  className="w-full border border-gray-300 rounded-xl px-4 py-3"
+                  name="fullName"
+                  value={cabForm.fullName}
+                  onChange={handleCabChange}
+                  className="w-full border rounded-xl px-4 py-3"
+                  required
                 />
               </div>
 
-              {/* Phone */}
-              <div className="md:col-span-2 lg:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Phone Number
-                </label>
+              <div>
+                <label>Phone Number</label>
                 <input
                   type="tel"
-                  placeholder="+91 9876543210"
-                  className="w-full border border-gray-300 rounded-xl px-4 py-3"
+                  name="phone"
+                  value={cabForm.phone}
+                  onChange={handleCabChange}
+                  className="w-full border rounded-xl px-4 py-3"
+                  required
                 />
               </div>
 
-              {/* Submit */}
-              <div className="md:col-span-2 lg:col-span-2 flex items-end">
+              <div>
+                <label>Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={cabForm.email}
+                  onChange={handleCabChange}
+                  className="w-full border rounded-xl px-4 py-3"
+                />
+              </div>
+
+              <div>
+                <label>Alternate Phone</label>
+                <input
+                  type="tel"
+                  name="alternatePhone"
+                  value={cabForm.alternatePhone}
+                  onChange={handleCabChange}
+                  className="w-full border rounded-xl px-4 py-3"
+                />
+              </div>
+
+              <div>
+                <label>Flight / Train Number</label>
+                <input
+                  type="text"
+                  name="flightNumber"
+                  value={cabForm.flightNumber}
+                  onChange={handleCabChange}
+                  className="w-full border rounded-xl px-4 py-3"
+                />
+              </div>
+
+              <div>
+                <label>Hotel Name</label>
+                <input
+                  type="text"
+                  name="hotelName"
+                  value={cabForm.hotelName}
+                  onChange={handleCabChange}
+                  className="w-full border rounded-xl px-4 py-3"
+                />
+              </div>
+
+              <div className="lg:col-span-4">
+                <label>Special Instructions</label>
+                <textarea
+                  rows={4}
+                  name="specialInstructions"
+                  value={cabForm.specialInstructions}
+                  onChange={handleCabChange}
+                  className="w-full border rounded-xl px-4 py-3"
+                  placeholder="Pickup landmark, child seat, extra stops, etc."
+                />
+              </div>
+
+              <div className="lg:col-span-4">
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-3 px-6 rounded-xl hover:opacity-90 transition"
+                  className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 rounded-xl font-semibold"
                 >
                   Book Cab Now
                 </button>
               </div>
-
             </form>
           </div>
         </div>

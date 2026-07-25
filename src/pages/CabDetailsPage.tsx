@@ -49,7 +49,8 @@ export const CabDetailsPage: React.FC = () => {
         return res.json();
       })
       .then((data) => {
-        setCab(data);
+        const cabObj = data.success ? data.data : data;
+        setCab(cabObj);
         setLoading(false);
       })
       .catch((err) => {
@@ -78,30 +79,43 @@ export const CabDetailsPage: React.FC = () => {
       return;
     }
 
-    const payload = {
-      cabId: cab?.id,
-      cabName: cab?.name,
-      pickup,
-      dropoff,
-      date,
-      time,
-      tripType,
-      passengerName,
-      passengerPhone,
-      passengerEmail,
-      notes,
-      pricePerKm: cab?.pricePerKm,
-      basePrice: cab?.basePrice
+    const bookingPayload = {
+      bookingType: 'Cab',
+      itemId: cab?.id || id,
+      bookingDetails: {
+        cabName: cab?.name,
+        pickup,
+        dropoff,
+        date,
+        time,
+        tripType,
+        passengerName,
+        passengerPhone,
+        passengerEmail,
+        notes,
+        pricePerKm: cab?.pricePerKm,
+        basePrice: cab?.basePrice
+      },
+      totalAmount: cab?.basePrice || 1200,
+      startDate: new Date(`${date}T${time}`),
+      endDate: new Date(`${date}T${time}`)
     };
 
-    fetch(`${apiUrl}/api/bookings/cab`, {
+    fetch(`${apiUrl}/api/bookings`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+      headers: {
+        'Content-Type': 'application/json',
+        ...(localStorage.getItem('token') ? { 'Authorization': `Bearer ${localStorage.getItem('token')}` } : {})
+      },
+      body: JSON.stringify(bookingPayload)
     })
       .then(res => res.json())
       .then(data => {
-        setBookingResponse(data);
+        const booking = data.success ? data.data : data;
+        setBookingResponse({
+          ...booking,
+          confirmationCode: booking.bookingReference || 'NTB-CONFIRMED'
+        });
         setBookingConfirmed(true);
         setTimeout(() => {
           setBookingConfirmed(false);
